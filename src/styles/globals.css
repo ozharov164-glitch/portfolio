@@ -1367,6 +1367,10 @@ a {
   height: 1.25rem;
 }
 
+.btn-primary .chroma-icon img {
+  filter: brightness(0);
+}
+
 @keyframes drift {
   from {
     transform: translate3d(0, 0, 0) scale(1);
