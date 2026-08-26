@@ -95,7 +95,7 @@ export function ProjectSwitcher() {
         aria-labelledby={`tab-${shown.id}`}
         className="projects__panel"
       >
-        <ProjectCase project={shown} phase={phase} />
+        <ProjectCase key={shown.id} project={shown} phase={phase} />
       </div>
     </section>
   )

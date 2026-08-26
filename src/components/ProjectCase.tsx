@@ -1,6 +1,7 @@
-import { useEffect, useRef, useState, type PointerEvent } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import type { Project } from '../content/projects'
-import { isConfigured } from '../content/site'
+import { isConfigured, site } from '../content/site'
 import { publicUrl } from '../lib/publicUrl'
 
 type ProjectCaseProps = {
@@ -8,29 +9,13 @@ type ProjectCaseProps = {
   phase: 'in' | 'out'
 }
 
-function prefersReducedMotion(): boolean {
-  return window.matchMedia('(prefers-reduced-motion: reduce)').matches
-}
-
-function canTilt(): boolean {
-  return window.matchMedia('(pointer: fine)').matches && !prefersReducedMotion()
-}
-
-function PlayGlyph() {
-  return (
-    <span className="play-btn__icon" aria-hidden="true">
-      <svg viewBox="0 0 24 24" width="12" height="12" focusable="false">
-        <path d="M8.4 5.2v13.6L19.6 12 8.4 5.2z" fill="currentColor" />
-      </svg>
-    </span>
-  )
-}
-
 export function ProjectCase({ project, phase }: ProjectCaseProps) {
-  const tiltRef = useRef<HTMLDivElement>(null)
+  const closeRef = useRef<HTMLButtonElement>(null)
+  const openerRef = useRef<HTMLButtonElement>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
   const [playing, setPlaying] = useState(false)
   const [shot, setShot] = useState(project.poster)
+  const [lightbox, setLightbox] = useState(false)
   const videoSrc = project.localVideo
   const hasVideo = isConfigured(videoSrc)
   const hasYoutube = isConfigured(project.youtubeUrl)
@@ -40,30 +25,28 @@ export function ProjectCase({ project, phase }: ProjectCaseProps) {
   const hasGithub = isConfigured(project.githubUrl)
   const hasDemo = isConfigured(project.demoUrl)
   const hasSite = isConfigured(project.siteUrl)
+  const activeStill = project.stills?.find((item) => item.src === shot)
+  const shotAlt = activeStill?.alt ?? project.posterAlt
+  const stills = project.stills ?? []
 
   useEffect(() => {
-    setPlaying(false)
-    setShot(project.poster)
-    const video = videoRef.current
-    if (video) {
-      video.pause()
-      video.currentTime = 0
+    if (!lightbox) return
+    const previous = document.body.style.overflow
+    const opener = openerRef.current
+    document.body.style.overflow = 'hidden'
+    closeRef.current?.focus()
+
+    function onKey(event: KeyboardEvent) {
+      if (event.key === 'Escape') setLightbox(false)
     }
-  }, [project.id, project.poster])
 
-  function onPointerMove(event: PointerEvent<HTMLDivElement>) {
-    const el = tiltRef.current
-    if (!el || !canTilt()) return
-    const box = el.getBoundingClientRect()
-    const px = (event.clientX - box.left) / box.width - 0.5
-    const py = (event.clientY - box.top) / box.height - 0.5
-    el.style.transform = `perspective(1200px) rotateX(${(-py * 5).toFixed(2)}deg) rotateY(${(px * 7).toFixed(2)}deg)`
-  }
-
-  function resetTilt() {
-    const el = tiltRef.current
-    if (el) el.style.transform = ''
-  }
+    window.addEventListener('keydown', onKey)
+    return () => {
+      document.body.style.overflow = previous
+      window.removeEventListener('keydown', onKey)
+      opener?.focus()
+    }
+  }, [lightbox])
 
   async function playVideo() {
     const video = videoRef.current
@@ -74,6 +57,18 @@ export function ProjectCase({ project, phase }: ProjectCaseProps) {
     } catch {
       setPlaying(false)
     }
+  }
+
+  function openLightbox() {
+    setLightbox(true)
+  }
+
+  function selectStill(src: string) {
+    if (shot === src) {
+      openLightbox()
+      return
+    }
+    setShot(src)
   }
 
   const badgeClass = project.status === 'inactive' ? 'badge is-inactive' : 'badge'
@@ -92,73 +87,69 @@ export function ProjectCase({ project, phase }: ProjectCaseProps) {
       </header>
 
       <div className="case__grid">
-        <div className="case-media-col">
-          <div
-            className={`case-media${hasVideo || hasYoutube ? ' has-play' : ''}`}
-            ref={tiltRef}
-            onPointerMove={onPointerMove}
-            onPointerLeave={resetTilt}
-          >
-            {hasVideo && resolvedVideo ? (
-              <video
-                ref={videoRef}
-                className="case-media__video"
-                poster={posterSrc}
-                preload="metadata"
-                controls={playing}
-                playsInline
-                onPause={() => setPlaying(false)}
-                onEnded={() => setPlaying(false)}
-              >
-                {resolvedVideo.endsWith('.webm') ? (
-                  <>
-                    <source src={resolvedVideo} type="video/webm" />
-                    <source src={resolvedVideo.replace(/\.webm$/, '.mp4')} type="video/mp4" />
-                  </>
-                ) : (
-                  <source src={resolvedVideo} type="video/mp4" />
-                )}
-              </video>
-            ) : (
-              <img className="case-media__poster" src={shotSrc} alt={project.posterAlt} />
-            )}
-            {hasVideo && !playing ? (
-              <div className="play-btn-wrap">
+        <div className={`case-media-col is-${project.mediaKind}`}>
+          <div className={`shot is-${project.mediaKind}`}>
+            <div className="shot__stage">
+              {hasVideo && resolvedVideo ? (
+                <video
+                  ref={videoRef}
+                  className="shot__video"
+                  poster={posterSrc}
+                  preload="metadata"
+                  controls={playing}
+                  playsInline
+                  onPause={() => setPlaying(false)}
+                  onEnded={() => setPlaying(false)}
+                >
+                  {resolvedVideo.endsWith('.webm') ? (
+                    <>
+                      <source src={resolvedVideo} type="video/webm" />
+                      <source src={resolvedVideo.replace(/\.webm$/, '.mp4')} type="video/mp4" />
+                    </>
+                  ) : (
+                    <source src={resolvedVideo} type="video/mp4" />
+                  )}
+                </video>
+              ) : (
                 <button
+                  ref={openerRef}
                   type="button"
-                  className="play-btn"
-                  onClick={() => void playVideo()}
-                  aria-label={`Смотреть короткое демо «${project.tab}»`}
+                  className="shot__open"
+                  onClick={openLightbox}
+                  aria-haspopup="dialog"
+                  aria-expanded={lightbox}
+                  aria-label={`${site.projectsIntro.shotHint}. ${shotAlt}`}
                 >
-                  <PlayGlyph />
-                  Смотреть короткое демо
+                  <img className="shot__img" src={shotSrc} alt={shotAlt} />
                 </button>
-              </div>
+              )}
+            </div>
+            {hasVideo && !playing ? (
+              <button type="button" className="shot__play" onClick={() => void playVideo()}>
+                Смотреть короткое демо
+              </button>
             ) : null}
-            {hasYoutube && !hasVideo ? (
-              <div className="play-btn-wrap">
-                <a
-                  className="play-btn"
-                  href={project.youtubeUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={`Смотреть запись «${project.tab}» на YouTube`}
-                >
-                  <PlayGlyph />
-                  Смотреть запись
-                </a>
-              </div>
+            {!hasVideo ? (
+              <p className="shot__hint">
+                <span className="shot__hint-mark" aria-hidden="true" />
+                {site.projectsIntro.shotHint}
+              </p>
             ) : null}
           </div>
-          {project.stills && project.stills.length > 1 ? (
-            <div className="stills" role="list">
-              {project.stills.map((item) => (
+          {stills.length > 1 ? (
+            <div className={`stills is-${project.mediaKind}`} role="list">
+              {stills.map((item) => (
                 <button
                   key={item.src}
                   type="button"
                   className={shot === item.src ? 'stills__btn is-active' : 'stills__btn'}
-                  onClick={() => setShot(item.src)}
-                  aria-label={item.alt}
+                  onClick={() => selectStill(item.src)}
+                  aria-label={
+                    shot === item.src
+                      ? `${item.alt}. ${site.projectsIntro.shotHint}`
+                      : item.alt
+                  }
+                  aria-current={shot === item.src ? 'true' : undefined}
                 >
                   <img src={publicUrl(item.src)} alt="" />
                 </button>
@@ -248,6 +239,38 @@ export function ProjectCase({ project, phase }: ProjectCaseProps) {
       </div>
 
       <p className="case__foot">{project.footnote}</p>
+
+      {lightbox
+        ? createPortal(
+            <div className={`lightbox is-${project.mediaKind}`} role="presentation">
+              <button
+                type="button"
+                className="lightbox__backdrop"
+                aria-label={site.projectsIntro.lightboxClose}
+                onClick={() => setLightbox(false)}
+              />
+              <div
+                className="lightbox__dialog"
+                role="dialog"
+                aria-modal="true"
+                aria-label={shotAlt}
+              >
+                <img className="lightbox__img" src={shotSrc} alt={shotAlt} />
+                <p className="lightbox__cap">{shotAlt}</p>
+                <button
+                  ref={closeRef}
+                  type="button"
+                  className="lightbox__close"
+                  onClick={() => setLightbox(false)}
+                >
+                  {site.projectsIntro.lightboxClose}
+                  <span className="lightbox__esc">Esc</span>
+                </button>
+              </div>
+            </div>,
+            document.body,
+          )
+        : null}
     </article>
   )
 }

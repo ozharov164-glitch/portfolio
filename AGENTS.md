@@ -13,6 +13,7 @@
 - Do not place decorative icons that float without a layout slot; icons belong in a step, card, or button.
 - HeroFlow «Системный путь» is typography-led: no 3D icons. Extra step copy expands on hover (desktop readout) or tap (mobile accordion), never as a popping tooltip.
 - Do not invent clients, revenue, reviews, or uptime. Keep placeholders instead of guessing contacts.
+- Case screenshots: show the full frame (`object-fit: contain` on a surface stage, never crop with `cover`). Click opens a lightbox; the hint sits under the shot, not as a tooltip. FADELINE sources are 226×512 — display near native, do not stretch them to fill the column.
 - GitHub remote: `https://github.com/ozharov164-glitch/portfolio` (public). Push only when explicitly asked.
 - Do not start a local Vite/dev/preview server. Check the live GitHub Pages site, not localhost.
 - Vite `base` is `/` locally (and with a custom domain). On GitHub Actions without `site.domain` it is `/portfolio/` so Pages works at `https://ozharov164-glitch.github.io/portfolio/`.
