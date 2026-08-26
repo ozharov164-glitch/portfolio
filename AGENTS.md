@@ -26,4 +26,4 @@
 - Site copy and links live in `src/content/site.ts` and `src/content/projects.ts`.
 - Case media belongs in `public/media/<project>/`; videos are added later by the owner.
 - Static legal pages: `public/privacy.html`, `public/security.html`, `public/terms.html`. Hosting named there as GitHub Pages. Operator contact: `dvv.spd@bk.ru`.
-- GitHub Pages deploy: `.github/workflows/pages.yml`. Custom-domain DNS cheat sheet: `deploy/dns.txt`. Live GitHub user/repo: `ozharov164-glitch/portfolio`.
+- Header brand mark is the AI-generated contour (`public/media/brand/programmer.webp`): crop tight to the figure, scale with `clamp` so it stays readable on fullscreen desktop. Do not replace it with a hand-drawn SVG.

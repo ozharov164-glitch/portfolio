@@ -19,7 +19,8 @@
   --wide: 78rem;
   --radius: 18px;
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
-  --header-h: 4.5rem;
+  --brand-mark: clamp(3.45rem, 2.15rem + 2.9vw, 6.5rem);
+  --header-h: calc(var(--brand-mark) + 1.9rem);
   --dock-h: 5.25rem;
   --glass: rgba(16, 21, 29, 0.82);
   --glow-soft: 0 16px 40px rgba(0, 0, 0, 0.32);
@@ -238,27 +239,28 @@ a {
   gap: 1rem;
   max-width: var(--wide);
   margin: 0 auto;
-  padding: 0.85rem var(--pad);
+  padding: 0.9rem var(--pad);
 }
 
 .brand {
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 0.8rem;
+  gap: clamp(0.75rem, 0.45rem + 0.7vw, 1.15rem);
   text-decoration: none;
   min-width: 0;
 }
 
 .brand__mark {
-  width: 2.85rem;
-  height: 2.85rem;
+  width: var(--brand-mark);
+  height: var(--brand-mark);
   flex: 0 0 auto;
   display: block;
-  border-radius: 11px;
-  object-fit: cover;
+  border-radius: clamp(0.7rem, 20%, 1.2rem);
+  object-fit: contain;
+  object-position: center;
   background: #090b0f;
-  box-shadow: 0 0 0 1px rgba(53, 226, 161, 0.2);
+  box-shadow: 0 0 0 1px rgba(53, 226, 161, 0.3);
 }
 
 .brand__text {
@@ -1829,6 +1831,10 @@ a {
 }
 
 @media (max-width: 959px) {
+  html {
+    --header-h: calc(var(--brand-mark) + 4.05rem);
+  }
+
   .site-header .btn-telegram {
     display: none;
   }

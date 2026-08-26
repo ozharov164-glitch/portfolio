@@ -13,8 +13,9 @@ export function Header() {
             className="brand__mark"
             src={publicUrl(site.brandMark)}
             alt=""
-            width={512}
-            height={512}
+            width={1024}
+            height={1024}
+            sizes="(min-width: 1600px) 6.5rem, (min-width: 960px) 5rem, 3.45rem"
             decoding="async"
           />
           <span className="brand__text">
