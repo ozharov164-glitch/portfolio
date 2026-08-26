@@ -80,7 +80,6 @@ export function ProjectCase({ project, phase }: ProjectCaseProps) {
 
   return (
     <article className={phase === 'out' ? 'case is-out' : 'case is-in'} aria-labelledby="case-title">
-      <div className="case__frame" aria-hidden="true" />
       <header className="case__head">
         <p className="case__meta">
           <span className="mono">{project.number}</span>
@@ -95,7 +94,7 @@ export function ProjectCase({ project, phase }: ProjectCaseProps) {
       <div className="case__grid">
         <div className="case-media-col">
           <div
-            className={`case-media is-${project.mediaKind}${hasVideo || hasYoutube ? ' has-play' : ''}`}
+            className={`case-media${hasVideo || hasYoutube ? ' has-play' : ''}`}
             ref={tiltRef}
             onPointerMove={onPointerMove}
             onPointerLeave={resetTilt}

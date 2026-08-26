@@ -9,15 +9,14 @@ export function WorkProcess() {
         <h2>{site.process.headline}</h2>
       </header>
       <ol className="process__steps">
-        {site.process.steps.map((step, index) => (
+        {site.process.steps.map((step) => (
           <li key={step.id} className="process__step">
-            <ChromaIcon src={step.icon} alt="" className="process__icon" />
-            <p className="process__num mono">{step.id}</p>
+            <div className="process__head">
+              <ChromaIcon src={step.icon} alt="" className="process__icon" />
+              <p className="process__num mono">{step.id}</p>
+            </div>
             <h3>{step.title}</h3>
             <p>{step.text}</p>
-            {index < site.process.steps.length - 1 ? (
-              <span className="process__link" aria-hidden="true" />
-            ) : null}
           </li>
         ))}
       </ol>
