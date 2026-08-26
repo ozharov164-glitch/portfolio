@@ -251,9 +251,13 @@ a {
 }
 
 .brand__mark {
-  width: 2.15rem;
-  height: 2.15rem;
+  width: 2.55rem;
+  height: 2.55rem;
   flex: 0 0 auto;
+}
+
+.brand__mark img {
+  filter: drop-shadow(0 0 7px rgba(53, 226, 161, 0.32));
 }
 
 .brand__text {
