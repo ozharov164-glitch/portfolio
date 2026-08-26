@@ -790,7 +790,7 @@ a {
   border: 0;
   background: transparent;
   cursor: zoom-in;
-  width: max-content;
+  width: auto;
   max-width: 100%;
   line-height: 0;
 }
@@ -811,7 +811,8 @@ a {
 }
 
 .shot.is-phone .shot__img {
-  width: min(100%, 13.5rem);
+  width: 13.5rem;
+  max-width: 100%;
   border-radius: 22px;
   box-shadow:
     0 0 0 2px #1a222e,
@@ -820,19 +821,22 @@ a {
 
 .shot.is-desktop .shot__img,
 .shot.is-desktop .shot__video {
-  width: min(100%, 28rem);
+  width: 28rem;
+  max-width: 100%;
   border-radius: 12px;
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.38);
 }
 
 .shot.is-poster .shot__img {
-  width: min(100%, 17.5rem);
+  width: 17.5rem;
+  max-width: 100%;
   border-radius: 14px;
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.38);
 }
 
 .shot.is-document .shot__img {
-  width: min(100%, 15.25rem);
+  width: 15.25rem;
+  max-width: 100%;
   border-radius: 8px;
   box-shadow:
     0 12px 28px rgba(0, 0, 0, 0.32),
