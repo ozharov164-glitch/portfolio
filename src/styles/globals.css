@@ -943,6 +943,7 @@ a {
   background: var(--green);
   color: var(--ink);
   font-weight: 700;
+  text-decoration: none;
   cursor: pointer;
 }
 
@@ -1204,7 +1205,7 @@ a {
   position: absolute;
   inset: -8%;
   background:
-    url('/media/atmosphere/aurora.webp') center / cover no-repeat,
+    var(--aurora-photo, none) center / cover no-repeat,
     radial-gradient(ellipse 70% 50% at 85% -10%, rgba(53, 226, 161, 0.16), transparent 58%),
     radial-gradient(ellipse 55% 42% at 0% 18%, rgba(42, 171, 238, 0.12), transparent 52%);
   opacity: 0.55;

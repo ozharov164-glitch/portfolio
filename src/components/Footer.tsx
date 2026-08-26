@@ -1,4 +1,5 @@
 import { isConfigured, site } from '../content/site'
+import { publicUrl } from '../lib/publicUrl'
 
 export function Footer() {
   const telegramReady = isConfigured(site.telegramUrl)
@@ -22,8 +23,8 @@ export function Footer() {
           </a>
         ) : null}
         {emailReady ? <a href={`mailto:${site.email}`}>Email</a> : <span>Email</span>}
-        <a href={`${import.meta.env.BASE_URL}privacy.html`}>{site.footer.privacy}</a>
-        <a href={`${import.meta.env.BASE_URL}security.html`}>{site.footer.security}</a>
+        <a href={publicUrl('privacy.html')}>{site.footer.privacy}</a>
+        <a href={publicUrl('security.html')}>{site.footer.security}</a>
       </nav>
       <p className="site-footer__copy">{site.footer.copy}</p>
     </footer>

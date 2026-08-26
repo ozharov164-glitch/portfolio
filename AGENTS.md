@@ -19,7 +19,7 @@
 
 - Workspace folder name has a trailing space: `/Users/dmitriidekhanov/портфолио `.
 - Visual system: Proof Console. Background `#090B0F`, surfaces `#10151D` / `#151C26`, text `#EDF5FF`, muted `#8B9AAF`, signal green `#35E2A1`, Telegram blue `#2AABEE`.
-- Chroma-keyed 3D icons live in `public/media/icons/*.webp`; aurora texture in `public/media/atmosphere/aurora.webp`.
+- Public files under `public/` must be loaded via `publicUrl()` in `src/lib/publicUrl.ts`. Vite does not rewrite root-absolute `/media/...` strings, so GitHub Pages (`base: /portfolio/`) otherwise 404s icons, posters, and the aurora texture.
 - Site copy and links live in `src/content/site.ts` and `src/content/projects.ts`.
 - Case media belongs in `public/media/<project>/`; videos are added later by the owner.
 - Static legal pages: `public/privacy.html`, `public/security.html`. Hosting named there as GitHub Pages.

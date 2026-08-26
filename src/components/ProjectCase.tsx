@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type PointerEvent } from 'react'
 import type { Project } from '../content/projects'
 import { isConfigured } from '../content/site'
+import { publicUrl } from '../lib/publicUrl'
 
 type ProjectCaseProps = {
   project: Project
@@ -23,6 +24,9 @@ export function ProjectCase({ project, phase }: ProjectCaseProps) {
   const videoSrc = project.localVideo
   const hasVideo = isConfigured(videoSrc)
   const hasYoutube = isConfigured(project.youtubeUrl)
+  const posterSrc = publicUrl(project.poster)
+  const shotSrc = publicUrl(shot)
+  const resolvedVideo = hasVideo && videoSrc ? publicUrl(videoSrc) : ''
   const hasGithub = isConfigured(project.githubUrl)
   const hasDemo = isConfigured(project.demoUrl)
   const hasSite = isConfigured(project.siteUrl)
@@ -86,34 +90,45 @@ export function ProjectCase({ project, phase }: ProjectCaseProps) {
             onPointerMove={onPointerMove}
             onPointerLeave={resetTilt}
           >
-            {hasVideo && videoSrc ? (
+            {hasVideo && resolvedVideo ? (
               <video
                 ref={videoRef}
                 className="case-media__video"
-                poster={project.poster}
+                poster={posterSrc}
                 preload="metadata"
                 controls={playing}
                 playsInline
                 onPause={() => setPlaying(false)}
                 onEnded={() => setPlaying(false)}
               >
-                {videoSrc.endsWith('.webm') ? (
+                {resolvedVideo.endsWith('.webm') ? (
                   <>
-                    <source src={videoSrc} type="video/webm" />
-                    <source src={videoSrc.replace(/\.webm$/, '.mp4')} type="video/mp4" />
+                    <source src={resolvedVideo} type="video/webm" />
+                    <source src={resolvedVideo.replace(/\.webm$/, '.mp4')} type="video/mp4" />
                   </>
                 ) : (
-                  <source src={videoSrc} type="video/mp4" />
+                  <source src={resolvedVideo} type="video/mp4" />
                 )}
               </video>
             ) : (
-              <img className="case-media__poster" src={shot} alt={project.posterAlt} />
+              <img className="case-media__poster" src={shotSrc} alt={project.posterAlt} />
             )}
             {hasVideo && !playing ? (
               <button type="button" className="play-btn" onClick={() => void playVideo()}>
                 <span className="play-btn__icon" aria-hidden="true" />
                 Смотреть короткое демо
               </button>
+            ) : null}
+            {hasYoutube && !hasVideo ? (
+              <a
+                className="play-btn"
+                href={project.youtubeUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <span className="play-btn__icon" aria-hidden="true" />
+                Смотреть запись
+              </a>
             ) : null}
           </div>
           {project.stills && project.stills.length > 1 ? (
@@ -126,7 +141,7 @@ export function ProjectCase({ project, phase }: ProjectCaseProps) {
                   onClick={() => setShot(item.src)}
                   aria-label={item.alt}
                 >
-                  <img src={item.src} alt="" />
+                  <img src={publicUrl(item.src)} alt="" />
                 </button>
               ))}
             </div>

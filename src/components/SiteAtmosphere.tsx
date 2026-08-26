@@ -1,7 +1,14 @@
+import type { CSSProperties } from 'react'
+import { publicUrl } from '../lib/publicUrl'
+
 export function SiteAtmosphere() {
+  const photoStyle = {
+    '--aurora-photo': `url("${publicUrl('/media/atmosphere/aurora.webp')}")`,
+  } as CSSProperties
+
   return (
     <div className="atmosphere" aria-hidden="true">
-      <div className="atmosphere__photo" />
+      <div className="atmosphere__photo" style={photoStyle} />
       <div className="atmosphere__blob atmosphere__blob--a" />
       <div className="atmosphere__blob atmosphere__blob--b" />
       <div className="atmosphere__blob atmosphere__blob--c" />
