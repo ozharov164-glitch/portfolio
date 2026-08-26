@@ -1,4 +1,5 @@
 import { icons, isConfigured, site } from '../content/site'
+import { publicUrl } from '../lib/publicUrl'
 import { ChromaIcon } from './ChromaIcon'
 
 export function Header() {
@@ -8,7 +9,14 @@ export function Header() {
     <header className="site-header">
       <div className="site-header__bar">
         <a className="brand" href="#top">
-          <ChromaIcon src={icons.mark} alt="" className="brand__mark" />
+          <img
+            className="brand__mark"
+            src={publicUrl(site.brandMark)}
+            alt=""
+            width={512}
+            height={512}
+            decoding="async"
+          />
           <span className="brand__text">
             <span className="brand__name">{site.name}</span>
             <span className="brand__role">{site.role}</span>

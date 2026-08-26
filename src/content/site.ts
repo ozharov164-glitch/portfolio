@@ -6,7 +6,6 @@ export function isConfigured(value: string | undefined | null): value is string 
 }
 
 export const icons = {
-  mark: '/media/icons/icon-mark.webp',
   miniapp: '/media/icons/icon-miniapp.webp',
   bot: '/media/icons/icon-bot.webp',
   ai: '/media/icons/icon-ai.webp',
@@ -22,6 +21,7 @@ export const icons = {
 export const site = {
   name: 'Дмитрий Деханов',
   role: 'Боты, Mini Apps и сайты',
+  brandMark: '/media/brand/programmer.webp',
   telegramUrl: 'https://t.me/solevoy19',
   telegramHandle: '@solevoy19',
   email: 'dvv.spd@bk.ru',
@@ -99,7 +99,7 @@ export const site = {
         title: 'Карточки и экзамен по меню',
         text: 'Карточки блюд, тренировка и проверка — чтобы смена выучила меню, а не листала чаты.',
         stack: 'Python · vanilla JS · HTML',
-        icon: icons.mark,
+        icon: icons.flow,
       },
     ],
   },
@@ -152,7 +152,7 @@ export const site = {
         id: '01',
         title: 'Фиксируем один полезный сценарий',
         text: 'Что человек нажимает и что получает на выходе. Остальное откладываем.',
-        icon: icons.mark,
+        icon: icons.bot,
       },
       {
         id: '02',
