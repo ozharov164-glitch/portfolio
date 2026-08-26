@@ -16,6 +16,16 @@ function canTilt(): boolean {
   return window.matchMedia('(pointer: fine)').matches && !prefersReducedMotion()
 }
 
+function PlayGlyph() {
+  return (
+    <span className="play-btn__icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" width="12" height="12" focusable="false">
+        <path d="M8.4 5.2v13.6L19.6 12 8.4 5.2z" fill="currentColor" />
+      </svg>
+    </span>
+  )
+}
+
 export function ProjectCase({ project, phase }: ProjectCaseProps) {
   const tiltRef = useRef<HTMLDivElement>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
@@ -85,7 +95,7 @@ export function ProjectCase({ project, phase }: ProjectCaseProps) {
       <div className="case__grid">
         <div className="case-media-col">
           <div
-            className={`case-media is-${project.mediaKind}`}
+            className={`case-media is-${project.mediaKind}${hasVideo || hasYoutube ? ' has-play' : ''}`}
             ref={tiltRef}
             onPointerMove={onPointerMove}
             onPointerLeave={resetTilt}
@@ -114,21 +124,31 @@ export function ProjectCase({ project, phase }: ProjectCaseProps) {
               <img className="case-media__poster" src={shotSrc} alt={project.posterAlt} />
             )}
             {hasVideo && !playing ? (
-              <button type="button" className="play-btn" onClick={() => void playVideo()}>
-                <span className="play-btn__icon" aria-hidden="true" />
-                Смотреть короткое демо
-              </button>
+              <div className="play-btn-wrap">
+                <button
+                  type="button"
+                  className="play-btn"
+                  onClick={() => void playVideo()}
+                  aria-label={`Смотреть короткое демо «${project.tab}»`}
+                >
+                  <PlayGlyph />
+                  Смотреть короткое демо
+                </button>
+              </div>
             ) : null}
             {hasYoutube && !hasVideo ? (
-              <a
-                className="play-btn"
-                href={project.youtubeUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <span className="play-btn__icon" aria-hidden="true" />
-                Смотреть запись
-              </a>
+              <div className="play-btn-wrap">
+                <a
+                  className="play-btn"
+                  href={project.youtubeUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`Смотреть запись «${project.tab}» на YouTube`}
+                >
+                  <PlayGlyph />
+                  Смотреть запись
+                </a>
+              </div>
             ) : null}
           </div>
           {project.stills && project.stills.length > 1 ? (

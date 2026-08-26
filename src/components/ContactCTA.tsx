@@ -1,4 +1,5 @@
 import { icons, isConfigured, site } from '../content/site'
+import { publicUrl } from '../lib/publicUrl'
 import { ChromaIcon } from './ChromaIcon'
 
 export function ContactCTA() {
@@ -23,7 +24,7 @@ export function ContactCTA() {
             {site.contact.primary}
           </a>
         ) : (
-          <span className="btn btn-primary is-pending" title="Заполните [[TELEGRAM_URL]] в src/content/site.ts">
+          <span className="btn btn-primary is-pending" title="Заполните ссылку Telegram в src/content/site.ts">
             {site.contact.primary}
           </span>
         )}
@@ -32,11 +33,17 @@ export function ContactCTA() {
             {site.email}
           </a>
         ) : (
-          <span className="btn btn-ghost is-pending" title="Заполните [[EMAIL]] в src/content/site.ts">
+          <span className="btn btn-ghost is-pending" title="Заполните почту в src/content/site.ts">
             {site.email}
           </span>
         )}
       </div>
+      <p className="cta__legal">
+        {site.contact.legal}{' '}
+        <a href={publicUrl('privacy.html')}>{site.footer.privacy}</a>
+        {' · '}
+        <a href={publicUrl('terms.html')}>{site.footer.terms}</a>
+      </p>
     </section>
   )
 }

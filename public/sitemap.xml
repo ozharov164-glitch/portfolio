@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://[[DOMAIN]]/</loc>
+    <loc>https://ozharov164-glitch.github.io/portfolio/</loc>
   </url>
   <url>
-    <loc>https://[[DOMAIN]]/privacy.html</loc>
+    <loc>https://ozharov164-glitch.github.io/portfolio/privacy.html</loc>
   </url>
   <url>
-    <loc>https://[[DOMAIN]]/security.html</loc>
+    <loc>https://ozharov164-glitch.github.io/portfolio/security.html</loc>
+  </url>
+  <url>
+    <loc>https://ozharov164-glitch.github.io/portfolio/terms.html</loc>
   </url>
 </urlset>

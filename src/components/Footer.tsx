@@ -22,9 +22,14 @@ export function Footer() {
             GitHub
           </a>
         ) : null}
-        {emailReady ? <a href={`mailto:${site.email}`}>Email</a> : <span>Email</span>}
+        {emailReady ? (
+          <a href={`mailto:${site.email}`}>{site.footer.emailLabel}</a>
+        ) : (
+          <span>{site.footer.emailLabel}</span>
+        )}
         <a href={publicUrl('privacy.html')}>{site.footer.privacy}</a>
         <a href={publicUrl('security.html')}>{site.footer.security}</a>
+        <a href={publicUrl('terms.html')}>{site.footer.terms}</a>
       </nav>
       <p className="site-footer__copy">{site.footer.copy}</p>
     </footer>

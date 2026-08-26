@@ -29,6 +29,9 @@ function githubPagesDomain(): Plugin {
   <url>
     <loc>https://${domain}/security.html</loc>
   </url>
+  <url>
+    <loc>https://${domain}/terms.html</loc>
+  </url>
 </urlset>
 `,
       )
