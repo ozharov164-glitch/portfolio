@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" role="img" aria-label="OptBot poster">
+  <rect width="1600" height="1000" fill="#10151D"/>
+  <rect x="48" y="48" width="1504" height="904" fill="none" stroke="#1C2734" stroke-width="1.5"/>
+  <text x="80" y="120" fill="#8B9AAF" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="22" letter-spacing="5">02 / OPTBOT</text>
+  <text x="80" y="178" fill="#EDF5FF" font-family="ui-sans-serif, system-ui, sans-serif" font-size="42" font-weight="700">Excel ’ order ’ PDF</text>
+  <g stroke="#1E2A38" fill="none">
+    <rect x="80" y="250" width="520" height="520" rx="16"/>
+    <path d="M80 318h520M168 250v520M300 250v520M430 250v520"/>
+    <path d="M80 386h520M80 454h520M80 522h520M80 590h520M80 658h520"/>
+  </g>
+  <rect x="168" y="386" width="132" height="68" fill="#151C26"/>
+  <rect x="300" y="454" width="130" height="68" fill="#35E2A1" opacity="0.2"/>
+  <rect x="430" y="522" width="170" height="68" fill="#2AABEE" opacity="0.18"/>
+  <path d="M640 510h120" stroke="#35E2A1" stroke-width="2"/>
+  <polygon points="760,500 784,510 760,520" fill="#35E2A1"/>
+  <g fill="none" stroke="#8B9AAF" stroke-width="1.5">
+    <rect x="820" y="300" width="360" height="440" rx="12"/>
+    <path d="M860 380h280M860 430h220M860 480h260M860 530h180"/>
+  </g>
+  <text x="860" y="350" fill="#35E2A1" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="20">INVOICE.PDF</text>
+  <g fill="none" stroke="#2AABEE" stroke-width="1.5">
+    <rect x="1240" y="390" width="240" height="220" rx="28"/>
+    <circle cx="1360" cy="470" r="18"/>
+    <path d="M1328 530h64"/>
+  </g>
+  <text x="1270" y="640" fill="#8B9AAF" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="18">MANAGER PING</text>
+</svg>

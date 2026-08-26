@@ -1,0 +1,53 @@
+import { icons, isConfigured, site } from '../content/site'
+import { ChromaIcon } from './ChromaIcon'
+
+export function Header() {
+  const telegramReady = isConfigured(site.telegramUrl)
+
+  return (
+    <header className="site-header">
+      <div className="site-header__bar">
+        <a className="brand" href="#top">
+          <ChromaIcon src={icons.mark} alt="" className="brand__mark" />
+          <span className="brand__text">
+            <span className="brand__name">{site.name}</span>
+            <span className="brand__role">{site.role}</span>
+          </span>
+        </a>
+
+        <nav className="nav-desktop" aria-label="Разделы">
+          {site.nav.map((item) => (
+            <a key={item.href} href={item.href}>
+              {item.label}
+            </a>
+          ))}
+        </nav>
+
+        {telegramReady ? (
+          <a
+            className="btn btn-accent btn-telegram"
+            href={site.telegramUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <ChromaIcon src={icons.telegram} alt="" />
+            Написать в Telegram
+          </a>
+        ) : (
+          <a className="btn btn-accent btn-telegram" href="#contact">
+            <ChromaIcon src={icons.telegram} alt="" />
+            Написать в Telegram
+          </a>
+        )}
+      </div>
+
+      <nav className="nav-mobile" aria-label="Разделы">
+        {site.nav.map((item) => (
+          <a key={item.href} href={item.href}>
+            {item.label}
+          </a>
+        ))}
+      </nav>
+    </header>
+  )
+}

@@ -1,0 +1,26 @@
+# AGENTS.md
+
+## Learned User Preferences
+
+- This portfolio must stay static and Russian-language.
+- Hosting is GitHub Pages (free, public repo) plus a purchased custom domain. Do not use VPS/Nginx as the live host.
+- Inactive archive cases: ВключиСебя / CozyReset (`cozyreset.ru`, `@CozyReset_bot`) and ResumeBot. Do not present them as live.
+- YouTube demos in `projects.ts` → `youtubeUrl`: FADELINE `https://www.youtube.com/shorts/NYJB5FELQic`, ВключиСебя `https://www.youtube.com/watch?v=vtnyWM9_l40&t=1s`, ResumeBot `https://www.youtube.com/shorts/-5Z_4betR-8`. OptBot still empty — do not invent a link.
+- Hire CTA Telegram is `@solevoy19`. Name on site: Дмитрий Деханов.
+- Positioning is generalist: bots, Mini Apps, and sites under a task. FADELINE / OptBot / DeckFlow / Pako are cases, not the brand. Do not shape hero, pitch, or capabilities around wholesale/Excel/invoices.
+- Pitch band is two offering cards (bots/Mini App vs sites), never a «чаты / таблицы / вкладки» pain story and never cart, invoice, or shift icons there.
+- Do not place decorative icons that float without a layout slot; icons belong in a step, card, or button.
+- HeroFlow «Системный путь» is typography-led: no 3D icons. Extra step copy expands on hover (desktop readout) or tap (mobile accordion), never as a popping tooltip.
+- Do not invent clients, revenue, reviews, or uptime. Keep placeholders instead of guessing contacts.
+- GitHub remote: `https://github.com/ozharov164-glitch/portfolio` (public). Push only when explicitly asked.
+- Vite `base` is `/` locally (and with a custom domain). On GitHub Actions without `site.domain` it is `/portfolio/` so Pages works at `https://ozharov164-glitch.github.io/portfolio/`.
+
+## Learned Workspace Facts
+
+- Workspace folder name has a trailing space: `/Users/dmitriidekhanov/портфолио `.
+- Visual system: Proof Console. Background `#090B0F`, surfaces `#10151D` / `#151C26`, text `#EDF5FF`, muted `#8B9AAF`, signal green `#35E2A1`, Telegram blue `#2AABEE`.
+- Chroma-keyed 3D icons live in `public/media/icons/*.webp`; aurora texture in `public/media/atmosphere/aurora.webp`.
+- Site copy and links live in `src/content/site.ts` and `src/content/projects.ts`.
+- Case media belongs in `public/media/<project>/`; videos are added later by the owner.
+- Static legal pages: `public/privacy.html`, `public/security.html`. Hosting named there as GitHub Pages.
+- GitHub Pages deploy: `.github/workflows/pages.yml`. Custom-domain DNS cheat sheet: `deploy/dns.txt`. Live GitHub user/repo: `ozharov164-glitch/portfolio`.

@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" role="img" aria-label="MixFlow poster">
+  <rect width="1600" height="1000" fill="#10151D"/>
+  <rect x="48" y="48" width="1504" height="904" fill="none" stroke="#1C2734" stroke-width="1.5"/>
+  <text x="80" y="120" fill="#8B9AAF" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="22" letter-spacing="5">01 / MIXFLOW</text>
+  <text x="80" y="178" fill="#EDF5FF" font-family="ui-sans-serif, system-ui, sans-serif" font-size="42" font-weight="700">Audio pipeline</text>
+  <g fill="none" stroke="#35E2A1" stroke-width="3" stroke-linecap="round">
+    <path d="M80 430 C 160 310, 240 550, 320 430 S 480 310, 560 430 S 720 550, 800 430 S 960 310, 1040 430 S 1200 550, 1280 430 S 1440 310, 1520 430"/>
+  </g>
+  <g fill="none" stroke="#2AABEE" stroke-width="1.5" opacity="0.7">
+    <path d="M80 510 C 160 450, 240 570, 320 510 S 480 450, 560 510 S 720 570, 800 510 S 960 450, 1040 510 S 1200 570, 1280 510 S 1440 450, 1520 510"/>
+  </g>
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="18" fill="#8B9AAF">
+    <text x="80" y="720">BOT</text>
+    <text x="360" y="720">MINI APP</text>
+    <text x="680" y="720">WORKER</text>
+    <text x="1000" y="720">PAY</text>
+    <text x="1280" y="720">MIX</text>
+  </g>
+  <g fill="none" stroke="#35E2A1" stroke-width="1.5">
+    <circle cx="98" cy="780" r="10"/>
+    <circle cx="390" cy="780" r="10"/>
+    <circle cx="710" cy="780" r="10"/>
+    <circle cx="1020" cy="780" r="10"/>
+    <circle cx="1300" cy="780" r="10"/>
+    <path d="M108 780h272M400 780h300M720 780h290M1030 780h260"/>
+  </g>
+  <circle cx="98" cy="780" r="4" fill="#35E2A1"/>
+</svg>

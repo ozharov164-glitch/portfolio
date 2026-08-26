@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" role="img" aria-label="DeckFlow poster">
+  <rect width="1600" height="1000" fill="#10151D"/>
+  <rect x="48" y="48" width="1504" height="904" fill="none" stroke="#1C2734" stroke-width="1.5"/>
+  <text x="80" y="120" fill="#8B9AAF" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="22" letter-spacing="5">03 / DECKFLOW</text>
+  <text x="80" y="178" fill="#EDF5FF" font-family="ui-sans-serif, system-ui, sans-serif" font-size="42" font-weight="700">Local two-deck mixer</text>
+  <g fill="none" stroke="#8B9AAF" stroke-width="2">
+    <circle cx="430" cy="560" r="210"/>
+    <circle cx="430" cy="560" r="78"/>
+    <circle cx="1170" cy="560" r="210"/>
+    <circle cx="1170" cy="560" r="78"/>
+  </g>
+  <g stroke="#35E2A1" stroke-width="3">
+    <path d="M430 350 v210"/>
+    <path d="M1170 560 h210"/>
+  </g>
+  <rect x="730" y="470" width="140" height="18" rx="9" fill="#151C26" stroke="#2AABEE"/>
+  <circle cx="800" cy="479" r="10" fill="#35E2A1"/>
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="18" fill="#8B9AAF">
+    <text x="390" y="820">DECK A</text>
+    <text x="760" y="430">CROSSFADER</text>
+    <text x="1130" y="820">DECK B</text>
+  </g>
+</svg>
