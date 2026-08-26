@@ -27,3 +27,4 @@
 - Case media belongs in `public/media/<project>/`; videos are added later by the owner.
 - Static legal pages: `public/privacy.html`, `public/security.html`, `public/terms.html`. Hosting named there as GitHub Pages. Operator contact: `dvv.spd@bk.ru`.
 - Header brand mark is the AI-generated contour (`public/media/brand/programmer.webp`): crop tight to the figure, scale with `clamp` so it stays readable on fullscreen desktop. Do not replace it with a hand-drawn SVG.
+- Background atmosphere stays behind `main` (`z-index: 0` vs content `1`): drifting blobs, side code rain, typewriter log, scanline. Keep it noticeable at the edges, never over the copy. Respect `prefers-reduced-motion`.
