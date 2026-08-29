@@ -34,15 +34,16 @@ export const site = {
     'Собираю ботов, Telegram Mini Apps и сайты под конкретную задачу. Кейсы — рабочие сборки, не макеты.',
   hero: {
     eyebrow: 'Открыт к проектной работе',
-    h1Before: 'Соберу продукт, в котором человек нажимает —',
-    h1Accent: 'и получает результат.',
+    h1Before: 'Соберу бота, Mini App или сайт —',
+    h1Accent: 'нажал и получил результат.',
     subtitle:
-      'Бот под вашу задачу, Mini App, сайт или внутренний инструмент. FADELINE, ОптБот, DeckFlow и PWA — разные продукты, не один шаблон.',
+      'Под конкретную задачу: заявка, файл, страница или внутренний инструмент. Кейсы разные — не один шаблон.',
     promise: 'Первый разговор — про одну задачу, а не про «сделайте всё».',
     primaryCta: 'Смотреть кейсы',
+    primaryCtaShort: 'Кейсы',
     secondaryCta: 'Написать в Telegram',
-    stackLine:
-      'Telegram Bot API · Mini Apps · HTML / CSS / JS · Python · TypeScript · React · Fastify · FFmpeg · Payments · Electron · VPS',
+    secondaryCtaShort: 'Telegram',
+    stackLine: 'Бот · Mini App · сайт · свой сервер',
     flowKicker: 'Системный путь',
     flowIdleKicker: 'Схема',
     flowIdle:
@@ -51,23 +52,23 @@ export const site = {
   proof: [
     { kicker: '07', label: 'сборок в портфолио' },
     { kicker: '3', label: 'канала: бот, Mini App, сайт' },
-    { kicker: 'ИИ', label: 'с лимитами, не бесконечный чат' },
+    { kicker: 'UTC+3', label: 'удалённо, пишу сам' },
   ],
   pitch: {
     eyebrow: 'Что предлагаю',
-    headline: 'Соберу бота, Mini App или сайт под вашу задачу',
+    headline: 'Куда удобнее нажимать — туда и собираю',
     cards: [
       {
         id: 'bots',
         kicker: 'Боты и Mini Apps',
-        text: 'Telegram-бот или экран внутри Telegram. Сценарий собираю под задачу: заявка, статус, файл, уведомление — не готовый шаблон одной ниши.',
+        text: 'Сценарий в Telegram: заявка, статус, файл, уведомление. Собираю под вашу работу, не под одну нишу.',
         icon: icons.bot,
         accent: false,
       },
       {
         id: 'sites',
         kicker: 'Сайты и панели',
-        text: 'Если удобнее браузер — страница, PWA или панель. Канал выбираем по тому, чем будут пользоваться, а не по одному продукту.',
+        text: 'Страница, PWA или панель в браузере — если людям удобнее не в мессенджере.',
         icon: icons.miniapp,
         accent: true,
       },
@@ -76,16 +77,16 @@ export const site = {
   projectsIntro: {
     eyebrow: 'Кейсы',
     headline: 'Не макеты. Сборки, которые уже дошли до рабочего сценария.',
-    note: 'Аудио, опт, DJ, ИИ, смена — разные задачи. Два продукта в архиве. Записи FADELINE, «ВключиСебя» и резюме-бота — в карточках. У ОптБота ссылка появится позже. Показать живую сборку могу по запросу, если она сейчас запущена.',
+    note: 'Пять кейсов — разные задачи. Два сейчас в архиве. Записи у FADELINE, «ВключиСебя» и резюме-бота. Живую сборку покажу по запросу, если она запущена.',
     shotHint: 'Нажмите снимок — откроется целиком',
     youtubeCta: 'Смотреть на YouTube',
     youtubeCtaShort: 'YouTube',
     lightboxClose: 'Закрыть',
   },
   moreWork: {
-    eyebrow: 'Ещё',
+    eyebrow: 'Сайты',
     headline: 'Сайты и инструменты вне Telegram',
-    note: 'Сайты и офлайн-инструменты тоже собираю — не только Telegram.',
+    note: 'Два примера: справочник смены и тренажёр меню.',
     items: [
       {
         id: 'pako-shift',
@@ -180,7 +181,7 @@ export const site = {
   },
   nav: [
     { href: '#projects', label: 'Кейсы' },
-    { href: '#more', label: 'Ещё' },
+    { href: '#more', label: 'Сайты' },
     { href: '#capabilities', label: 'Что могу' },
     { href: '#process', label: 'Как работаю' },
     { href: '#contact', label: 'Контакт' },

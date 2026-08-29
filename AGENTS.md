@@ -15,14 +15,15 @@
 - Do not invent clients, revenue, reviews, or uptime. Keep placeholders instead of guessing contacts.
 - Case screenshots: show the full frame (`object-fit: contain`), no extra inner stage box. Case grid is `auto + text`, so the media column is only as wide as the shot. Click opens a lightbox; hint is a caption under the shot. FADELINE sources are 226×512 — display near native. YouTube CTA sits in the case meta row next to the prototype badge (not above the shot, not in the footer action row); use a geometric SVG play mark, never an AI-generated 3D/glass button. Telegram CTA uses a geometric SVG paper plane (`TelegramMark`), never the 3D webp, so the mark stays sharp and optically centered in the pill.
 - GitHub remote: `https://github.com/ozharov164-glitch/portfolio` (public). Push only when explicitly asked.
-- Do not start a local Vite/dev/preview server. Check the live GitHub Pages site, not localhost.
+- Do not start a local Vite/dev/preview server, Python http.server, or any other local site server. The machine should not heat up for preview. Check the live GitHub Pages site, not localhost.
 - Vite `base` is `/` locally and when `site.domain` is set (`portfoliodekha.ru`). On GitHub Actions without a domain it is `/portfolio/` so Pages works at `https://ozharov164-glitch.github.io/portfolio/`.
 - Beget menu for this domain: only «Редактировать DNS». Skip «Сертификат на домен», AuthInfo-code, and domain transfer. GitHub Pages custom domain is set via repo Settings/API (`cname: portfoliodekha.ru`); the Actions workflow ignores the CNAME file for binding. HTTPS Enforce cannot be enabled until GitHub issues the certificate.
 
 ## Learned Workspace Facts
 
 - Workspace folder name has a trailing space: `/Users/dmitriidekhanov/портфолио `.
-- Visual system: Proof Console. Background `#090B0F`, surfaces `#10151D` / `#151C26`, text `#EDF5FF`, muted `#8B9AAF`, signal green `#35E2A1`, Telegram blue `#2AABEE`.
+- Visual system: Proof Console. Background `#090B0F`, surfaces `#10151D` / `#151C26`, text `#EDF5FF`, muted `#9AA8BB`, signal green `#35E2A1`, Telegram blue `#2AABEE`.
+- CSS variables that change by breakpoint must be set on `:root`, not `html` — `:root` wins on specificity, so mobile `--header-h` / `--brand-mark` overrides were silently ignored.
 - Public files under `public/` must be loaded via `publicUrl()` in `src/lib/publicUrl.ts`. Vite does not rewrite root-absolute `/media/...` strings, so GitHub Pages (`base: /portfolio/`) otherwise 404s icons, posters, and the aurora texture.
 - Site copy and links live in `src/content/site.ts` and `src/content/projects.ts`.
 - Case media belongs in `public/media/<project>/`; videos are added later by the owner.

@@ -2,7 +2,7 @@
   --bg: #090b0f;
   --surface: #10151d;
   --text: #edf5ff;
-  --muted: #8b9aaf;
+  --muted: #9aa8bb;
   --green: #35e2a1;
   --line: rgba(237, 245, 255, 0.1);
   --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
@@ -22,7 +22,8 @@ html, body {
 body {
   max-width: 46rem;
   margin: 0 auto;
-  padding: 2rem 1.15rem 3.5rem;
+  padding: 2rem max(1.15rem, env(safe-area-inset-left))
+    calc(3.5rem + env(safe-area-inset-bottom)) max(1.15rem, env(safe-area-inset-right));
 }
 
 a { color: var(--green); }

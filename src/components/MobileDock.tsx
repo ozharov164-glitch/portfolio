@@ -7,7 +7,7 @@ export function MobileDock() {
   return (
     <div className="mobile-dock">
       <a className="btn btn-ghost" href="#projects">
-        {site.hero.primaryCta}
+        {site.hero.primaryCtaShort}
       </a>
       {telegramReady ? (
         <a
@@ -17,12 +17,12 @@ export function MobileDock() {
           rel="noopener noreferrer"
         >
           <TelegramMark />
-          {site.hero.secondaryCta}
+          {site.hero.secondaryCtaShort}
         </a>
       ) : (
         <a className="btn btn-primary btn-telegram mobile-dock__cta" href="#contact">
           <TelegramMark />
-          {site.hero.secondaryCta}
+          {site.hero.secondaryCtaShort}
         </a>
       )}
     </div>
