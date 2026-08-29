@@ -77,19 +77,10 @@ export function ProjectCase({ project, phase }: ProjectCaseProps) {
   return (
     <article className={phase === 'out' ? 'case is-out' : 'case is-in'} aria-labelledby="case-title">
       <header className="case__head">
-        <p className="case__meta">
+        <div className="case__meta">
           <span className="mono">{project.number}</span>
-          <span className={badgeClass}>{project.statusLabel}</span>
-        </p>
-        <h3 id="case-title" className="case__title">
-          {project.title}
-        </h3>
-        <p className="case__one">{project.oneLiner}</p>
-      </header>
-
-      <div className="case__grid">
-        <div className={`case-media-col is-${project.mediaKind}`}>
-          <div className={`shot is-${project.mediaKind}`}>
+          <span className="case__meta-tags">
+            <span className={badgeClass}>{project.statusLabel}</span>
             {hasYoutube ? (
               <a
                 className="btn btn-watch"
@@ -101,6 +92,17 @@ export function ProjectCase({ project, phase }: ProjectCaseProps) {
                 <span>{site.projectsIntro.youtubeCta}</span>
               </a>
             ) : null}
+          </span>
+        </div>
+        <h3 id="case-title" className="case__title">
+          {project.title}
+        </h3>
+        <p className="case__one">{project.oneLiner}</p>
+      </header>
+
+      <div className="case__grid">
+        <div className={`case-media-col is-${project.mediaKind}`}>
+          <div className={`shot is-${project.mediaKind}`}>
             <div className="shot__stage">
               {hasVideo && resolvedVideo ? (
                 <video

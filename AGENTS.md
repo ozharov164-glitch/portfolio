@@ -13,11 +13,11 @@
 - Do not place decorative icons that float without a layout slot; icons belong in a step, card, or button.
 - HeroFlow «Системный путь» is typography-led: no 3D icons. Extra step copy expands on hover (desktop readout) or tap (mobile accordion), never as a popping tooltip.
 - Do not invent clients, revenue, reviews, or uptime. Keep placeholders instead of guessing contacts.
-- Case screenshots: show the full frame (`object-fit: contain`), no extra inner stage box. Case grid is `auto + text`, so the media column is only as wide as the shot. Click opens a lightbox; hint is a caption under the shot. FADELINE sources are 226×512 — display near native.
+- Case screenshots: show the full frame (`object-fit: contain`), no extra inner stage box. Case grid is `auto + text`, so the media column is only as wide as the shot. Click opens a lightbox; hint is a caption under the shot. FADELINE sources are 226×512 — display near native. YouTube CTA sits in the case meta row next to the prototype badge (not above the shot, not in the footer action row); use a geometric SVG play mark, never an AI-generated 3D/glass button.
 - GitHub remote: `https://github.com/ozharov164-glitch/portfolio` (public). Push only when explicitly asked.
 - Do not start a local Vite/dev/preview server. Check the live GitHub Pages site, not localhost.
 - Vite `base` is `/` locally and when `site.domain` is set (`portfoliodekha.ru`). On GitHub Actions without a domain it is `/portfolio/` so Pages works at `https://ozharov164-glitch.github.io/portfolio/`.
-- Beget menu for this domain: only «Редактировать DNS». Skip «Сертификат на домен», AuthInfo-code, and domain transfer. GitHub Pages custom domain + Enforce HTTPS is configured in repo Settings → Pages (Actions workflow ignores the CNAME file for domain binding).
+- Beget menu for this domain: only «Редактировать DNS». Skip «Сертификат на домен», AuthInfo-code, and domain transfer. GitHub Pages custom domain is set via repo Settings/API (`cname: portfoliodekha.ru`); the Actions workflow ignores the CNAME file for binding. HTTPS Enforce cannot be enabled until GitHub issues the certificate.
 
 ## Learned Workspace Facts
 
