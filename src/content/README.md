@@ -14,7 +14,7 @@
 | `[[EMAIL]]` | Почта для mailto |
 | `[[GITHUB_URL]]` | Профиль или репозиторий. Пока стоит placeholder — ссылка GitHub скрыта |
 | `[[TIMEZONE]]` | Например `UTC+3` |
-| `[[DOMAIN]]` | Купленный домен без `https://`. При сборке подставит sitemap/robots и CNAME для GitHub Pages |
+| `domain` | Сейчас `portfoliodekha.ru`. При сборке подставит sitemap/robots и CNAME |
 | `[[YEAR]]` | Год в футере |
 
 В `projects.ts` для каждого кейса:

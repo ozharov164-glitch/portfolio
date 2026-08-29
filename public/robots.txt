@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://ozharov164-glitch.github.io/portfolio/sitemap.xml
+Sitemap: https://portfoliodekha.ru/sitemap.xml

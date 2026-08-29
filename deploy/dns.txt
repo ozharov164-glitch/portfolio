@@ -1,17 +1,34 @@
-DNS для купленного домена → GitHub Pages
+DNS: portfoliodekha.ru → GitHub Pages
+Регистратор домена — Beget. Сайт живёт на GitHub Pages, не на хостинге Beget.
 
-Подставьте свой домен вместо example.com.
-Логин GitHub подставьте вместо USERNAME.
+Не нажимайте в меню домена:
+  «Направить на сайт или VPS»
+  «Сертификат на домен»
+  «Получить AuthInfo-code»
+  «Передать домен на другой аккаунт»
 
-A-записи для корня домена (example.com):
+Нужный пункт: «Редактировать DNS».
+
+Удалите старые A-записи корня и www (они смотрят на Beget).
+Не трогайте MX, если почта Beget ещё нужна. Записи вида *.portfoliodekha.ru не нужны.
+
+A для корня (хост @ или пусто):
   185.199.108.153
   185.199.109.153
   185.199.110.153
   185.199.111.153
 
-CNAME для www:
-  www  →  USERNAME.github.io
+AAAA для корня (по желанию, тоже @):
+  2606:50c0:8000::153
+  2606:50c0:8001::153
+  2606:50c0:8002::153
+  2606:50c0:8003::153
 
-Свой домен в GitHub: Settings → Pages → Custom domain.
-HTTPS GitHub включает сам, обычно в течение нескольких часов.
-Не используйте запись вида *.example.com
+CNAME для www:
+  www  →  ozharov164-glitch.github.io
+
+В GitHub: Settings → Pages → Custom domain = portfoliodekha.ru
+и галочка Enforce HTTPS. Для сборки через Actions CNAME-файл сам домен не включает.
+
+HTTPS выдаёт GitHub (Let's Encrypt), не сертификат Beget.
+После смены DNS замок может появиться от нескольких минут до нескольких часов.

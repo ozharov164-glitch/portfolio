@@ -23,12 +23,12 @@ npm run preview
 Репозиторий: [github.com/ozharov164-glitch/portfolio](https://github.com/ozharov164-glitch/portfolio). Он **публичный** — так работает бесплатный GitHub Pages.
 
 1. При каждом обновлении ветки `main` GitHub сам собирает сайт и выкладывает его.
-2. Пока свой домен не подключен, сайт открывается так: `https://ozharov164-glitch.github.io/portfolio/`.
-3. Купленный домен направляется на GitHub. Замочек HTTPS GitHub включает сам.
+2. Свой домен: `https://portfoliodekha.ru`. Пока DNS не указан на GitHub, запасной адрес — `https://ozharov164-glitch.github.io/portfolio/`.
+3. Домен куплен в Beget. Сайт на Beget не заливается: в панели только DNS. HTTPS включает GitHub.
 
-Когда домен появится — напишите его в чат. Нужно прописать его в `src/content/site.ts` (`domain`) и в GitHub: **Settings → Pages → Custom domain**.
+Домен уже прописан в `src/content/site.ts`. После пуша в `main` в GitHub нужно: **Settings → Pages → Custom domain** = `portfoliodekha.ru` и **Enforce HTTPS**.
 
-DNS-записи для регистратора лежат в `deploy/dns.txt`.
+Записи DNS для Beget — в `deploy/dns.txt`.
 
 ## Где заменить placeholders
 

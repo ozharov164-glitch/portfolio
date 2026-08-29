@@ -3,7 +3,7 @@
 ## Learned User Preferences
 
 - This portfolio must stay static and Russian-language.
-- Hosting is GitHub Pages (free, public repo) plus a purchased custom domain. Do not use VPS/Nginx as the live host.
+- Hosting is GitHub Pages (free, public repo) plus custom domain `portfoliodekha.ru`. Registrar is Beget (DNS only). Do not host files on Beget, do not use Beget SSL or «Направить на сайт или VPS», do not use VPS/Nginx as the live host.
 - Inactive archive cases: ВключиСебя / CozyReset (`cozyreset.ru`, `@CozyReset_bot`) and ResumeBot. Do not present them as live.
 - YouTube demos in `projects.ts` → `youtubeUrl`: FADELINE `https://www.youtube.com/shorts/NYJB5FELQic`, ВключиСебя `https://www.youtube.com/watch?v=vtnyWM9_l40&t=1s`, ResumeBot `https://www.youtube.com/shorts/-5Z_4betR-8`. OptBot still empty — do not invent a link.
 - Hire CTA Telegram is `@solevoy19`. Contact email is `dvv.spd@bk.ru`. Name on site: Дмитрий Деханов.
@@ -16,7 +16,8 @@
 - Case screenshots: show the full frame (`object-fit: contain`), no extra inner stage box. Case grid is `auto + text`, so the media column is only as wide as the shot. Click opens a lightbox; hint is a caption under the shot. FADELINE sources are 226×512 — display near native.
 - GitHub remote: `https://github.com/ozharov164-glitch/portfolio` (public). Push only when explicitly asked.
 - Do not start a local Vite/dev/preview server. Check the live GitHub Pages site, not localhost.
-- Vite `base` is `/` locally (and with a custom domain). On GitHub Actions without `site.domain` it is `/portfolio/` so Pages works at `https://ozharov164-glitch.github.io/portfolio/`.
+- Vite `base` is `/` locally and when `site.domain` is set (`portfoliodekha.ru`). On GitHub Actions without a domain it is `/portfolio/` so Pages works at `https://ozharov164-glitch.github.io/portfolio/`.
+- Beget menu for this domain: only «Редактировать DNS». Skip «Сертификат на домен», AuthInfo-code, and domain transfer. GitHub Pages custom domain + Enforce HTTPS is configured in repo Settings → Pages (Actions workflow ignores the CNAME file for domain binding).
 
 ## Learned Workspace Facts
 
@@ -25,6 +26,6 @@
 - Public files under `public/` must be loaded via `publicUrl()` in `src/lib/publicUrl.ts`. Vite does not rewrite root-absolute `/media/...` strings, so GitHub Pages (`base: /portfolio/`) otherwise 404s icons, posters, and the aurora texture.
 - Site copy and links live in `src/content/site.ts` and `src/content/projects.ts`.
 - Case media belongs in `public/media/<project>/`; videos are added later by the owner.
-- Static legal pages: `public/privacy.html`, `public/security.html`, `public/terms.html`. Hosting named there as GitHub Pages. Operator contact: `dvv.spd@bk.ru`.
+- Static legal pages: `public/privacy.html`, `public/security.html`, `public/terms.html`. Site URL `https://portfoliodekha.ru`. Hosting named there as GitHub Pages; Beget is registrar only. Operator contact: `dvv.spd@bk.ru`.
 - Header brand mark is the AI-generated contour (`public/media/brand/programmer.webp`): crop tight to the figure, scale with `clamp` so it stays readable on fullscreen desktop. Do not replace it with a hand-drawn SVG.
 - Background atmosphere stays behind `main` (`z-index: 0` vs content `1`): quiet edge rain, faint typewriter, scanline. Never compete with copy; on mobile hide tty/scan and keep only a faint left rain. Respect `prefers-reduced-motion`.

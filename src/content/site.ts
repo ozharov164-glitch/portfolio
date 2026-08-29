@@ -27,7 +27,7 @@ export const site = {
   email: 'dvv.spd@bk.ru',
   githubUrl: 'https://github.com/ozharov164-glitch/portfolio',
   timezone: 'UTC+3',
-  domain: '[[DOMAIN]]',
+  domain: 'portfoliodekha.ru',
   year: '2026',
   title: 'Дмитрий Деханов — боты, Mini Apps и сайты',
   description:
