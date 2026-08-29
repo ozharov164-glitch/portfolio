@@ -21,6 +21,7 @@
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
   --brand-mark: clamp(3.45rem, 2.15rem + 2.9vw, 6.5rem);
   --header-h: calc(var(--brand-mark) + 1.9rem);
+  --safe-top: env(safe-area-inset-top, 0px);
   --dock-h: 5.25rem;
   --glass: rgba(16, 21, 29, 0.82);
   --glow-soft: 0 16px 40px rgba(0, 0, 0, 0.32);
@@ -35,8 +36,8 @@
 html {
   color-scheme: dark;
   scroll-behavior: smooth;
-  scroll-padding-top: calc(var(--header-h) + 0.5rem);
-  scroll-padding-bottom: calc(var(--dock-h) + 0.35rem);
+  scroll-padding-top: calc(var(--header-h) + var(--safe-top) + 0.5rem);
+  scroll-padding-bottom: calc(var(--dock-h) + env(safe-area-inset-bottom, 0px) + 0.35rem);
 }
 
 html,
@@ -54,13 +55,14 @@ body {
   letter-spacing: 0.01em;
   overflow-x: hidden;
   background: var(--bg);
-  padding-bottom: var(--dock-h);
+  padding-bottom: calc(var(--dock-h) + env(safe-area-inset-bottom, 0px));
 }
 
 #root {
   position: relative;
   z-index: 1;
   min-height: 100vh;
+  padding-top: calc(var(--header-h) + var(--safe-top));
 }
 
 main,
@@ -133,7 +135,7 @@ a {
 }
 
 .skip-link:focus {
-  top: 1rem;
+  top: calc(1rem + var(--safe-top));
 }
 
 :focus-visible {
@@ -231,10 +233,13 @@ a {
 }
 
 .site-header {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 40;
-  background: rgba(9, 11, 15, 0.84);
+  padding-top: var(--safe-top);
+  background: rgba(9, 11, 15, 0.92);
   border-bottom: 1px solid var(--line);
   backdrop-filter: blur(18px) saturate(1.25);
 }
@@ -1908,7 +1913,7 @@ a {
   .hero {
     grid-template-columns: 1.05fr 0.95fr;
     align-items: center;
-    min-height: calc(100svh - var(--header-h));
+    min-height: calc(100svh - var(--header-h) - var(--safe-top));
     padding-top: 2.5rem;
   }
 
