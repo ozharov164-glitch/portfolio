@@ -5,6 +5,7 @@ export function TelegramMark() {
       viewBox="0 0 24 24"
       width="18"
       height="18"
+      preserveAspectRatio="xMidYMid meet"
       aria-hidden="true"
       focusable="false"
     >
