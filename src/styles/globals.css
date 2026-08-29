@@ -229,16 +229,19 @@ a {
 
 .btn-watch {
   flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
   gap: 0.38rem;
-  min-height: 2.5rem;
-  padding: 0.38rem 0.7rem 0.38rem 0.5rem;
+  min-height: 0;
+  height: 2rem;
+  padding: 0 0.58rem;
   background: var(--surface-2);
   color: var(--text);
   border-color: var(--line-strong);
-  font-size: 0.68rem;
+  font-size: 0.78rem;
   font-weight: 600;
-  letter-spacing: 0.02em;
-  line-height: 1.2;
+  letter-spacing: 0.01em;
+  line-height: 1;
   white-space: nowrap;
   touch-action: manipulation;
 }
@@ -246,8 +249,8 @@ a {
 .btn-watch .yt-mark {
   display: block;
   flex: 0 0 auto;
-  width: 0.95rem;
-  height: 0.68rem;
+  width: 1.05rem;
+  height: 0.74rem;
   color: var(--youtube);
 }
 
@@ -942,11 +945,14 @@ a {
 }
 
 .badge {
+  display: inline-flex;
+  align-items: center;
   flex: 0 0 auto;
+  min-height: 2rem;
   font-family: var(--font-mono);
   font-size: 0.68rem;
   letter-spacing: 0.08em;
-  line-height: 1.2;
+  line-height: 1;
   color: var(--green);
   border: 1px solid var(--green-dim);
   background: var(--green-dim);
@@ -2298,22 +2304,37 @@ a {
   }
 }
 
-@media (max-width: 479px) {
-  .badge {
-    letter-spacing: 0.03em;
-    padding-inline: 0.42rem;
-  }
-
-  .btn-watch {
-    padding: 0.36rem 0.52rem 0.36rem 0.4rem;
-  }
-
+@media (max-width: 719px) {
   .btn-watch__full {
     display: none;
   }
 
   .btn-watch__short {
     display: inline;
+  }
+
+  .badge,
+  .btn-watch {
+    min-height: 2.15rem;
+    height: 2.15rem;
+  }
+
+  .btn-watch {
+    padding: 0 0.7rem;
+    gap: 0.42rem;
+    font-size: 0.86rem;
+  }
+
+  .btn-watch .yt-mark {
+    width: 1.15rem;
+    height: 0.82rem;
+  }
+}
+
+@media (max-width: 479px) {
+  .badge {
+    letter-spacing: 0.03em;
+    padding-inline: 0.42rem;
   }
 }
 
