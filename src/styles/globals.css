@@ -248,6 +248,10 @@ a {
   color: var(--youtube);
 }
 
+.btn-watch__short {
+  display: none;
+}
+
 .btn-watch:hover {
   transform: none;
 }
@@ -2079,6 +2083,25 @@ a {
   .atmosphere__rain--left {
     width: min(7.5rem, 24vw);
     color: rgba(53, 226, 161, 0.12);
+  }
+}
+
+@media (max-width: 479px) {
+  .badge {
+    letter-spacing: 0.03em;
+    padding-inline: 0.42rem;
+  }
+
+  .btn-watch {
+    padding: 0.28rem 0.5rem 0.28rem 0.38rem;
+  }
+
+  .btn-watch__full {
+    display: none;
+  }
+
+  .btn-watch__short {
+    display: inline;
   }
 }
 

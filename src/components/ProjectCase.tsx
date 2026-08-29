@@ -87,9 +87,13 @@ export function ProjectCase({ project, phase }: ProjectCaseProps) {
                 href={project.youtubeUrl}
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label={site.projectsIntro.youtubeCta}
               >
                 <YoutubeMark />
-                <span>{site.projectsIntro.youtubeCta}</span>
+                <span className="btn-watch__full">{site.projectsIntro.youtubeCta}</span>
+                <span className="btn-watch__short" aria-hidden="true">
+                  {site.projectsIntro.youtubeCtaShort}
+                </span>
               </a>
             ) : null}
           </span>
