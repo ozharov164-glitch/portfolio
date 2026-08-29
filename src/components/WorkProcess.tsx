@@ -1,5 +1,5 @@
 import { site } from '../content/site'
-import { ChromaIcon } from './ChromaIcon'
+import { LineIcon } from './LineIcon'
 
 export function WorkProcess() {
   return (
@@ -12,7 +12,7 @@ export function WorkProcess() {
         {site.process.steps.map((step) => (
           <li key={step.id} className="process__step">
             <div className="process__head">
-              <ChromaIcon src={step.icon} alt="" className="process__icon" />
+              <LineIcon name={step.icon} className="process__icon" />
               <p className="process__num mono">{step.id}</p>
             </div>
             <h3>{step.title}</h3>

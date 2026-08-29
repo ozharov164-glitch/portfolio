@@ -1,5 +1,5 @@
 import { site } from '../content/site'
-import { ChromaIcon } from './ChromaIcon'
+import { LineIcon } from './LineIcon'
 
 export function PitchBand() {
   return (
@@ -14,7 +14,7 @@ export function PitchBand() {
             key={card.id}
             className={card.accent ? 'pitch__card pitch__card--after' : 'pitch__card'}
           >
-            <ChromaIcon src={card.icon} alt="" />
+            <LineIcon name={card.icon} />
             <p className="pitch__kicker">{card.kicker}</p>
             <p>{card.text}</p>
           </article>

@@ -1,5 +1,5 @@
 import { site } from '../content/site'
-import { ChromaIcon } from './ChromaIcon'
+import { LineIcon } from './LineIcon'
 
 export function CapabilityGrid() {
   return (
@@ -12,7 +12,7 @@ export function CapabilityGrid() {
         {site.capabilities.items.map((item) => (
           <li key={item.id} className={`caps__card signal-${item.signal}`}>
             <span className="caps__icon">
-              <ChromaIcon src={item.icon} alt="" />
+              <LineIcon name={item.icon} />
             </span>
             <h3>{item.title}</h3>
             <p>{item.result}</p>

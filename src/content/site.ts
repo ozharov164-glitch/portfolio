@@ -5,18 +5,15 @@ export function isConfigured(value: string | undefined | null): value is string 
   return !PLACEHOLDER.test(value)
 }
 
-export const icons = {
-  miniapp: '/media/icons/icon-miniapp.webp',
-  bot: '/media/icons/icon-bot.webp',
-  ai: '/media/icons/icon-ai.webp',
-  harden: '/media/icons/icon-harden.webp',
-  telegram: '/media/icons/icon-telegram.webp',
-  invoice: '/media/icons/icon-invoice.webp',
-  mixer: '/media/icons/icon-mixer.webp',
-  cart: '/media/icons/icon-cart.webp',
-  shift: '/media/icons/icon-shift.webp',
-  flow: '/media/icons/icon-flow.webp',
-} as const
+export type LineIconId =
+  | 'bot'
+  | 'screen'
+  | 'board'
+  | 'cards'
+  | 'shield'
+  | 'focus'
+  | 'nodes'
+  | 'handoff'
 
 export const site = {
   name: 'Дмитрий Деханов',
@@ -62,14 +59,14 @@ export const site = {
         id: 'bots',
         kicker: 'Боты и Mini Apps',
         text: 'Сценарий в Telegram: заявка, статус, файл, уведомление. Собираю под вашу работу, не под одну нишу.',
-        icon: icons.bot,
+        icon: 'bot',
         accent: false,
       },
       {
         id: 'sites',
         kicker: 'Сайты и панели',
         text: 'Страница, PWA или панель в браузере — если людям удобнее не в мессенджере.',
-        icon: icons.miniapp,
+        icon: 'board',
         accent: true,
       },
     ],
@@ -94,7 +91,7 @@ export const site = {
         title: 'Пако — на смене',
         text: 'Справочник меню и бара для официантов на iPhone: 59 блюд и 44 напитка, работает без сети.',
         stack: 'HTML / CSS / JS · Service Worker',
-        icon: icons.shift,
+        icon: 'screen',
       },
       {
         id: 'pako-guide',
@@ -102,7 +99,7 @@ export const site = {
         title: 'Карточки и экзамен по меню',
         text: 'Карточки блюд, тренировка и проверка — чтобы смена выучила меню, а не листала чаты.',
         stack: 'Python · vanilla JS · HTML',
-        icon: icons.flow,
+        icon: 'cards',
       },
     ],
   },
@@ -118,7 +115,7 @@ export const site = {
         result:
           'Заявки, каталог, уведомления, выдача файла, запись на услугу — сценарий под вашу работу, не один готовый шаблон.',
         signal: 'blue',
-        icon: icons.bot,
+        icon: 'bot',
       },
       {
         id: 'miniapp',
@@ -126,7 +123,7 @@ export const site = {
         result:
           'Экран, где настраивают задачу и видят статус. FADELINE — один из таких экранов, не единственный.',
         signal: 'green',
-        icon: icons.miniapp,
+        icon: 'screen',
       },
       {
         id: 'web',
@@ -134,7 +131,7 @@ export const site = {
         result:
           'Страница или приложение в браузере, в том числе офлайн. Как справочник «Пако — на смене».',
         signal: 'green',
-        icon: icons.shift,
+        icon: 'board',
       },
       {
         id: 'harden',
@@ -142,7 +139,7 @@ export const site = {
         result:
           'API, очередь, запуск на сервере, оплаты. ИИ — с понятным входом, не бесконечный чат. Могу довести уже живой продукт.',
         signal: 'blue',
-        icon: icons.harden,
+        icon: 'shield',
       },
     ],
   },
@@ -155,19 +152,19 @@ export const site = {
         id: '01',
         title: 'Фиксируем один полезный сценарий',
         text: 'Что человек нажимает и что получает на выходе. Остальное откладываем.',
-        icon: icons.bot,
+        icon: 'focus',
       },
       {
         id: '02',
         title: 'Собираю рабочую первую версию',
         text: 'Бот, Mini App, сайт или внутренний инструмент — то, что уже можно прогнать руками.',
-        icon: icons.flow,
+        icon: 'nodes',
       },
       {
         id: '03',
         title: 'Проверяем, запускаем, передаю',
         text: 'Прогоняем сценарий, поднимаем сборку и оставляем понятную передачу.',
-        icon: icons.harden,
+        icon: 'handoff',
       },
     ],
   },
