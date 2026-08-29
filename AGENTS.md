@@ -11,7 +11,7 @@
 - Positioning is generalist: bots, Mini Apps, and sites under a task. FADELINE / OptBot / DeckFlow / Pako are cases, not the brand. Do not shape hero, pitch, or capabilities around wholesale/Excel/invoices.
 - Pitch band is two offering cards (bots/Mini App vs sites), never a «чаты / таблицы / вкладки» pain story and never cart, invoice, or shift icons there.
 - Do not place decorative icons that float without a layout slot; icons belong in a step, card, or button.
-- HeroFlow «Системный путь» is typography-led: no 3D icons. Extra step copy expands on hover (desktop readout) or tap (mobile accordion), never as a popping tooltip.
+- HeroFlow «Системный путь» is typography-led: no 3D icons. Extra step copy expands on hover (desktop readout) or tap (mobile accordion), never as a popping tooltip. The rail is a packet trace: signal eases node-to-node, progress stroke follows, hover/tap seeks the playhead. No particles.
 - Do not invent clients, revenue, reviews, or uptime. Keep placeholders instead of guessing contacts.
 - Case screenshots: show the full frame (`object-fit: contain`), no extra inner stage box. Case grid is `auto + text`, so the media column is only as wide as the shot. Click opens a lightbox; hint is a caption under the shot. FADELINE sources are 226×512 — display near native. YouTube CTA sits in the case meta row next to the prototype badge (not above the shot, not in the footer action row); use a geometric SVG play mark, never an AI-generated 3D/glass button.
 - GitHub remote: `https://github.com/ozharov164-glitch/portfolio` (public). Push only when explicitly asked.
