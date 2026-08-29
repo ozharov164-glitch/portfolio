@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom'
 import type { Project } from '../content/projects'
 import { isConfigured, site } from '../content/site'
 import { publicUrl } from '../lib/publicUrl'
+import { YoutubeMark } from './YoutubeMark'
 
 type ProjectCaseProps = {
   project: Project
@@ -89,6 +90,17 @@ export function ProjectCase({ project, phase }: ProjectCaseProps) {
       <div className="case__grid">
         <div className={`case-media-col is-${project.mediaKind}`}>
           <div className={`shot is-${project.mediaKind}`}>
+            {hasYoutube ? (
+              <a
+                className="btn btn-watch"
+                href={project.youtubeUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <YoutubeMark />
+                <span>{site.projectsIntro.youtubeCta}</span>
+              </a>
+            ) : null}
             <div className="shot__stage">
               {hasVideo && resolvedVideo ? (
                 <video
@@ -190,53 +202,45 @@ export function ProjectCase({ project, phase }: ProjectCaseProps) {
         ))}
       </ul>
 
-      <div className="case-actions">
-        {hasVideo ? (
-          <button type="button" className="btn btn-ghost" onClick={() => void playVideo()}>
-            Смотреть короткое демо
-          </button>
-        ) : null}
-        {hasYoutube ? (
-          <a
-            className="btn btn-ghost"
-            href={project.youtubeUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Запись на YouTube ↗
-          </a>
-        ) : null}
-        {hasDemo ? (
-          <a
-            className="btn btn-ghost"
-            href={project.demoUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {project.demoLabel ?? 'Открыть в Telegram ↗'}
-          </a>
-        ) : null}
-        {hasSite ? (
-          <a
-            className="btn btn-ghost"
-            href={project.siteUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {project.siteLabel ?? 'Сайт ↗'}
-          </a>
-        ) : null}
-        {hasGithub ? (
-          <a
-            className="btn btn-ghost"
-            href={project.githubUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Код / GitHub ↗
-          </a>
-        ) : null}
-      </div>
+      {hasVideo || hasDemo || hasSite || hasGithub ? (
+        <div className="case-actions">
+          {hasVideo ? (
+            <button type="button" className="btn btn-ghost" onClick={() => void playVideo()}>
+              Смотреть короткое демо
+            </button>
+          ) : null}
+          {hasDemo ? (
+            <a
+              className="btn btn-ghost"
+              href={project.demoUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {project.demoLabel ?? 'Открыть в Telegram ↗'}
+            </a>
+          ) : null}
+          {hasSite ? (
+            <a
+              className="btn btn-ghost"
+              href={project.siteUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {project.siteLabel ?? 'Сайт ↗'}
+            </a>
+          ) : null}
+          {hasGithub ? (
+            <a
+              className="btn btn-ghost"
+              href={project.githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Код / GitHub ↗
+            </a>
+          ) : null}
+        </div>
+      ) : null}
 
       <p className="case__foot">{project.footnote}</p>
 

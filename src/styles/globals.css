@@ -11,6 +11,7 @@
   --green-glow: rgba(53, 226, 161, 0.38);
   --blue: #2aabee;
   --blue-dim: rgba(42, 171, 238, 0.14);
+  --youtube: #ff0033;
   --ink: #08110c;
   --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-mono: ui-monospace, 'SFMono-Regular', 'SF Mono', Menlo, Consolas, monospace;
@@ -221,6 +222,39 @@ a {
 
 .btn-telegram .chroma-icon img {
   filter: none;
+}
+
+.btn-watch {
+  align-self: stretch;
+  width: 100%;
+  gap: 0.65rem;
+  min-height: 2.9rem;
+  padding: 0.65rem 1.15rem 0.65rem 1rem;
+  background: var(--surface-2);
+  color: var(--text);
+  border-color: var(--line-strong);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  touch-action: manipulation;
+}
+
+.btn-watch .yt-mark {
+  display: block;
+  flex: 0 0 auto;
+  color: var(--youtube);
+}
+
+.btn-watch:hover,
+.btn-watch:focus-visible {
+  border-color: rgba(255, 0, 51, 0.55);
+  background: #1b1416;
+  color: var(--text);
+  box-shadow: none;
+}
+
+.shot.is-phone .btn-watch {
+  font-size: 0.84rem;
+  padding-inline: 0.7rem;
 }
 
 .btn.is-pending {
