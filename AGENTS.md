@@ -29,4 +29,4 @@
 - Case media belongs in `public/media/<project>/`; videos are added later by the owner.
 - Static legal pages: `public/privacy.html`, `public/security.html`, `public/terms.html`. Site URL `https://portfoliodekha.ru`. Hosting named there as GitHub Pages; Beget is registrar only. Operator contact: `dvv.spd@bk.ru`.
 - Header brand mark is the AI-generated contour (`public/media/brand/programmer.webp`): crop tight to the figure, scale with `clamp` so it stays readable on fullscreen desktop. Do not replace it with a hand-drawn SVG.
-- Background atmosphere stays behind `main` (`z-index: 0` vs content `1`): quiet edge rain, faint typewriter, scanline. Never compete with copy; on mobile hide tty/scan and keep only a faint left rain. Respect `prefers-reduced-motion`.
+- Background atmosphere stays behind `main` (`z-index: 0` vs content `1`): quiet edge rain, faint typewriter, scanline. Never compete with copy. On mobile keep both rains, scan, and blobs visible at the edges; hide only the typewriter. Soften the vignette so edge motion is not eaten. Respect `prefers-reduced-motion`.

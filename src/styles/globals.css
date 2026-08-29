@@ -2259,16 +2259,42 @@ a {
     padding-bottom: clamp(2rem, 8vw, 3.5rem);
   }
 
-  .atmosphere__rain--right,
-  .atmosphere__tty,
-  .atmosphere__scan,
-  .atmosphere__blob--c {
+  .atmosphere__tty {
     display: none;
   }
 
+  .atmosphere__photo {
+    opacity: 0.4;
+  }
+
+  .atmosphere__blob {
+    opacity: 0.5;
+  }
+
+  .atmosphere__rain {
+    font-size: 0.58rem;
+  }
+
   .atmosphere__rain--left {
-    width: min(7.5rem, 24vw);
-    color: rgba(53, 226, 161, 0.12);
+    width: min(5.6rem, 30vw);
+    color: rgba(53, 226, 161, 0.3);
+    mask-image: linear-gradient(to right, #000 18%, transparent 92%);
+  }
+
+  .atmosphere__rain--right {
+    width: min(4.6rem, 24vw);
+    color: rgba(42, 171, 238, 0.24);
+    mask-image: linear-gradient(to left, #000 18%, transparent 92%);
+  }
+
+  .atmosphere__scan {
+    opacity: 0.9;
+  }
+
+  .atmosphere__vignette {
+    background:
+      radial-gradient(ellipse at center, transparent 62%, rgba(9, 11, 15, 0.42) 100%),
+      linear-gradient(180deg, rgba(9, 11, 15, 0.1), transparent 12%, transparent 78%, rgba(9, 11, 15, 0.52));
   }
 }
 
