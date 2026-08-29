@@ -1,6 +1,6 @@
-import { icons, isConfigured, site } from '../content/site'
+import { isConfigured, site } from '../content/site'
 import { publicUrl } from '../lib/publicUrl'
-import { ChromaIcon } from './ChromaIcon'
+import { TelegramMark } from './TelegramMark'
 
 export function Header() {
   const telegramReady = isConfigured(site.telegramUrl)
@@ -39,12 +39,12 @@ export function Header() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <ChromaIcon src={icons.telegram} alt="" />
+            <TelegramMark />
             Написать в Telegram
           </a>
         ) : (
           <a className="btn btn-accent btn-telegram" href="#contact">
-            <ChromaIcon src={icons.telegram} alt="" />
+            <TelegramMark />
             Написать в Telegram
           </a>
         )}

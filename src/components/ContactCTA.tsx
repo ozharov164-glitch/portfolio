@@ -1,6 +1,6 @@
-import { icons, isConfigured, site } from '../content/site'
+import { isConfigured, site } from '../content/site'
 import { publicUrl } from '../lib/publicUrl'
-import { ChromaIcon } from './ChromaIcon'
+import { TelegramMark } from './TelegramMark'
 
 export function ContactCTA() {
   const telegramReady = isConfigured(site.telegramUrl)
@@ -20,7 +20,7 @@ export function ContactCTA() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <ChromaIcon src={icons.telegram} alt="" />
+            <TelegramMark />
             {site.contact.primary}
           </a>
         ) : (

@@ -1,5 +1,4 @@
 import { CapabilityGrid } from './components/CapabilityGrid'
-import { ChromaIcon } from './components/ChromaIcon'
 import { ContactCTA } from './components/ContactCTA'
 import { Footer } from './components/Footer'
 import { Header } from './components/Header'
@@ -11,8 +10,9 @@ import { ProofBar } from './components/ProofBar'
 import { ProjectSwitcher } from './components/ProjectSwitcher'
 import { Reveal } from './components/Reveal'
 import { SiteAtmosphere } from './components/SiteAtmosphere'
+import { TelegramMark } from './components/TelegramMark'
 import { WorkProcess } from './components/WorkProcess'
-import { icons, isConfigured, site } from './content/site'
+import { isConfigured, site } from './content/site'
 
 export default function App() {
   const telegramReady = isConfigured(site.telegramUrl)
@@ -48,12 +48,12 @@ export default function App() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <ChromaIcon src={icons.telegram} alt="" />
+                  <TelegramMark />
                   {site.hero.secondaryCta}
                 </a>
               ) : (
                 <a className="btn btn-ghost btn-telegram" href="#contact">
-                  <ChromaIcon src={icons.telegram} alt="" />
+                  <TelegramMark />
                   {site.hero.secondaryCta}
                 </a>
               )}

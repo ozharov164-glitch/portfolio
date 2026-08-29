@@ -212,16 +212,16 @@ a {
 }
 
 .btn-telegram {
-  gap: 0.45rem;
+  gap: 0.4rem;
+  padding-inline: 1.05rem 1.15rem;
 }
 
-.btn-telegram .chroma-icon {
-  width: 1.35rem;
-  height: 1.35rem;
-}
-
-.btn-telegram .chroma-icon img {
-  filter: none;
+.tg-mark {
+  display: block;
+  flex: 0 0 auto;
+  width: 1.1rem;
+  height: 1.1rem;
+  translate: 0.5px -0.5px;
 }
 
 .btn-watch {
@@ -1897,16 +1897,29 @@ a {
 }
 
 .mobile-dock .btn {
-  flex: 1;
+  flex: 1 1 0;
+  min-width: 0;
+  gap: 0.36rem;
+  min-height: 2.9rem;
+  padding: 0.62rem 0.72rem;
+  font-size: 0.86rem;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  white-space: nowrap;
 }
 
 .mobile-dock .btn:hover {
   transform: none;
 }
 
-.mobile-dock__cta .chroma-icon {
-  width: 1.25rem;
-  height: 1.25rem;
+.mobile-dock__cta {
+  flex: 1.16 1 0;
+  padding-inline: 0.68rem 0.78rem;
+}
+
+.mobile-dock .tg-mark {
+  width: 1.02rem;
+  height: 1.02rem;
 }
 
 .btn-primary .chroma-icon img {
@@ -2270,6 +2283,11 @@ a {
   .site-header__bar {
     padding-left: 0.85rem;
     padding-right: 0.85rem;
+  }
+
+  .mobile-dock .btn {
+    font-size: 0.8rem;
+    padding-inline: 0.58rem;
   }
 }
 

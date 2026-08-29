@@ -1,5 +1,5 @@
-import { icons, isConfigured, site } from '../content/site'
-import { ChromaIcon } from './ChromaIcon'
+import { isConfigured, site } from '../content/site'
+import { TelegramMark } from './TelegramMark'
 
 export function MobileDock() {
   const telegramReady = isConfigured(site.telegramUrl)
@@ -11,17 +11,17 @@ export function MobileDock() {
       </a>
       {telegramReady ? (
         <a
-          className="btn btn-primary mobile-dock__cta"
+          className="btn btn-primary btn-telegram mobile-dock__cta"
           href={site.telegramUrl}
           target="_blank"
           rel="noopener noreferrer"
         >
-          <ChromaIcon src={icons.telegram} alt="" />
+          <TelegramMark />
           {site.hero.secondaryCta}
         </a>
       ) : (
-        <a className="btn btn-primary mobile-dock__cta" href="#contact">
-          <ChromaIcon src={icons.telegram} alt="" />
+        <a className="btn btn-primary btn-telegram mobile-dock__cta" href="#contact">
+          <TelegramMark />
           {site.hero.secondaryCta}
         </a>
       )}
