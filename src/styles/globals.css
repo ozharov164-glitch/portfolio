@@ -2504,7 +2504,16 @@ html.is-locked body {
 }
 
 @media (min-width: 800px) {
-  .about__grid { grid-template-columns: 280px minmax(0, 1fr); align-items: center; }
+  .about__grid {
+    grid-template-columns: 200px minmax(0, 1fr);
+    align-items: start;
+    column-gap: 48px;
+  }
+  .portrait {
+    position: sticky;
+    top: calc(var(--header-h) + 32px);
+    justify-self: end;
+  }
   .reviews__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 
