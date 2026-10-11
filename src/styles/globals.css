@@ -2023,6 +2023,14 @@ html.is-locked body {
 
 .steps li p { margin-top: 8px; color: var(--muted); }
 
+.steps h3 {
+  font-size: clamp(1.25rem, 1.7vw, 1.625rem);
+  line-height: 1.12;
+  margin-top: 10px;
+  overflow-wrap: normal;
+  hyphens: manual;
+}
+
 .steps__line {
   position: absolute;
   left: 0;
@@ -2082,6 +2090,11 @@ html.is-locked body {
   }
 }
 
+@media (min-width: 960px) and (max-width: 1199px) {
+  .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 32px; }
+  .steps__line { display: none; }
+}
+
 .hero-flow {
   --flow-dot: 11px;
   --flow-gap: 0.72rem;
@@ -2117,7 +2130,7 @@ html.is-locked body {
 
 .hero-flow__cue-hover { display: none; }
 
-.hero-flow__stage { position: relative; }
+.hero-flow__stage { position: static; }
 
 .hero-flow__nodes {
   list-style: none;
