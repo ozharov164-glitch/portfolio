@@ -22,6 +22,7 @@ const SHORT = new Set([
   'же',
   'ли',
   'бы',
+  'или',
 ])
 
 const PLACEHOLDER = /\[\[[A-Z0-9_]+\]\]/g
@@ -37,13 +38,11 @@ export function ty(text: string): string {
   })
 
   result = result.replace(
-    /(^|[\s\u00A0«„"(])([A-Za-zА-Яа-яЁё]{1,3})[ \t]+/gu,
-    (full, prefix: string, word: string) => {
-      if (!SHORT.has(word.toLowerCase())) return full
-      return `${prefix}${word}\u00A0`
-    },
+    /(?<=^|[\s\u00A0«„"(])([A-Za-zА-Яа-яЁё]{1,3})[ \t]+/gu,
+    (full, word: string) => (SHORT.has(word.toLowerCase()) ? `${word}\u00A0` : full),
   )
 
+  result = result.replace(/([A-Za-zА-Яа-яЁё]{1,8})-([A-Za-zА-Яа-яЁё]{1,12})/gu, '$1\u2060-\u2060$2')
   result = result.replace(/[ \t]+—/g, '\u00A0—')
   result = result.replace(/(\d)[ \t]+([^\s\d]{1,12})/gu, '$1\u00A0$2')
 
