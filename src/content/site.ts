@@ -68,7 +68,7 @@ const rawSite = {
     next: 'Следующий',
   },
   moreWork: {
-    eyebrow: 'Ещё проекты',
+    eyebrow: 'Не только Telegram',
     headline: 'Ещё проекты',
     note: 'Не только Telegram: справочник для смены ресторана и тренажёр меню.',
     items: [

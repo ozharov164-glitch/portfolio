@@ -193,6 +193,7 @@ p,
 ul,
 ol,
 dl,
+dd,
 figure {
   margin: 0;
 }
@@ -313,6 +314,16 @@ a {
 
 .section-head {
   margin-bottom: clamp(32px, 5vw, 64px);
+}
+
+.more > .section-head,
+.offer > .section-head,
+.process > .section-head,
+.about > .section-head,
+.reviews > .section-head {
+  width: auto;
+  padding-inline: 0;
+  margin-inline: 0;
 }
 
 .more,
@@ -1548,6 +1559,7 @@ html.is-locked body {
   margin-top: 18px;
 }
 
+.case__facts dd { max-width: 34rem; }
 .case__facts dt { color: var(--muted); }
 .case__facts .is-result dt,
 .case__facts .is-result dd { color: var(--text); }
@@ -2389,10 +2401,21 @@ html.is-locked body {
 
 .site-footer {
   padding-block: 28px 48px;
-  border-top: 1px solid var(--line);
+  border-top: 0;
+  position: relative;
   color: var(--muted);
   display: grid;
   gap: 12px;
+}
+
+.site-footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: var(--pad);
+  right: var(--pad);
+  height: 1px;
+  background: var(--line);
 }
 
 .site-footer__row {
@@ -2406,6 +2429,7 @@ html.is-locked body {
   display: flex;
   flex-wrap: wrap;
   gap: 4px 8px;
+  margin-inline: -6px;
 }
 
 .site-footer a {
