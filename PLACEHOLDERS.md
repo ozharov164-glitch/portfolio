@@ -17,8 +17,9 @@
 3. `[[SHOT_RESUMEBOT]]` — настоящие скриншоты резюме-бота вместо `public/media/resumebot/card.svg`.
 4. `[[PHOTO_PATH]]` в `src/content/site.ts` — фото владельца, путь вида `/media/brand/photo.webp`. Пока его нет, в блоке «Обо мне» стоит знак `programmer.webp`.
 5. `[[GITHUB_PROFILE_URL]]` — ссылка на профиль GitHub, не на репозиторий этого сайта. Пока ключ стоит, ссылка «GitHub» скрыта.
-6. `[[REVIEW_1_TEXT]]`, `[[REVIEW_1_AUTHOR]]`, `[[REVIEW_1_CONTEXT]]` — первый отзыв.
-7. `[[REVIEW_2_TEXT]]`, `[[REVIEW_2_AUTHOR]]`, `[[REVIEW_2_CONTEXT]]` — второй.
-8. `[[REVIEW_3_TEXT]]`, `[[REVIEW_3_AUTHOR]]`, `[[REVIEW_3_CONTEXT]]` — третий.
+6. Кадр каталога LINKTECH с целой кнопкой «+ В корзину». Сейчас `public/media/linktech/poster.webp` обрезан по этой кнопке. Готового кадра в папке нет — не подменять карточкой товара или корзиной.
+7. `[[REVIEW_1_TEXT]]`, `[[REVIEW_1_AUTHOR]]`, `[[REVIEW_1_CONTEXT]]` — первый отзыв.
+8. `[[REVIEW_2_TEXT]]`, `[[REVIEW_2_AUTHOR]]`, `[[REVIEW_2_CONTEXT]]` — второй.
+9. `[[REVIEW_3_TEXT]]`, `[[REVIEW_3_AUTHOR]]`, `[[REVIEW_3_CONTEXT]]` — третий.
 
 Секция «Что говорят» и пункт меню появляются только когда заполнены текст и автор хотя бы одного отзыва. Не выдумывайте отзывы.

@@ -107,6 +107,15 @@ export function CaseScene({ project, flip }: { project: Project; flip: boolean }
       <DeviceLaptop>
         <ScreenCarousel slides={slides} onOpen={openAt} />
       </DeviceLaptop>
+    ) : project.mediaKind === 'poster' ? (
+      <button type="button" className="poster-scene" onClick={(event) => openAt(0, event.currentTarget)}>
+        <SoftImage
+          src={publicUrl(project.poster)}
+          alt={project.posterAlt}
+          width={project.posterWidth}
+          height={project.posterHeight}
+        />
+      </button>
     ) : (
       <PhoneFrame className={project.lofi ? 'phone--lofi' : 'phone--case'} tilt={4}>
         <ScreenCarousel slides={slides} onOpen={openAt} />
@@ -122,28 +131,35 @@ export function CaseScene({ project, flip }: { project: Project; flip: boolean }
       <div className="case__visual">{media}</div>
       <div className="case__copy">
         <div className="case__meta">
-          <p className="case__num grad-text">
-            <CountUp value={project.number} />
-          </p>
-          <span className={`badge is-${project.status}`}>
-            {project.status === 'live' ? <span className="status-dot" aria-hidden="true" /> : null}
-            {project.statusLabel}
-          </span>
-          {youtube ? (
-            <ExternalLink className="btn btn-watch" href={project.youtubeUrl ?? ''}>
-              <YoutubeMark />
-              <span>{site.projectsIntro.youtubeCta}</span>
-            </ExternalLink>
-          ) : null}
-          {demo ? (
-            <ExternalLink className="text-link" href={project.demoUrl ?? ''}>
-              {project.demoLabel || site.projectsIntro.demoCta}
-            </ExternalLink>
-          ) : null}
-          {siteLink ? (
-            <ExternalLink className="text-link" href={project.siteUrl ?? ''}>
-              {project.siteLabel}
-            </ExternalLink>
+          <div className="case__identity">
+            <p className="case__num grad-text">
+              <CountUp value={project.number} />
+            </p>
+            <span className={`badge is-${project.status}`}>
+              {project.status === 'live' ? <span className="status-dot" aria-hidden="true" /> : null}
+              {project.statusLabel}
+            </span>
+            {youtube ? (
+              <ExternalLink className="btn btn-watch" href={project.youtubeUrl ?? ''}>
+                <YoutubeMark />
+                <span className="only-wide">{site.projectsIntro.youtubeCta}</span>
+                <span className="only-narrow">{site.projectsIntro.youtubeCtaShort}</span>
+              </ExternalLink>
+            ) : null}
+          </div>
+          {demo || siteLink ? (
+            <div className="case__links">
+              {demo ? (
+                <ExternalLink className="text-link" href={project.demoUrl ?? ''}>
+                  {project.demoLabel || site.projectsIntro.demoCta}
+                </ExternalLink>
+              ) : null}
+              {siteLink ? (
+                <ExternalLink className="text-link" href={project.siteUrl ?? ''}>
+                  {project.siteLabel}
+                </ExternalLink>
+              ) : null}
+            </div>
           ) : null}
         </div>
         <h3 id={`case-title-${project.id}`}>{project.title}</h3>

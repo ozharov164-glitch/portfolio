@@ -8,7 +8,7 @@ export function YoutubeMark() {
       aria-hidden="true"
       focusable="false"
     >
-      <rect width="24" height="17" rx="4.2" fill="currentColor" />
+      <rect width="24" height="17" rx="4.2" fill="#FF0033" />
       <path d="M9.4 4.7v7.6L16.6 8.5 9.4 4.7z" fill="#fff" />
     </svg>
   )
