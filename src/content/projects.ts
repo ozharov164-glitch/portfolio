@@ -1,4 +1,4 @@
-export type ProjectId = 'fadeline' | 'optbot' | 'deckflow' | 'cozyreset' | 'resumebot'
+export type ProjectId = 'fadeline' | 'optbot' | 'deckflow' | 'cozyreset' | 'resumebot' | 'linktech'
 export type MediaKind = 'phone' | 'desktop' | 'document' | 'poster'
 export type ProjectStatus = 'prototype' | 'inactive'
 
@@ -201,6 +201,44 @@ export const projects: Project[] = [
     footnote:
       'Проект сейчас неактивен. Запись — на YouTube. Живой URL и метрики не публикую.',
   },
+  {
+    id: 'linktech',
+    tab: 'LINKTECH',
+    number: '06',
+    status: 'prototype',
+    statusLabel: 'Живое демо',
+    title: 'Оптовый каталог MacBook прямо в Telegram',
+    oneLiner:
+      'Поиск, конфигурация, корзина от 5 штук и заявка менеджеру — без прайса в переписке.',
+    flow: [
+      'Прайс',
+      'Каталог и фильтры',
+      'Карточка конфигурации',
+      'Корзина от 5 шт.',
+      'Заявка менеджеру',
+    ],
+    whatSolved:
+      'Собрал выбор партии в одном экране: модель, память, грейд, цена в у.е. и в рублях, остаток.',
+    whatBuilt:
+      'Telegram Mini App: каталог из прайса, фильтры, карточка конфигурации, корзина с минимальной партией и заявка. Открывается в Telegram и в обычном браузере.',
+    ownership: 'Экран, логика каталога и корзины, заявка и выкладка демо.',
+    stack: ['TypeScript', 'React', 'Telegram Mini Apps', 'Vercel'],
+    poster: '/media/linktech/poster.webp',
+    posterAlt: 'LINKTECH: каталог MacBook, поиск и цены в у.е. и рублях',
+    mediaKind: 'phone',
+    stills: [
+      { src: '/media/linktech/poster.webp', alt: 'Каталог' },
+      { src: '/media/linktech/still-product.webp', alt: 'Карточка модели' },
+      { src: '/media/linktech/still-cart.webp', alt: 'Корзина' },
+    ],
+    localVideo: '',
+    youtubeUrl: '',
+    githubUrl: '',
+    demoUrl: 'https://linktech-demo.vercel.app',
+    demoLabel: 'Открыть демо ↗',
+    footnote:
+      'Живое демо. Цены и остатки берутся из прайса. Оплата на сайте не принимается — заявка уходит менеджеру.',
+  },
 ]
 
 export function getProject(id: ProjectId): Project {
@@ -209,7 +247,8 @@ export function getProject(id: ProjectId): Project {
     case 'optbot':
     case 'deckflow':
     case 'cozyreset':
-    case 'resumebot': {
+    case 'resumebot':
+    case 'linktech': {
       const found = projects.find((item) => item.id === id)
       if (!found) throw new Error(`Missing project data: ${id}`)
       return found

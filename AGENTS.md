@@ -5,7 +5,8 @@
 - This portfolio must stay static and Russian-language.
 - Hosting is GitHub Pages (free, public repo) plus custom domain `portfoliodekha.ru`. Registrar is Beget (DNS only). Do not host files on Beget, do not use Beget SSL or «Направить на сайт или VPS», do not use VPS/Nginx as the live host.
 - Inactive archive cases: ВключиСебя / CozyReset (`cozyreset.ru`, `@CozyReset_bot`) and ResumeBot. Do not present them as live.
-- YouTube demos in `projects.ts` → `youtubeUrl`: FADELINE `https://www.youtube.com/shorts/NYJB5FELQic`, ВключиСебя `https://www.youtube.com/watch?v=vtnyWM9_l40&t=1s`, ResumeBot `https://www.youtube.com/shorts/-5Z_4betR-8`. OptBot still empty — do not invent a link.
+- YouTube demos in `projects.ts` → `youtubeUrl`: FADELINE `https://www.youtube.com/shorts/NYJB5FELQic`, ВключиСебя `https://www.youtube.com/watch?v=vtnyWM9_l40&t=1s`, ResumeBot `https://www.youtube.com/shorts/-5Z_4betR-8`. OptBot and LINKTECH are empty — do not invent a link.
+- LINKTECH is case `06` in `projects.ts`: wholesale MacBook Telegram Mini App. Live demo `https://linktech-demo.vercel.app`. Stills in `public/media/linktech/`. Do not present it as a retail storefront or invent the client’s revenue.
 - Hire CTA Telegram is `@solevoy19`. Contact email is `dvv.spd@bk.ru`. Name on site: Дмитрий Деханов.
 - Legal pages in `public/`: `privacy.html`, `security.html`, `terms.html`. Operator is an individual (физическое лицо); do not invent INN/OGRN/ИП. Site is not a public offer.
 - Positioning is generalist: bots, Mini Apps, and sites under a task. FADELINE / OptBot / DeckFlow / Pako are cases, not the brand. Do not shape hero, pitch, or capabilities around wholesale/Excel/invoices.
