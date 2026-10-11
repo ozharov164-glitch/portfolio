@@ -55,7 +55,8 @@ export function Hero() {
             </a>
           ) : null}
           <a className="btn btn-ghost btn-lg" href="#projects">
-            {site.hero.secondaryCta}
+            <span className="only-wide">{site.hero.secondaryCta}</span>
+            <span className="only-narrow">{site.hero.secondaryCtaShort}</span>
           </a>
         </div>
         <p className="hero__trust">{projectsInTelegram(projects.length)}</p>

@@ -859,6 +859,7 @@ html.is-locked body {
 
 .hero {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   align-content: start;
   gap: 18px;
   min-height: calc(100svh - var(--header-h) - var(--safe-top));
@@ -866,6 +867,10 @@ html.is-locked body {
   padding-bottom: 28px;
   position: relative;
 }
+
+.hero > * { min-width: 0; }
+
+.hero h1 { font-size: clamp(2rem, calc((100vw - 40px) / 9.2), 2.75rem); }
 
 .hero::before,
 .cta::before {
@@ -974,8 +979,30 @@ html.is-locked body {
     padding-top: 12px;
   }
 
-  .hero__copy { grid-column: 1 / 7; }
-  .hero__stage { grid-column: 7 / 13; }
+  .hero__copy { grid-column: 1 / 8; }
+  .hero__stage { grid-column: 8 / 13; }
+  .hero h1 { font-size: clamp(2.75rem, min(5vw, 8.6vh), 4.5rem); }
+}
+
+@media (max-width: 959px) {
+  .hero { gap: 14px; padding-bottom: 20px; }
+  .hero__actions { flex-wrap: nowrap; gap: 8px; }
+  .hero__actions .btn { min-height: 52px; padding-inline: 16px; }
+  .hero__actions .btn-ghost { flex: none; }
+  .hero__actions .btn-tg { flex: 1 1 auto; min-width: 0; }
+  .hero__sub { font-size: 1.0625rem; margin-top: 10px; }
+  .hero__trust { display: none; }
+}
+
+@media (max-width: 389px) {
+  .hero__actions { flex-wrap: wrap; }
+}
+
+.only-narrow { display: none; }
+
+@media (max-width: 400px) {
+  .only-wide { display: none; }
+  .only-narrow { display: inline; }
 }
 
 /* Phone + chat */
