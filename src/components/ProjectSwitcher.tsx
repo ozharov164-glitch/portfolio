@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { ProjectCase } from './ProjectCase'
 import { getProject, projects, type ProjectId } from '../content/projects'
 import { site } from '../content/site'
@@ -7,7 +7,10 @@ export function ProjectSwitcher() {
   const [activeId, setActiveId] = useState<ProjectId>(projects[0].id)
   const [shownId, setShownId] = useState<ProjectId>(projects[0].id)
   const [phase, setPhase] = useState<'in' | 'out'>('in')
+  const [glideOn, setGlideOn] = useState(false)
   const timerRef = useRef<number | null>(null)
+  const tabsRef = useRef<HTMLDivElement>(null)
+  const glideRef = useRef<HTMLSpanElement>(null)
 
   const shown = getProject(shownId)
 
@@ -16,6 +19,35 @@ export function ProjectSwitcher() {
       if (timerRef.current !== null) window.clearTimeout(timerRef.current)
     }
   }, [])
+
+  useLayoutEffect(() => {
+    const list = tabsRef.current
+    const glide = glideRef.current
+    const button = list?.querySelector<HTMLElement>(`#tab-${activeId}`)
+    if (!list || !glide || !button) return
+
+    const place = () => {
+      glide.style.transform = `translate3d(${button.offsetLeft}px, 0, 0)`
+      glide.style.width = `${button.offsetWidth}px`
+      glide.style.height = `${button.offsetHeight}px`
+    }
+
+    place()
+    const left = button.offsetLeft
+    const right = left + button.offsetWidth
+    if (left < list.scrollLeft) list.scrollLeft = left - 8
+    else if (right > list.scrollLeft + list.clientWidth) {
+      list.scrollLeft = right - list.clientWidth + 8
+    }
+    const frame = window.requestAnimationFrame(() => setGlideOn(true))
+    const observer = new ResizeObserver(place)
+    observer.observe(list)
+    observer.observe(button)
+    return () => {
+      window.cancelAnimationFrame(frame)
+      observer.disconnect()
+    }
+  }, [activeId])
 
   function select(id: ProjectId) {
     if (id === activeId) return
@@ -44,7 +76,8 @@ export function ProjectSwitcher() {
         <p className="lede">{site.projectsIntro.note}</p>
       </header>
 
-      <div className="tabs" role="tablist" aria-label="Проекты">
+      <div className="tabs" role="tablist" aria-label="Проекты" ref={tabsRef}>
+        <span ref={glideRef} className={glideOn ? 'tabs__glide is-on' : 'tabs__glide'} aria-hidden="true" />
         {projects.map((project) => {
           const selected = project.id === activeId
           return (

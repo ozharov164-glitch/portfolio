@@ -12,7 +12,7 @@ export function PitchBand() {
         {site.pitch.cards.map((card) => (
           <article
             key={card.id}
-            className={card.accent ? 'pitch__card pitch__card--after' : 'pitch__card'}
+            className={card.accent ? 'pitch__card pitch__card--after rise-item' : 'pitch__card rise-item'}
           >
             <LineIcon name={card.icon} />
             <p className="pitch__kicker">{card.kicker}</p>

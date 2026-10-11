@@ -107,6 +107,10 @@ h1 {
 
 .accent-text {
   color: var(--green);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.16em;
+  text-decoration-color: transparent;
 }
 
 h2 {
@@ -144,6 +148,11 @@ a {
   outline-offset: 3px;
 }
 
+::selection {
+  background: rgba(53, 226, 161, 0.28);
+  color: var(--text);
+}
+
 .btn {
   position: relative;
   display: inline-flex;
@@ -167,6 +176,10 @@ a {
 
 .btn:hover {
   transform: translateY(-1px);
+}
+
+.btn:active {
+  transform: translateY(0) scale(0.985);
 }
 
 .btn-primary {
@@ -291,6 +304,26 @@ a {
   background: rgba(9, 11, 15, 0.92);
   border-bottom: 1px solid var(--line);
   backdrop-filter: blur(18px) saturate(1.25);
+  transition:
+    background 200ms var(--ease),
+    box-shadow 200ms var(--ease);
+}
+
+.site-header.is-scrolled {
+  background: rgba(9, 11, 15, 0.78);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.28);
+}
+
+.scroll-progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  transform: scaleX(var(--scroll, 0));
+  transform-origin: 0 50%;
+  background: var(--green);
+  pointer-events: none;
 }
 
 .site-header__bar {
@@ -353,7 +386,10 @@ a {
   color: var(--muted);
   text-decoration: none;
   font-size: 0.92rem;
-  transition: color 160ms var(--ease);
+  box-shadow: inset 0 -2px 0 transparent;
+  transition:
+    color 160ms var(--ease),
+    box-shadow 220ms var(--ease);
 }
 
 .nav-desktop a:hover,
@@ -363,7 +399,8 @@ a {
   color: var(--text);
 }
 
-.nav-desktop a.is-active {
+.nav-desktop a.is-active,
+.nav-mobile a.is-active {
   box-shadow: inset 0 -2px 0 var(--green);
 }
 
@@ -816,11 +853,24 @@ a {
 }
 
 .eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
   font-family: var(--font-mono);
   font-size: 0.72rem;
   letter-spacing: 0.16em;
   color: var(--muted);
   margin-bottom: 0.65rem;
+}
+
+.eyebrow::before {
+  content: '';
+  width: 1.15rem;
+  height: 1px;
+  flex: 0 0 auto;
+  background: var(--green);
+  transform: scaleX(1);
+  transform-origin: 0 50%;
 }
 
 .lede {
@@ -841,6 +891,7 @@ a {
 }
 
 .tabs {
+  position: relative;
   display: flex;
   gap: 0.45rem;
   overflow-x: auto;
@@ -849,11 +900,34 @@ a {
   scrollbar-width: none;
 }
 
+.tabs__glide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  border-radius: 999px;
+  background: var(--green);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0;
+}
+
+.tabs__glide.is-on {
+  opacity: 1;
+  transition:
+    transform 280ms var(--ease),
+    width 280ms var(--ease),
+    height 180ms var(--ease),
+    opacity 160ms var(--ease);
+}
+
 .tabs::-webkit-scrollbar {
   display: none;
 }
 
 .tabs__btn {
+  position: relative;
+  z-index: 1;
   flex: 0 0 auto;
   min-height: 2.75rem;
   padding: 0.55rem 0.95rem;
@@ -880,6 +954,11 @@ a {
   color: var(--ink);
   background: var(--green);
   border-color: var(--green);
+}
+
+.tabs:has(.tabs__glide.is-on) .tabs__btn.is-active {
+  background: transparent;
+  border-color: transparent;
 }
 
 .tabs__btn.is-active:hover {
@@ -1042,6 +1121,10 @@ a {
   height: auto;
   max-width: 100%;
   object-fit: contain;
+}
+
+.shot__img {
+  animation: shot-in 280ms var(--ease);
 }
 
 .shot.is-phone .shot__img {
@@ -1267,6 +1350,7 @@ a {
   display: grid;
   place-items: center;
   padding: 1.25rem;
+  animation: veil 200ms var(--ease);
 }
 
 .lightbox__backdrop {
@@ -1287,6 +1371,7 @@ a {
   justify-items: center;
   gap: 0.7rem;
   max-width: 100%;
+  animation: rise 280ms var(--ease) both;
 }
 
 .lightbox__img {
@@ -1495,10 +1580,21 @@ a {
   height: 100%;
   background: transparent;
   border: 0;
-  border-top: 2px solid var(--green);
   border-radius: 0;
   padding: 1.05rem 0.15rem 0.2rem;
   box-shadow: none;
+}
+
+.process__step::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--green);
+  transform: scaleX(1);
+  transform-origin: 0 50%;
 }
 
 .process__head {
@@ -2021,6 +2117,50 @@ a {
   }
 }
 
+@keyframes rise {
+  from {
+    opacity: 0;
+    translate: 0 12px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+@keyframes draw-x {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes rule {
+  to {
+    text-decoration-color: currentColor;
+  }
+}
+
+@keyframes shot-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes veil {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 @media (hover: hover) and (pointer: fine) {
   .hero-flow__cue-hover {
     display: inline;
@@ -2073,6 +2213,78 @@ a {
 .js .reveal.is-visible {
   opacity: 1;
   transform: none;
+}
+
+.js .hero__eyebrow,
+.js .hero h1,
+.js .hero__sub,
+.js .hero__promise,
+.js .hero__actions,
+.js .hero-flow,
+.js .hero__stack {
+  animation: rise 620ms var(--ease) both;
+}
+
+.js .hero h1 {
+  animation-delay: 70ms;
+}
+
+.js .hero__sub {
+  animation-delay: 120ms;
+}
+
+.js .hero__promise {
+  animation-delay: 160ms;
+}
+
+.js .hero__actions {
+  animation-delay: 210ms;
+}
+
+.js .hero-flow {
+  animation-delay: 90ms;
+}
+
+.js .hero__stack {
+  animation-delay: 260ms;
+}
+
+.js .accent-text {
+  animation: rule 640ms 420ms var(--ease) forwards;
+}
+
+.js .reveal:not(.is-visible) .eyebrow::before,
+.js .reveal:not(.is-visible) .process__step::before {
+  transform: scaleX(0);
+}
+
+.js .reveal.is-visible .eyebrow::before,
+.js .reveal.is-visible .process__step::before {
+  animation: draw-x 460ms var(--ease) both;
+}
+
+.js .reveal.is-visible .process__step:nth-child(2)::before {
+  animation-delay: 80ms;
+}
+
+.js .reveal.is-visible .process__step:nth-child(3)::before {
+  animation-delay: 160ms;
+}
+
+.js .reveal.is-visible .rise-item {
+  animation: rise 520ms var(--ease) both;
+}
+
+.js .reveal.is-visible .rise-item:nth-child(2) {
+  animation-delay: 55ms;
+}
+
+.js .reveal.is-visible .rise-item:nth-child(3) {
+  animation-delay: 110ms;
+}
+
+.js .reveal.is-visible .rise-item:nth-child(4) {
+  animation-delay: 165ms;
 }
 
 @media (min-width: 720px) {
@@ -2399,9 +2611,42 @@ a {
     clip-path: none;
   }
 
+  .status-dot,
+  .shot__img,
+  .lightbox,
+  .lightbox__dialog,
+  .js .hero__eyebrow,
+  .js .hero h1,
+  .js .hero__sub,
+  .js .hero__promise,
+  .js .hero__actions,
+  .js .hero-flow,
+  .js .hero__stack,
+  .js .accent-text,
+  .js .reveal.is-visible .eyebrow::before,
+  .js .reveal.is-visible .process__step::before,
+  .js .reveal.is-visible .rise-item {
+    animation: none;
+  }
+
+  .js .accent-text {
+    text-decoration-color: currentColor;
+  }
+
+  .js .reveal:not(.is-visible) .eyebrow::before,
+  .js .reveal:not(.is-visible) .process__step::before,
+  .eyebrow::before,
+  .process__step::before {
+    transform: scaleX(1);
+  }
+
+  .tabs__glide,
+  .tabs__glide.is-on {
+    transition: none;
+  }
+
   .status-dot {
     box-shadow: 0 0 0 4px var(--green-dim);
-    animation: none;
   }
 
   .atmosphere__blob-core,

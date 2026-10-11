@@ -11,7 +11,7 @@ export function MoreWork() {
       </header>
       <ul className="more__grid">
         {site.moreWork.items.map((item) => (
-          <li key={item.id} className="more__card">
+          <li key={item.id} className="more__card rise-item">
             <LineIcon name={item.icon} className="more__icon" />
             <p className="mono more__kicker">{item.kicker}</p>
             <h3>{item.title}</h3>

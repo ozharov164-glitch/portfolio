@@ -10,7 +10,7 @@ export function WorkProcess() {
       </header>
       <ol className="process__steps">
         {site.process.steps.map((step) => (
-          <li key={step.id} className="process__step">
+          <li key={step.id} className="process__step rise-item">
             <div className="process__head">
               <LineIcon name={step.icon} className="process__icon" />
               <p className="process__num mono">{step.id}</p>

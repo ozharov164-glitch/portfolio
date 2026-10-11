@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, type CSSProperties } from 'react'
 import { isConfigured, site } from '../content/site'
 import { publicUrl } from '../lib/publicUrl'
 import { TelegramMark } from './TelegramMark'
@@ -33,12 +33,46 @@ function useActiveSection() {
   return active
 }
 
+function useScrollChrome() {
+  const [scrolled, setScrolled] = useState(false)
+  const [progress, setProgress] = useState(0)
+
+  useEffect(() => {
+    let frame = 0
+
+    const measure = () => {
+      frame = 0
+      const max = document.documentElement.scrollHeight - window.innerHeight
+      setScrolled(window.scrollY > 8)
+      setProgress(max > 0 ? Math.min(1, window.scrollY / max) : 0)
+    }
+
+    const onScroll = () => {
+      if (frame !== 0) return
+      frame = window.requestAnimationFrame(measure)
+    }
+
+    measure()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll)
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+      if (frame !== 0) window.cancelAnimationFrame(frame)
+    }
+  }, [])
+
+  return { scrolled, progress }
+}
+
 export function Header() {
   const telegramReady = isConfigured(site.telegramUrl)
   const active = useActiveSection()
+  const { scrolled, progress } = useScrollChrome()
+  const chrome = { '--scroll': progress } as CSSProperties
 
   return (
-    <header className="site-header">
+    <header className={scrolled ? 'site-header is-scrolled' : 'site-header'} style={chrome}>
       <div className="site-header__bar">
         <a className="brand" href="#top">
           <img
@@ -109,6 +143,7 @@ export function Header() {
           )
         })}
       </nav>
+      <div className="scroll-progress" aria-hidden="true" />
     </header>
   )
 }

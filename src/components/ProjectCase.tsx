@@ -138,7 +138,7 @@ export function ProjectCase({ project, phase }: ProjectCaseProps) {
                   aria-expanded={lightbox}
                   aria-label={`${site.projectsIntro.shotHint}. ${shotAlt}`}
                 >
-                  <img className="shot__img" src={shotSrc} alt={shotAlt} />
+                  <img key={shotSrc} className="shot__img" src={shotSrc} alt={shotAlt} />
                 </button>
               )}
             </div>

@@ -10,7 +10,7 @@ export function CapabilityGrid() {
       </header>
       <ul className="caps__grid">
         {site.capabilities.items.map((item) => (
-          <li key={item.id} className={`caps__card signal-${item.signal}`}>
+          <li key={item.id} className={`caps__card signal-${item.signal} rise-item`}>
             <span className="caps__icon">
               <LineIcon name={item.icon} />
             </span>
