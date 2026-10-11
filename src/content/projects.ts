@@ -104,7 +104,7 @@ const rawProjects: Project[] = [
     posterWidth: 226,
     posterHeight: 512,
     mediaKind: 'phone',
-    // [[FADELINE_HIRES_SHOTS]] Переснять экраны не ниже 780×1690 и положить в public/media/fadeline/
+    // Кадры 226×512 остаются. Владелец их не переснимает, мокап не шире 240px.
     lofi: true,
     stills: [
       { src: '/media/fadeline/poster.webp', alt: 'Готовый микс', width: 226, height: 512 },
