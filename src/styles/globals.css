@@ -1818,6 +1818,18 @@ html.is-locked body {
   .more__card:hover::before { opacity: 1; }
 }
 
+.more__card {
+  display: grid;
+  grid-template-rows: 180px auto;
+  align-content: start;
+}
+
+.more__card > .mini-phone,
+.more__card > .flip {
+  align-self: center;
+  justify-self: center;
+}
+
 .more__card h3,
 .offer__card h3 { margin-top: 12px; font-size: clamp(1.4rem, 2vw, 1.8rem); }
 .more__card p,
@@ -1918,16 +1930,48 @@ html.is-locked body {
 }
 
 .illus {
-  height: 150px;
+  height: 160px;
   display: grid;
   align-content: center;
-  justify-items: start;
+  justify-items: center;
   gap: 8px;
 }
 
+.illus--bots { justify-items: stretch; padding-inline: 8px; }
 .illus--sites { justify-items: stretch; }
 
-.illus-phone { position: relative; overflow: hidden; }
+.illus-phone {
+  position: relative;
+  overflow: hidden;
+  width: 104px;
+  height: 148px;
+  border-radius: 20px;
+  padding: 18px 8px 8px;
+}
+
+.illus-phone::before {
+  content: '';
+  position: absolute;
+  top: 7px;
+  left: 50%;
+  width: 32px;
+  height: 6px;
+  transform: translateX(-50%);
+  border-radius: 6px;
+  background: var(--ink-3);
+}
+
+.illus-phone__bars {
+  display: grid;
+  gap: 8px;
+}
+
+.illus-phone__bars i {
+  display: block;
+  height: 22px;
+  border-radius: 8px;
+  background: var(--ink-3);
+}
 .illus-sheet {
   position: absolute;
   left: 8px;
@@ -1957,9 +2001,9 @@ html.is-locked body {
   display: block;
   height: 28px;
   border-radius: 8px;
-  background: var(--ink-3);
-  transform: translateY(8px);
-  opacity: 0.4;
+  background: rgb(237 245 255 / 0.16);
+  transform: none;
+  opacity: 1;
   transition: transform 400ms var(--ease-out), opacity 400ms var(--ease-out);
 }
 
@@ -1973,6 +2017,11 @@ html.is-locked body {
 .offer__card:focus-within .illus-window i:nth-child(2) { transition-delay: 70ms; }
 .offer__card:hover .illus-window i:nth-child(3),
 .offer__card:focus-within .illus-window i:nth-child(3) { transition-delay: 140ms; }
+
+@media (hover: none) {
+  .illus-window i { transform: none; opacity: 1; }
+  .illus-sheet { transform: translateY(30%); }
+}
 
 .marquee {
   margin-top: 28px;

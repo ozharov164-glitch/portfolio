@@ -52,6 +52,11 @@ export function Offer() {
         {cards[1] ? (
           <OfferCard id={cards[1].id} title={cards[1].title} text={cards[1].text}>
             <span className="illus-phone">
+              <span className="illus-phone__bars">
+                <i />
+                <i />
+                <i />
+              </span>
               <span className="illus-sheet" />
             </span>
           </OfferCard>
