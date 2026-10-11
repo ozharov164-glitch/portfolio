@@ -171,7 +171,23 @@ export function HeroFlow() {
           y: rect.top + rect.height / 2 - box.top,
         }
       })
-      setPath(toPath(points))
+      const xs = points.map((point) => point.x)
+      const ys = points.map((point) => point.y)
+      const xSpread = Math.max(...xs) - Math.min(...xs)
+      const ySpread = Math.max(...ys) - Math.min(...ys)
+      const snapped =
+        xSpread < 1.5 && ySpread > 8
+          ? points.map((point) => ({
+              x: xs.reduce((sum, value) => sum + value, 0) / xs.length,
+              y: point.y,
+            }))
+          : ySpread < 1.5 && xSpread > 8
+            ? points.map((point) => ({
+                x: point.x,
+                y: ys.reduce((sum, value) => sum + value, 0) / ys.length,
+              }))
+            : points
+      setPath(toPath(snapped))
     }
 
     measure()
@@ -381,6 +397,7 @@ export function HeroFlow() {
           </span>
         </p>
       </div>
+      <div className="hero-flow__stage">
       <ol className="hero-flow__nodes">
         {site.heroFlow.map((node, index) => {
           const open = openHint === index
@@ -453,6 +470,7 @@ export function HeroFlow() {
           {openHint === null ? site.hero.flowIdle : preview.hint}
         </span>
       </p>
+      </div>
       <svg
         className={path ? 'hero-flow__svg' : 'hero-flow__svg is-idle'}
         aria-hidden="true"
@@ -472,13 +490,13 @@ export function HeroFlow() {
               trailRefs.current[index] = el
             }}
             className={`hero-flow__trail is-${index}`}
-            r={index === 0 ? 3.2 : 2.4}
+            r={index === 0 ? 2.1 : 1.5}
             cx="0"
             cy="0"
           />
         ))}
-        <circle ref={signalRef} className="hero-flow__signal" r="4.4" cx="0" cy="0" />
-        <circle ref={coreRef} className="hero-flow__core" r="1.6" cx="0" cy="0" />
+        <circle ref={signalRef} className="hero-flow__signal" r="3.1" cx="0" cy="0" />
+        <circle ref={coreRef} className="hero-flow__core" r="1.25" cx="0" cy="0" />
       </svg>
     </div>
   )
