@@ -1819,7 +1819,8 @@ html.is-locked body {
 .lightbox__dialog {
   position: relative;
   z-index: 1;
-  width: min(920px, calc(100% - 32px));
+  width: auto;
+  max-width: calc(100% - 32px);
   max-height: calc(100vh - 48px - var(--safe-top));
   display: grid;
   justify-items: center;
@@ -1828,12 +1829,15 @@ html.is-locked body {
 
 .lightbox__frame {
   margin: 0;
-  max-height: 72vh;
+  max-height: none;
+  display: grid;
+  gap: 8px;
+  justify-items: center;
 }
 
 .lightbox__frame img,
 .lightbox__frame .soft-img {
-  max-height: 72vh;
+  max-height: min(72vh, calc(100svh - 160px));
   width: auto;
   margin-inline: auto;
 }
@@ -1848,8 +1852,10 @@ html.is-locked body {
 
 .lightbox__close {
   position: absolute;
-  top: calc(8px + var(--safe-top));
-  right: 8px;
+  top: auto;
+  bottom: 100%;
+  right: 0;
+  margin-bottom: 8px;
   z-index: 2;
   min-width: 44px;
   min-height: 44px;
@@ -1865,6 +1871,16 @@ html.is-locked body {
 }
 
 .lightbox__esc { display: none; }
+
+@media (max-width: 959px) {
+  .lightbox__close {
+    position: fixed;
+    top: calc(8px + var(--safe-top));
+    right: 8px;
+    bottom: auto;
+    margin: 0;
+  }
+}
 
 @media (hover: hover) and (pointer: fine) {
   .lightbox__esc { display: inline; color: var(--muted); }
