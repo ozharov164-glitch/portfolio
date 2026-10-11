@@ -436,6 +436,11 @@ a {
   }
 }
 
+@media (hover: none) {
+  .atmosphere__blob--signal,
+  .atmosphere__blob--deep { animation: none; }
+}
+
 @keyframes drift {
   from { transform: translate3d(0, 0, 0) scale(1); }
   to { transform: translate3d(6%, 4%, 0) scale(1.08); }
@@ -468,6 +473,13 @@ html.is-hidden .btn-xl::after {
   background: rgb(9 11 15 / 0.6);
   border-bottom: 1px solid var(--line);
   backdrop-filter: blur(14px) saturate(140%);
+}
+
+@media (max-width: 959px) {
+  .site-header.is-scrolled {
+    backdrop-filter: none;
+    background: rgb(9 11 15 / 0.92);
+  }
 }
 
 .site-header__bar {
@@ -615,7 +627,6 @@ html.is-hidden .btn-xl::after {
   flex-direction: column;
   justify-content: space-between;
   padding: calc(var(--header-h) + var(--safe-top) + 28px) var(--pad) calc(28px + var(--safe-bottom));
-  backdrop-filter: blur(16px);
 }
 
 .menu[hidden] {
@@ -657,6 +668,13 @@ html.is-hidden .btn-xl::after {
 .cta__mail a,
 .text-link {
   position: relative;
+}
+
+.cta__mail a,
+.menu__mail a {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
 }
 
 .text-link::after,
@@ -1403,17 +1421,26 @@ html.is-locked body {
   cursor: pointer;
 }
 
+.carousel__arrow { height: 44px; }
+
 .carousel__dots {
   display: flex;
-  gap: 6px;
+  gap: 20px;
 }
 
 .carousel__dots button {
+  position: relative;
   width: 8px;
   height: 8px;
   padding: 0;
   border-radius: 50%;
   background: var(--line-strong);
+}
+
+.carousel__dots button::before {
+  content: '';
+  position: absolute;
+  inset: -14px;
 }
 
 .carousel__dots button.is-active { background: var(--signal); }
@@ -1577,7 +1604,7 @@ html.is-locked body {
   border-color: rgb(53 226 161 / 0.35);
 }
 
-.badge.is-archive { opacity: 0.7; }
+.badge.is-archive { color: var(--muted); }
 
 .case__facts {
   display: grid;
