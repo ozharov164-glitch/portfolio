@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#07090D"/>
+  <circle cx="980" cy="80" r="300" fill="#2AABEE" fill-opacity="0.28"/>
+  <circle cx="140" cy="580" r="260" fill="#35E2A1" fill-opacity="0.18"/>
+  <circle cx="620" cy="200" r="180" fill="#1C7ED6" fill-opacity="0.16"/>
+  <text x="72" y="250" fill="#EDF5FF" font-family="Unbounded" font-size="68" font-weight="600">Дмитрий Деханов</text>
+  <text x="72" y="328" fill="#9AA8BB" font-family="Onest" font-size="32">Telegram-боты · Mini App · сайты</text>
+  <text x="72" y="540" fill="#35E2A1" font-family="Onest" font-size="26">portfoliodekha.ru</text>
+  <rect x="900" y="160" width="196" height="400" rx="36" fill="#10151D" stroke="#EDF5FF" stroke-opacity="0.22"/>
+  <rect x="916" y="186" width="164" height="348" rx="26" fill="#151C26"/>
+  <rect x="966" y="174" width="64" height="16" rx="8" fill="#07090D"/>
+  <rect x="936" y="230" width="92" height="28" rx="10" fill="#1d4e89"/>
+  <rect x="936" y="272" width="124" height="36" rx="10" fill="#1c2633"/>
+  <rect x="936" y="320" width="70" height="24" rx="8" fill="#2AABEE" fill-opacity="0.35"/>
+  <rect x="1014" y="320" width="46" height="24" rx="8" fill="#2AABEE" fill-opacity="0.2"/>
+</svg>

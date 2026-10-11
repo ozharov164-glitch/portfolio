@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="robots" content="noindex" />
+    <meta name="theme-color" content="#07090D" />
+    <title>Такой страницы нет — Дмитрий Деханов</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <style>
+      :root { color-scheme: dark; }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; min-height: 100%; background: #07090d; color: #edf5ff; font-family: system-ui, sans-serif; }
+      body {
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        padding: 24px;
+        background:
+          radial-gradient(closest-side, rgb(42 171 238 / 0.22), transparent 70%) 80% 20% / 70vmax 70vmax no-repeat,
+          radial-gradient(closest-side, rgb(53 226 161 / 0.14), transparent 70%) 10% 90% / 60vmax 60vmax no-repeat,
+          #07090d;
+      }
+      main { max-width: 36rem; }
+      h1 { font-size: clamp(2.4rem, 8vw, 4.5rem); line-height: 1.05; letter-spacing: -0.03em; margin: 0 0 12px; }
+      p { color: #9aa8bb; font-size: 1.15rem; margin: 0 0 24px; }
+      .row { display: flex; flex-wrap: wrap; gap: 10px; }
+      a {
+        display: inline-flex;
+        align-items: center;
+        min-height: 52px;
+        padding: 0 18px;
+        border-radius: 999px;
+        text-decoration: none;
+        font-weight: 650;
+      }
+      .go { background: #2aabee; color: #fff; }
+      .home { color: #edf5ff; border: 1px solid rgb(237 245 255 / 0.16); }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Такой страницы нет</h1>
+      <p>Зато есть кейсы и Telegram</p>
+      <div class="row">
+        <a class="home" href="./">На главную</a>
+        <a class="go" href="https://t.me/solevoy19">Написать в Telegram</a>
+      </div>
+    </main>
+  </body>
+</html>

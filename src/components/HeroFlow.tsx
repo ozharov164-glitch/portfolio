@@ -1,4 +1,4 @@
-import { useEffect, useId, useLayoutEffect, useRef, useState } from 'react'
+import { useEffect, useId, useRef, useState } from 'react'
 import { site } from '../content/site'
 
 type Point = { x: number; y: number }
@@ -76,7 +76,9 @@ export function HeroFlow() {
   const dotRefs = useRef<Array<HTMLSpanElement | null>>([])
   const signalRef = useRef<SVGCircleElement>(null)
   const coreRef = useRef<SVGCircleElement>(null)
-  const progressRef = useRef<SVGPathElement>(null)
+  const fillRef = useRef<HTMLSpanElement>(null)
+  const meterRef = useRef<HTMLDivElement>(null)
+  const axisRef = useRef<'x' | 'y'>('y')
   const trailRefs = useRef<Array<SVGCircleElement | null>>([])
   const alongRef = useRef(0)
   const visibleRef = useRef(true)
@@ -101,7 +103,6 @@ export function HeroFlow() {
   const previewIndex = openHint ?? liveNode
   const preview = site.heroFlow[previewIndex] ?? site.heroFlow[0]
   const clock = `${String(liveNode + 1).padStart(2, '0')}/${String(STEP_COUNT).padStart(2, '0')}`
-  openHintRef.current = openHint
 
   function ping(index: number) {
     window.clearTimeout(pingTimer.current)
@@ -124,8 +125,11 @@ export function HeroFlow() {
     TRAIL.forEach((lag, index) => {
       applyOffset(trailRefs.current[index], t - lag)
     })
-    const progress = progressRef.current
-    if (progress) progress.style.strokeDashoffset = String(1 - t)
+    const fill = fillRef.current
+    if (fill) {
+      const axis = axisRef.current
+      fill.style.transform = axis === 'x' ? `scaleX(${clamp01(t)})` : `scaleY(${clamp01(t)})`
+    }
     commitNode(tToNode(t))
   }
 
@@ -156,7 +160,7 @@ export function HeroFlow() {
     closeTimer.current = window.setTimeout(() => setOpenHint(null), CLOSE_DELAY_MS)
   }
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const wrap = wrapRef.current
     if (!wrap) return
 
@@ -188,6 +192,27 @@ export function HeroFlow() {
               }))
             : points
       setPath(toPath(snapped))
+      const first = snapped[0]
+      const last = snapped[snapped.length - 1]
+      const meter = meterRef.current
+      const horizontal = xSpread >= ySpread && xSpread > 8
+      axisRef.current = horizontal ? 'x' : 'y'
+      if (meter && first && last) {
+        meter.classList.toggle('is-x', horizontal)
+        if (horizontal) {
+          const left = Math.min(first.x, last.x)
+          meter.style.left = `${left}px`
+          meter.style.top = `${first.y - 1}px`
+          meter.style.width = `${Math.max(Math.abs(last.x - first.x), 1)}px`
+          meter.style.height = '2px'
+        } else {
+          const top = Math.min(first.y, last.y)
+          meter.style.left = `${first.x - 1}px`
+          meter.style.top = `${top}px`
+          meter.style.width = '2px'
+          meter.style.height = `${Math.max(Math.abs(last.y - first.y), 1)}px`
+        }
+      }
     }
 
     measure()
@@ -233,6 +258,7 @@ export function HeroFlow() {
   }, [])
 
   useEffect(() => {
+    openHintRef.current = openHint
     const machine = machineRef.current
     if (openHint === null) {
       const node = tToNode(alongRef.current)
@@ -392,12 +418,15 @@ export function HeroFlow() {
             <span className="mono">{clock}</span>
           </span>
           <span className="hero-flow__cue">
-            <span className="hero-flow__cue-hover">Наведите шаг</span>
-            <span className="hero-flow__cue-tap">Нажмите шаг</span>
+            <span className="hero-flow__cue-hover">{site.hero.flowCueHover}</span>
+            <span className="hero-flow__cue-tap">{site.hero.flowCueTap}</span>
           </span>
         </p>
       </div>
       <div className="hero-flow__stage">
+      <div className="hero-flow__meter" ref={meterRef} aria-hidden="true">
+        <span className="hero-flow__meter-fill" ref={fillRef} />
+      </div>
       <ol className="hero-flow__nodes">
         {site.heroFlow.map((node, index) => {
           const open = openHint === index
@@ -476,13 +505,6 @@ export function HeroFlow() {
         aria-hidden="true"
       >
         <path className="hero-flow__rail" d={path} fill="none" />
-        <path
-          ref={progressRef}
-          className="hero-flow__progress"
-          d={path}
-          fill="none"
-          pathLength={1}
-        />
         {TRAIL.map((_, index) => (
           <circle
             key={index}

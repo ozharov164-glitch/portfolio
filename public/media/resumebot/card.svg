@@ -1,8 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" role="img" aria-label="Схема резюме-бота: вакансия, навыки, документ">
   <rect width="800" height="1000" fill="#10151D"/>
-  <text x="56" y="88" fill="#8B9AAF" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="15" letter-spacing="4">05 / АРХИВ</text>
+  <text x="56" y="88" fill="#8B9AAF" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="15" letter-spacing="4">06 / АРХИВ</text>
   <text x="56" y="148" fill="#EDF5FF" font-family="ui-sans-serif, system-ui, sans-serif" font-size="36" font-weight="700">Вакансия → резюме</text>
-  <text x="56" y="186" fill="#8B9AAF" font-family="ui-sans-serif, system-ui, sans-serif" font-size="18">Telegram-бот. Сейчас не сопровождается.</text>
+  <text x="56" y="186" fill="#8B9AAF" font-family="ui-sans-serif, system-ui, sans-serif" font-size="18">Telegram-бот. Проект в архиве.</text>
   <rect x="56" y="240" width="688" height="168" rx="18" fill="#151C26"/>
   <text x="80" y="292" fill="#35E2A1" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" letter-spacing="2">01 / JOB</text>
   <text x="80" y="328" fill="#EDF5FF" font-family="ui-sans-serif, system-ui, sans-serif" font-size="22" font-weight="600">Формулировка работы</text>
@@ -15,6 +15,6 @@
   <text x="80" y="668" fill="#2AABEE" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" letter-spacing="2">03 / FILE</text>
   <text x="80" y="704" fill="#EDF5FF" font-family="ui-sans-serif, system-ui, sans-serif" font-size="22" font-weight="600">Черновик документа</text>
   <text x="80" y="738" fill="#8B9AAF" font-family="ui-sans-serif, system-ui, sans-serif" font-size="16">файл резюме на выходе</text>
-  <text x="56" y="860" fill="#35E2A1" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14">STATUS / INACTIVE</text>
+  <text x="56" y="860" fill="#35E2A1" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14">АРХИВ</text>
   <text x="56" y="896" fill="#8B9AAF" font-family="ui-sans-serif, system-ui, sans-serif" font-size="16">Запись сценария — на YouTube.</text>
 </svg>

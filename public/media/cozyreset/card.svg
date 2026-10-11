@@ -2,7 +2,7 @@
   <rect width="800" height="1000" fill="#10151D"/>
   <circle cx="90" cy="920" r="220" fill="#1A3A38" opacity="0.4"/>
   <circle cx="740" cy="80" r="200" fill="#3A2A18" opacity="0.38"/>
-  <text x="56" y="88" fill="#8B9AAF" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="15" letter-spacing="4">04 / АРХИВ</text>
+  <text x="56" y="88" fill="#8B9AAF" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="15" letter-spacing="4">05 / АРХИВ</text>
   <text x="56" y="148" fill="#EDF5FF" font-family="ui-sans-serif, system-ui, sans-serif" font-size="40" font-weight="700">ВключиСебя</text>
   <text x="56" y="186" fill="#8B9AAF" font-family="ui-sans-serif, system-ui, sans-serif" font-size="18">Бот · Mini App · ИИ с лимитами</text>
   <rect x="56" y="240" width="688" height="168" rx="18" fill="#151C26"/>
@@ -12,11 +12,11 @@
   <rect x="56" y="428" width="688" height="168" rx="18" fill="#151C26"/>
   <text x="80" y="480" fill="#35E2A1" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" letter-spacing="2">MINI APP</text>
   <text x="80" y="516" fill="#EDF5FF" font-family="ui-sans-serif, system-ui, sans-serif" font-size="22" font-weight="600">Путь к Себе</text>
-  <text x="80" y="550" fill="#8B9AAF" font-family="ui-sans-serif, system-ui, sans-serif" font-size="16">тесты, практики, PDF</text>
+  <text x="80" y="550" fill="#8B9AAF" font-family="ui-sans-serif, system-ui, sans-serif" font-size="16">тесты, практики, PDF-отчёт</text>
   <rect x="56" y="616" width="688" height="168" rx="18" fill="#151C26"/>
   <text x="80" y="668" fill="#2AABEE" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" letter-spacing="2">ИИ-ВЕНЕРА</text>
   <text x="80" y="704" fill="#EDF5FF" font-family="ui-sans-serif, system-ui, sans-serif" font-size="22" font-weight="600">Контекст, без лекций</text>
   <text x="80" y="738" fill="#8B9AAF" font-family="ui-sans-serif, system-ui, sans-serif" font-size="16">лимиты вместо бесконечного чата</text>
-  <text x="56" y="860" fill="#35E2A1" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14">STATUS / INACTIVE</text>
+  <text x="56" y="860" fill="#35E2A1" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14">АРХИВ</text>
   <text x="56" y="896" fill="#8B9AAF" font-family="ui-sans-serif, system-ui, sans-serif" font-size="16">Не медицина. Не замена психолога.</text>
 </svg>

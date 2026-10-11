@@ -1,3 +1,5 @@
+import { tyDeep } from '../lib/typograph.ts'
+
 const PLACEHOLDER = /\[\[[A-Z0-9_]+\]\]/
 
 export function isConfigured(value: string | undefined | null): value is string {
@@ -5,85 +7,69 @@ export function isConfigured(value: string | undefined | null): value is string 
   return !PLACEHOLDER.test(value)
 }
 
-export type LineIconId =
-  | 'bot'
-  | 'screen'
-  | 'board'
-  | 'cards'
-  | 'shield'
-  | 'focus'
-  | 'nodes'
-  | 'handoff'
+export type Review = {
+  text: string
+  author: string
+  context: string
+}
 
-export const site = {
+const rawSite = {
   name: 'Дмитрий Деханов',
-  role: 'Боты, Mini Apps и сайты',
+  role: 'Боты, Mini App и сайты',
   brandMark: '/media/brand/programmer.webp',
+  photo: '[[PHOTO_PATH]]',
   telegramUrl: 'https://t.me/solevoy19',
   telegramHandle: '@solevoy19',
   email: 'dvv.spd@bk.ru',
-  githubUrl: 'https://github.com/ozharov164-glitch/portfolio',
+  githubUrl: '[[GITHUB_PROFILE_URL]]',
   timezone: 'UTC+3',
   domain: 'portfoliodekha.ru',
-  year: '2026',
-  title: 'Дмитрий Деханов — боты, Mini Apps и сайты',
+  title: 'Дмитрий Деханов — Telegram-боты, Mini App и сайты',
   description:
-    'Собираю ботов, Telegram Mini Apps и сайты под конкретную задачу. Кейсы — рабочие сборки, не макеты.',
+    'Делаю Telegram-ботов, Mini App и сайты: от идеи до запуска. Кейсы с живым демо и видео. Пишите в Telegram.',
+  knowsAbout: ['Telegram Bot API', 'Telegram Mini Apps', 'React', 'TypeScript', 'Python'],
   hero: {
-    eyebrow: 'Открыт к проектной работе',
-    h1Before: 'Соберу бота, Mini App или сайт —',
-    h1Accent: 'нажал и получил результат.',
+    eyebrow: 'Открыт к новым проектам',
+    // Вариант B: «Telegram-боты и Mini App, которые выглядят как большой продукт»
+    // Вариант C: «Превращаю задачу в бота, Mini App или сайт — от идеи до запуска»
+    h1: 'Делаю Telegram-ботов, Mini App и сайты, которыми приятно пользоваться',
+    h1Accent: 'приятно пользоваться',
     subtitle:
-      'Под конкретную задачу: заявка, файл, страница или внутренний инструмент. Кейсы разные — не один шаблон.',
-    promise: 'Первый разговор — про одну задачу, а не про «сделайте всё».',
-    primaryCta: 'Смотреть кейсы',
-    primaryCtaShort: 'Кейсы',
-    secondaryCta: 'Написать в Telegram',
-    secondaryCtaShort: 'Telegram',
-    stackLine: 'Бот · Mini App · сайт · свой сервер',
-    flowKicker: 'Системный путь',
-    flowIdleKicker: 'Схема',
+      'Беру проект целиком и делаю сам: сценарий, интерфейс, сервер, оплаты и запуск. Ниже — то, что уже сделано.',
+    primaryCta: 'Написать в Telegram',
+    secondaryCta: 'Смотреть кейсы ↓',
+    phoneCaption: 'Демонстрация: бот → Mini App → результат',
+    phoneLabel: 'Демонстрация: пользователь пишет боту, открывает Mini App и оформляет заявку',
+    flowKicker: 'Из чего состоит проект',
+    flowIdleKicker: 'Описание',
+    flowCueHover: 'Наведите на шаг',
+    flowCueTap: 'Нажмите на шаг',
     flowIdle:
       'Сначала задача и канал: бот, Mini App или сайт. Потом экран, логика и результат, которым будут пользоваться.',
   },
-  proof: [
-    { kicker: '08', label: 'сборок в портфолио' },
-    { kicker: '3', label: 'канала: бот, Mini App, сайт' },
-    { kicker: 'UTC+3', label: 'удалённо, пишу сам' },
-  ],
-  pitch: {
-    eyebrow: 'Что предлагаю',
-    headline: 'Куда удобнее нажимать — туда и собираю',
-    cards: [
-      {
-        id: 'bots',
-        kicker: 'Боты и Mini Apps',
-        text: 'Сценарий в Telegram: заявка, статус, файл, уведомление. Собираю под вашу работу, не под одну нишу.',
-        icon: 'bot',
-        accent: false,
-      },
-      {
-        id: 'sites',
-        kicker: 'Сайты и панели',
-        text: 'Страница, PWA или панель в браузере — если людям удобнее не в мессенджере.',
-        icon: 'board',
-        accent: true,
-      },
-    ],
-  },
   projectsIntro: {
     eyebrow: 'Кейсы',
-    headline: 'Не макеты. Сборки, которые уже дошли до рабочего сценария.',
-    note: 'Шесть кейсов — разные задачи. Два сейчас в архиве. Записи у FADELINE, «ВключиСебя» и резюме-бота. У LINKTECH открыто живое демо.',
-    shotHint: 'Нажмите снимок — откроется целиком',
+    headline: 'Что я уже сделал',
+    note: 'Боты, Mini App и приложения — с живым демо, видео или скриншотами. Нажмите на экран, чтобы рассмотреть.',
     youtubeCta: 'Смотреть на YouTube',
     youtubeCtaShort: 'YouTube',
+    demoCta: 'Открыть демо ↗',
+    sameCta: 'Хочу так же → Telegram',
+    details: 'Технические детали',
+    task: 'Задача',
+    solution: 'Решение',
+    result: 'Результат',
+    built: 'Что построил',
+    role: 'Моя роль',
+    flow: 'Как устроено',
     lightboxClose: 'Закрыть',
+    prev: 'Предыдущий',
+    next: 'Следующий',
   },
   moreWork: {
-    eyebrow: 'Сайты',
-    headline: 'Сайты и инструменты вне Telegram',
-    note: 'Два примера: справочник смены и тренажёр меню.',
+    eyebrow: 'Ещё проекты',
+    headline: 'Ещё проекты',
+    note: 'Не только Telegram: справочник для смены ресторана и тренажёр меню.',
     items: [
       {
         id: 'pako-shift',
@@ -91,97 +77,94 @@ export const site = {
         title: 'Пако — на смене',
         text: 'Справочник меню и бара для официантов на iPhone: 59 блюд и 44 напитка, работает без сети.',
         stack: 'HTML / CSS / JS · Service Worker',
-        icon: 'screen',
       },
       {
         id: 'pako-guide',
-        kicker: 'Шпаргалка',
+        kicker: 'Тренажёр',
         title: 'Карточки и экзамен по меню',
         text: 'Карточки блюд, тренировка и проверка — чтобы смена выучила меню, а не листала чаты.',
         stack: 'Python · vanilla JS · HTML',
-        icon: 'cards',
       },
     ],
   },
-  capabilities: {
-    eyebrow: 'Навыки',
-    headline: 'Что могу взять в работу',
-    stackLine:
-      'Telegram Bot API · Mini Apps · HTML / CSS / JS · Python · TypeScript · React · Fastify · Payments · PostgreSQL · SQLite · FFmpeg · ИИ с лимитами · Electron · VPS',
-    items: [
+  offer: {
+    eyebrow: 'Форматы',
+    headline: 'Что я делаю',
+    aside:
+      'А ещё: сервер и запуск, приём оплат (ЮKassa, Telegram Stars), ИИ-функции с лимитами, доработка уже запущенных проектов.',
+    marquee:
+      'Telegram Bot API · Mini Apps · TypeScript · React · Python · Fastify · PostgreSQL · SQLite · FFmpeg · Electron · VPS',
+    cards: [
       {
-        id: 'bot',
-        title: 'Боты под разные задачи',
-        result:
-          'Заявки, каталог, уведомления, выдача файла, запись на услугу — сценарий под вашу работу, не один готовый шаблон.',
-        signal: 'blue',
-        icon: 'bot',
+        id: 'bots',
+        title: 'Telegram-боты',
+        text: 'Заявки, каталог, запись, уведомления, выдача файлов, оплата.',
       },
       {
         id: 'miniapp',
-        title: 'Mini App внутри Telegram',
-        result:
-          'Экран, где настраивают задачу и видят статус. FADELINE и LINKTECH — такие экраны, не единственный формат.',
-        signal: 'green',
-        icon: 'screen',
+        title: 'Mini App',
+        text: 'Полноценный интерфейс внутри Telegram: каталог, корзина, личный кабинет, статусы.',
       },
       {
-        id: 'web',
-        title: 'Сайты, PWA и панели',
-        result:
-          'Страница или приложение в браузере, в том числе офлайн. Как справочник «Пако — на смене».',
-        signal: 'green',
-        icon: 'board',
-      },
-      {
-        id: 'harden',
-        title: 'Сервер, оплаты, ИИ с лимитами',
-        result:
-          'API, очередь, запуск на сервере, оплаты. ИИ — с понятным входом, не бесконечный чат. Могу довести уже живой продукт.',
-        signal: 'blue',
-        icon: 'shield',
+        id: 'sites',
+        title: 'Сайты и веб-приложения',
+        text: 'Лендинги, панели, PWA, которые работают даже без интернета.',
       },
     ],
   },
   process: {
-    eyebrow: 'Как работаю',
-    headline: 'Без тумана в разработке',
-    copy: 'Захожу, когда понятен результат: бот, Mini App, сайт или внутренний инструмент. На выходе — работающая сборка, а не только макет.',
+    eyebrow: 'Процесс',
+    headline: 'Как я работаю',
     steps: [
       {
         id: '01',
-        title: 'Фиксируем один полезный сценарий',
-        text: 'Что человек нажимает и что получает на выходе. Остальное откладываем.',
-        icon: 'focus',
+        title: 'Обсуждаем задачу',
+        text: 'Вы пишете в Telegram, что нужно. Задаю вопросы и предлагаю формат: бот, Mini App или сайт.',
       },
       {
         id: '02',
-        title: 'Собираю рабочую первую версию',
-        text: 'Бот, Mini App, сайт или внутренний инструмент — то, что уже можно прогнать руками.',
-        icon: 'nodes',
+        title: 'Договариваемся',
+        text: 'Фиксирую, что войдёт в первую версию, сроки и стоимость — всё в переписке, до начала работы.',
       },
       {
         id: '03',
-        title: 'Проверяем, запускаем, передаю',
-        text: 'Прогоняем сценарий, поднимаем сборку и оставляем понятную передачу.',
-        icon: 'handoff',
+        title: 'Делаю и показываю',
+        text: 'Первая рабочая версия, которую можно потрогать руками. Дорабатываем по вашим комментариям.',
+      },
+      {
+        id: '04',
+        title: 'Запускаю и передаю',
+        text: 'Запускаю на сервере, проверяем вместе, передаю код, доступы и инструкцию.',
       },
     ],
   },
+  about: {
+    eyebrow: 'Автор',
+    headline: 'Обо мне',
+    text: 'Меня зовут Дмитрий Деханов. Делаю Telegram-ботов, Mini App и сайты — один, поэтому вы общаетесь напрямую с тем, кто пишет код. Люблю, когда интерфейс понятен с первого касания, а под капотом всё надёжно: очередь, сервер, оплаты. В портфолио — аудиосервис в Mini App, оптовые каталоги, DJ-приложение для Mac и PWA для официантов.',
+    facts: [
+      { label: 'Полный цикл', value: 'от идеи до сервера' },
+      { label: 'Формат', value: 'удалённо, по всей России' },
+      { label: 'Часовой пояс', value: 'Москва, UTC+3' },
+    ],
+  },
+  reviews: {
+    eyebrow: 'Отзывы',
+    headline: 'Что говорят',
+  },
   contact: {
-    eyebrow: 'Контакт',
-    headline: 'Нужен бот, Mini App или сайт под конкретную работу?',
-    text: 'Напишите в Telegram или на почту. Разберём одну задачу и объём первого этапа.',
-    legal:
-      'На сайте нет форм и приёма оплаты. Переписка идёт в Telegram или по почте. Это не публичная оферта: условия работы согласовываем в переписке.',
+    headline: 'Есть идея? Напишите мне в Telegram',
+    headlineAccent: 'в Telegram',
+    text: 'Расскажите в двух словах, что нужно, — отвечу лично и предложу, как это сделать.',
     primary: 'Написать в Telegram',
+    emailLead: 'или на почту',
+    copied: 'Почта скопирована',
   },
   nav: [
     { href: '#projects', label: 'Кейсы' },
-    { href: '#more', label: 'Сайты' },
-    { href: '#capabilities', label: 'Что могу' },
+    { href: '#offer', label: 'Что делаю' },
     { href: '#process', label: 'Как работаю' },
-    { href: '#contact', label: 'Контакт' },
+    { href: '#about', label: 'Обо мне' },
   ],
   heroFlow: [
     {
@@ -216,11 +199,42 @@ export const site = {
     },
   ],
   footer: {
-    who: 'Дмитрий Деханов · удалённо · UTC+3',
     privacy: 'Конфиденциальность',
     security: 'Безопасность',
     terms: 'Условия',
     emailLabel: 'Почта',
-    copy: '© 2026. Портфолио Дмитрия Деханова. В кейсах — записанные рабочие прототипы.',
+    telegram: 'Telegram',
+    github: 'GitHub',
+    legal: 'Сайт не принимает оплату и не собирает данные. Это не публичная оферта.',
   },
-} as const
+  menu: {
+    open: 'Меню',
+    close: 'Закрыть',
+  },
+}
+
+export const site = tyDeep(rawSite)
+
+const rawReviews: Review[] = [
+  { text: '[[REVIEW_1_TEXT]]', author: '[[REVIEW_1_AUTHOR]]', context: '[[REVIEW_1_CONTEXT]]' },
+  { text: '[[REVIEW_2_TEXT]]', author: '[[REVIEW_2_AUTHOR]]', context: '[[REVIEW_2_CONTEXT]]' },
+  { text: '[[REVIEW_3_TEXT]]', author: '[[REVIEW_3_AUTHOR]]', context: '[[REVIEW_3_CONTEXT]]' },
+]
+
+export const reviews: Review[] = rawReviews
+
+export function configuredReviews(): Review[] {
+  return reviews.filter((item) => isConfigured(item.text) && isConfigured(item.author))
+}
+
+export function projectsInTelegram(count: number): string {
+  const mod10 = count % 10
+  const mod100 = count % 100
+  const word =
+    mod10 === 1 && mod100 !== 11
+      ? 'проект'
+      : mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)
+        ? 'проекта'
+        : 'проектов'
+  return `${count}\u00A0${word} в\u00A0Telegram · живое демо · полный цикл от\u00A0идеи до\u00A0сервера`
+}
