@@ -18,11 +18,15 @@ export function WorkProcess() {
         <ol className="steps">
           {site.process.steps.map((step, index) => (
             <li key={step.id} className="card-premium">
-              <p className="steps__num grad-text">{step.id}</p>
-              <h3>
-                {STEP_ICONS[index] ? <Icon name={STEP_ICONS[index]} size={16} /> : null}
-                <span>{step.title}</span>
-              </h3>
+              <div className="steps__top">
+                <p className="steps__num grad-text">{step.id}</p>
+                {STEP_ICONS[index] ? (
+                  <span className="icon-tile icon-tile--sm" aria-hidden="true">
+                    <Icon name={STEP_ICONS[index]} size={20} />
+                  </span>
+                ) : null}
+              </div>
+              <h3>{step.title}</h3>
               <p>{step.text}</p>
             </li>
           ))}

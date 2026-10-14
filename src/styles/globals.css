@@ -871,6 +871,13 @@ html.is-locked body {
   text-transform: uppercase;
 }
 
+.yt-mark {
+  display: block;
+  flex: none;
+  width: 22px;
+  height: 16px;
+}
+
 .tg-mark {
   width: 18px;
   height: 18px;
@@ -1195,12 +1202,34 @@ html.is-locked body {
 }
 
 .hero-phone .phone__caption {
-  width: auto;
+  display: grid;
+  justify-items: center;
+  gap: 2px;
+  width: 100%;
   max-width: 100%;
-  white-space: normal;
+  margin-top: 10px;
   position: static;
   left: auto;
   transform: none;
+  white-space: normal;
+}
+
+.phone__caption-label {
+  color: var(--muted);
+}
+
+.phone__caption-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.hero-phone .phone__caption .icon {
+  width: 14px;
+  height: 14px;
+  display: block;
 }
 
 @media (min-width: 960px) {
@@ -2317,7 +2346,11 @@ html.is-locked .float-cta {
 @media (hover: hover) and (pointer: fine) {
   .offer__card:hover .craft-extra { opacity: 1; }
   .offer__card:hover .craft-press { transform: scale(0.97); transform-box: fill-box; transform-origin: center; }
-  .offer__card:hover .craft-cursor { transform: translate(-96px, -4px); }
+  .offer__card:hover .craft-cursor {
+    transform: translate(-8px, -5px);
+    transform-box: fill-box;
+    transform-origin: 0 0;
+  }
 }
 
 .illus {
@@ -3106,15 +3139,25 @@ section + section::before {
 .facts li .icon-tile { grid-row: 1 / span 2; }
 
 .steps h3 {
-  display: grid;
-  grid-template-columns: 16px minmax(0, 1fr);
-  gap: 8px;
-  align-items: start;
+  display: block;
+  margin-top: 14px;
+}
+.steps li {
+  position: relative;
   min-width: 0;
+  padding: 18px 16px 16px;
+  border-radius: 20px;
+  overflow: hidden;
 }
 
-.steps h3 span { min-width: 0; }
-.steps li { min-width: 0; }
+.steps__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.steps__top .steps__num { margin: 0; }
 
 .lightbox__close,
 .cta__mail {

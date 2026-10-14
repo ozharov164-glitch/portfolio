@@ -125,18 +125,11 @@ export function HeroPhone() {
     }
     document.addEventListener('visibilitychange', onHide)
 
-    const replay = () => {
-      if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) return
-      arm()
-    }
-    root.addEventListener('click', replay)
-
     return () => {
       stopped = true
       for (const id of timers) window.clearTimeout(id)
       observer.disconnect()
       document.removeEventListener('visibilitychange', onHide)
-      root.removeEventListener('click', replay)
     }
   }, [])
 
@@ -212,8 +205,14 @@ export function HeroPhone() {
         </div>
       </div>
       <p className="phone__caption">
-        {ty('Демонстрация: бот')} <Icon className="icon--mute" name="arrow-right" size={16} /> {ty('Mini App')}{' '}
-        <Icon className="icon--mute" name="arrow-right" size={16} /> {ty('результат')}
+        <span className="phone__caption-label">{ty('Демонстрация')}</span>
+        <span className="phone__caption-row">
+          <span>{ty('бот')}</span>
+          <Icon className="icon--mute" name="arrow-right" size={16} />
+          <span>{ty('Mini App')}</span>
+          <Icon className="icon--mute" name="arrow-right" size={16} />
+          <span>{ty('результат')}</span>
+        </span>
       </p>
     </div>
   )
