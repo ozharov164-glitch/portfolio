@@ -73,18 +73,18 @@ export function SiteWindow() {
 
 export function PakoDesk() {
   return (
-    <svg className="craft" viewBox="0 0 200 160" role="img" aria-hidden="true">
-      <rect x="58" y="8" width="84" height="144" rx="18" fill="var(--surface-3)" stroke="var(--hairline-strong)" />
-      <rect x="78" y="16" width="44" height="5" rx="2.5" fill="var(--surface-1)" />
-      <rect x="70" y="30" width="28" height="28" rx="8" fill="var(--surface-4)" />
-      <rect x="102" y="30" width="28" height="28" rx="8" fill="var(--surface-1)" stroke="var(--tg)" strokeWidth="1.5" />
-      <text x="116" y="49" textAnchor="middle" fill="var(--tg)" fontSize="13" fontFamily="Unbounded, sans-serif">
+    <svg className="craft" viewBox="0 0 200 180" role="img" aria-hidden="true">
+      <rect x="50" y="8" width="100" height="164" rx="22" fill="#151c26" stroke="rgb(237 245 255 / 0.28)" strokeWidth="1.5" />
+      <rect x="78" y="16" width="44" height="6" rx="3" fill="rgb(237 245 255 / 0.2)" />
+      <rect x="64" y="32" width="32" height="32" rx="9" fill="#10151d" />
+      <rect x="104" y="32" width="32" height="32" rx="9" fill="#10151d" stroke="#2AABEE" strokeWidth="1.5" />
+      <text x="120" y="53" textAnchor="middle" fill="#2AABEE" fontSize="14" fontFamily="Unbounded, sans-serif">
         П
       </text>
-      <rect x="70" y="64" width="28" height="28" rx="8" fill="var(--surface-4)" />
-      <rect x="102" y="64" width="28" height="28" rx="8" fill="var(--surface-4)" />
-      <rect x="66" y="102" width="68" height="16" rx="8" fill="rgb(53 226 161 / 0.16)" />
-      <text x="100" y="113" textAnchor="middle" fill="var(--signal)" fontSize="9" fontFamily="Onest, sans-serif">
+      <rect x="64" y="72" width="32" height="32" rx="9" fill="#10151d" />
+      <rect x="104" y="72" width="32" height="32" rx="9" fill="#10151d" />
+      <rect x="62" y="116" width="76" height="18" rx="9" fill="rgb(53 226 161 / 0.2)" />
+      <text x="100" y="128" textAnchor="middle" fill="#35E2A1" fontSize="10" fontFamily="Onest, sans-serif">
         {ty('Установлено')}
       </text>
     </svg>

@@ -9,7 +9,7 @@ export function YoutubeMark() {
       focusable="false"
     >
       <rect width="28" height="20" rx="5" fill="#FF0033" />
-      <path d="M12 6.15 12 13.85 19.6 10Z" fill="#fff" />
+      <path d="M11.7 5.2 11.7 14.8 19.7 10Z" fill="#fff" />
     </svg>
   )
 }
