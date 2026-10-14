@@ -18,6 +18,7 @@ export function DeviceLaptop({ children, className }: DeviceLaptopProps) {
         </div>
         <div className="laptop__base" aria-hidden="true" />
       </div>
+      <span className="phone__ground" aria-hidden="true" />
     </div>
   )
 }
