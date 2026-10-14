@@ -1,23 +1,33 @@
-import type { ReactNode } from 'react'
 import { site } from '../content/site'
 import { useInView, useSpotlight } from '../lib/motion'
+import { BotChat, MiniAppShot, SiteWindow } from './illustrations/Craft'
+import { Icon, type IconName } from './icons/Icon'
+
+const MARKS: IconName[] = ['message-circle', 'layout-panel-top', 'globe']
+const TONES = ['icon-tile--tg', '', 'icon-tile--signal']
+const ARTS = [BotChat, MiniAppShot, SiteWindow]
 
 function OfferCard({
+  index,
   id,
   title,
   text,
-  children,
 }: {
+  index: number
   id: string
   title: string
   text: string
-  children: ReactNode
 }) {
   const ref = useSpotlight<HTMLLIElement>()
+  const Art = ARTS[index] ?? BotChat
+  const mark = MARKS[index] ?? 'message-circle'
   return (
-    <li ref={ref} className={`offer__card is-${id}`}>
-      <div className={`illus illus--${id}`} aria-hidden="true">
-        {children}
+    <li ref={ref} className={`offer__card card-premium is-${id}`}>
+      <span className={['icon-tile', TONES[index]].filter(Boolean).join(' ')}>
+        <Icon name={mark} size={24} />
+      </span>
+      <div className="craft-slot" aria-hidden="true">
+        <Art />
       </div>
       <h3>{title}</h3>
       <p>{text}</p>
@@ -36,40 +46,9 @@ export function Offer() {
         <h2>{site.offer.headline}</h2>
       </header>
       <ul className="offer__grid">
-        {cards[0] ? (
-          <OfferCard id={cards[0].id} title={cards[0].title} text={cards[0].text}>
-            <span className="bubble bubble--user">Заявка</span>
-            <span className="bubble bubble--bot">
-              Ответ
-              <i className="typing">
-                <i />
-                <i />
-                <i />
-              </i>
-            </span>
-          </OfferCard>
-        ) : null}
-        {cards[1] ? (
-          <OfferCard id={cards[1].id} title={cards[1].title} text={cards[1].text}>
-            <span className="illus-phone">
-              <span className="illus-phone__bars">
-                <i />
-                <i />
-                <i />
-              </span>
-              <span className="illus-sheet" />
-            </span>
-          </OfferCard>
-        ) : null}
-        {cards[2] ? (
-          <OfferCard id={cards[2].id} title={cards[2].title} text={cards[2].text}>
-            <span className="illus-window">
-              <i />
-              <i />
-              <i />
-            </span>
-          </OfferCard>
-        ) : null}
+        {cards.map((card, index) => (
+          <OfferCard key={card.id} index={index} id={card.id} title={card.title} text={card.text} />
+        ))}
       </ul>
       <p className="offer__aside">{site.offer.aside}</p>
       <div className={marqueeOn ? 'marquee' : 'marquee is-off'} ref={marqueeRef}>

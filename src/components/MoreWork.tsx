@@ -1,7 +1,14 @@
-import { useState } from 'react'
+import { useState, type ReactNode } from 'react'
 import { site } from '../content/site'
+import { FlashStack, PakoDesk, PakoMenu } from './illustrations/Craft'
 
-function FlipCard() {
+function FlipSlot({
+  front,
+  back,
+}: {
+  front: ReactNode
+  back: ReactNode
+}) {
   const [flipped, setFlipped] = useState(false)
   return (
     <button
@@ -11,22 +18,8 @@ function FlipCard() {
       aria-pressed={flipped}
     >
       <span className="flip__inner">
-        <span className="flip__face browser">
-          <span className="browser__dots" aria-hidden="true">
-            <i />
-            <i />
-            <i />
-          </span>
-          <span className="quiz-card">Карточка блюда</span>
-        </span>
-        <span className="flip__face flip__back browser">
-          <span className="browser__dots" aria-hidden="true">
-            <i />
-            <i />
-            <i />
-          </span>
-          <span className="quiz-card">Проверка</span>
-        </span>
+        <span className="flip__face craft-slot">{front}</span>
+        <span className="flip__face flip__back craft-slot">{back}</span>
       </span>
     </button>
   )
@@ -35,6 +28,7 @@ function FlipCard() {
 export function MoreWork() {
   const shift = site.moreWork.items[0]
   const guide = site.moreWork.items[1]
+  const [cardFlip, setCardFlip] = useState(false)
   if (!shift || !guide) return null
 
   return (
@@ -45,22 +39,24 @@ export function MoreWork() {
         <p className="lede">{site.moreWork.note}</p>
       </header>
       <ul className="more__grid">
-        <li className="more__card">
-          <div className="mini-phone" aria-hidden="true">
-            <ul>
-              <li>Позиция меню</li>
-              <li>Позиция меню</li>
-              <li>Напиток</li>
-              <li>Напиток</li>
-            </ul>
-          </div>
+        <li className="more__card card-premium">
+          <FlipSlot front={<PakoDesk />} back={<PakoMenu />} />
           <p className="kicker">{shift.kicker}</p>
           <h3>{shift.title}</h3>
           <p>{shift.text}</p>
           <p className="mono more__stack">{shift.stack}</p>
         </li>
-        <li className="more__card">
-          <FlipCard />
+        <li className="more__card card-premium">
+          <button
+            type="button"
+            className="flip is-static"
+            aria-pressed={cardFlip}
+            onClick={() => setCardFlip((value) => !value)}
+          >
+            <span className="craft-slot">
+              <FlashStack flipped={cardFlip} />
+            </span>
+          </button>
           <p className="kicker">{guide.kicker}</p>
           <h3>{guide.title}</h3>
           <p>{guide.text}</p>

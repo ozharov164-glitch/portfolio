@@ -2161,8 +2161,12 @@ html.is-locked .float-cta {
   transition: transform 500ms var(--ease-out);
 }
 
-.flip.is-flipped .flip__inner,
-.flip:hover .flip__inner { transform: rotateY(180deg); }
+.flip.is-flipped .flip__inner { transform: rotateY(180deg); }
+
+@media (hover: hover) and (pointer: fine) {
+  .flip:hover .flip__inner { transform: none; }
+  .flip.is-flipped:hover .flip__inner { transform: rotateY(180deg); }
+}
 
 @media (hover: none) {
   .flip:hover .flip__inner { transform: none; }
@@ -2180,30 +2184,30 @@ html.is-locked .float-cta {
 
 .flip__back { transform: rotateY(180deg); }
 
-.browser {
-  background: var(--ink-0);
-  border: 1px solid var(--line-strong);
+.craft-slot {
+  width: 100%;
+  height: 160px;
+  display: grid;
+  place-items: center;
 }
 
-.browser__dots {
-  position: absolute;
-  top: 10px;
-  left: 12px;
-  display: flex;
-  gap: 5px;
+.more .craft-slot,
+.flip,
+.flip.is-static {
+  width: 200px;
+  height: 180px;
+  margin-inline: auto;
 }
 
-.browser__dots i {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--line-strong);
-}
+.craft { width: 100%; height: 100%; }
+.craft-extra { opacity: 0; transition: opacity 200ms var(--ease-out); }
+.craft-press,
+.craft-cursor { transition: transform 200ms var(--ease-out); }
 
-.quiz-card {
-  padding: 16px 20px;
-  border-radius: 12px;
-  background: var(--ink-3);
+@media (hover: hover) and (pointer: fine) {
+  .offer__card:hover .craft-extra { opacity: 1; }
+  .offer__card:hover .craft-press { transform: scale(0.97); transform-box: fill-box; transform-origin: center; }
+  .offer__card:hover .craft-cursor { transform: translate(-96px, -4px); }
 }
 
 .illus {
