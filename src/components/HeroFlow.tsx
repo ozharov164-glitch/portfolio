@@ -1,525 +1,343 @@
-import { useEffect, useId, useRef, useState } from 'react'
+import { useEffect, useId, useRef, useState, type KeyboardEvent, type PointerEvent } from 'react'
 import { site } from '../content/site'
+import { usePrefersReducedMotion } from '../lib/motion'
+import { Icon, type IconName } from './icons/Icon'
 
-type Point = { x: number; y: number }
-type FlowKind = 'dwell' | 'move' | 'hold' | 'reset' | 'seek'
+const ICONS: IconName[] = ['send', 'smartphone', 'workflow', 'server', 'badge-check', 'rocket']
+const LAST = site.heroFlow.length - 1
 
-type Machine = {
-  kind: FlowKind
-  node: number
-  fromT: number
-  toT: number
-  started: number
-}
-
-const OPEN_DELAY_MS = 70
-const CLOSE_DELAY_MS = 160
-const PATH_SETTLE_MS = 400
-const MOVE_MS = 620
-const DWELL_MS = 400
-const HOLD_MS = 720
-const RESET_MS = 280
-const SEEK_MS = 360
-const PING_MS = 460
-const TRAIL = [0.042, 0.084] as const
-const STEP_COUNT = site.heroFlow.length
-const LAST = STEP_COUNT - 1
-
-function toPath(points: Point[]): string {
-  if (points.length < 2) return ''
-  return points
-    .map((point, index) => `${index === 0 ? 'M' : 'L'} ${point.x.toFixed(1)} ${point.y.toFixed(1)}`)
-    .join(' ')
-}
-
-function prefersReducedMotion(): boolean {
-  return window.matchMedia('(prefers-reduced-motion: reduce)').matches
-}
-
-function hasHoverPointer(): boolean {
-  return window.matchMedia('(hover: hover) and (pointer: fine)').matches
-}
-
-function clamp01(value: number): number {
-  return Math.min(1, Math.max(0, value))
-}
-
-function easeInOutCubic(value: number): number {
-  const t = clamp01(value)
-  return t < 0.5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2
-}
-
-function nodeT(index: number): number {
-  return index / LAST
-}
-
-function tToNode(t: number): number {
-  return Math.min(LAST, Math.max(0, Math.round(t * LAST)))
-}
-
-function applyOffset(el: SVGElement | null, t: number) {
-  if (!el) return
-  el.style.offsetDistance = `${(clamp01(t) * 100).toFixed(3)}%`
-}
-
-function bindPath(el: SVGElement | null, path: string) {
-  if (!el) return
-  el.style.offsetPath = path ? `path('${path}')` : 'none'
-}
-
-function assertNever(value: never): never {
-  throw new Error(`unexpected flow kind: ${String(value)}`)
+function ease(t: number): number {
+  const x1 = 0.65
+  const y1 = 0
+  const x2 = 0.35
+  const y2 = 1
+  let start = 0
+  let end = 1
+  for (let i = 0; i < 8; i += 1) {
+    const mid = (start + end) / 2
+    const x = 3 * (1 - mid) * (1 - mid) * mid * x1 + 3 * (1 - mid) * mid * mid * x2 + mid * mid * mid
+    if (x < t) start = mid
+    else end = mid
+  }
+  const u = (start + end) / 2
+  return 3 * (1 - u) * (1 - u) * u * y1 + 3 * (1 - u) * u * u * y2 + u * u * u
 }
 
 export function HeroFlow() {
-  const wrapRef = useRef<HTMLDivElement>(null)
-  const dotRefs = useRef<Array<HTMLSpanElement | null>>([])
-  const signalRef = useRef<SVGCircleElement>(null)
-  const coreRef = useRef<SVGCircleElement>(null)
+  const cardRef = useRef<HTMLDivElement>(null)
+  const svgRef = useRef<SVGSVGElement>(null)
+  const railRef = useRef<SVGPathElement>(null)
+  const progressRef = useRef<SVGPathElement>(null)
+  const signalRef = useRef<SVGGElement>(null)
+  const buttonsRef = useRef<Array<HTMLButtonElement | null>>([])
+  const mobileListRef = useRef<HTMLOListElement>(null)
+  const dotRef = useRef<HTMLSpanElement>(null)
   const fillRef = useRef<HTMLSpanElement>(null)
-  const meterRef = useRef<HTMLDivElement>(null)
-  const axisRef = useRef<'x' | 'y'>('y')
-  const trailRefs = useRef<Array<SVGCircleElement | null>>([])
-  const alongRef = useRef(0)
-  const visibleRef = useRef(true)
-  const reduceRef = useRef(false)
-  const openHintRef = useRef<number | null>(null)
-  const machineRef = useRef<Machine>({
-    kind: 'dwell',
-    node: 0,
-    fromT: 0,
-    toT: 0,
-    started: 0,
-  })
-  const openTimer = useRef(0)
-  const closeTimer = useRef(0)
-  const pingTimer = useRef(0)
-  const [path, setPath] = useState('')
-  const [liveNode, setLiveNode] = useState(0)
-  const [armed, setArmed] = useState<number | null>(null)
-  const [openHint, setOpenHint] = useState<number | null>(null)
-  const hintId = useId()
-  const readoutId = `${hintId}-readout`
-  const previewIndex = openHint ?? liveNode
-  const preview = site.heroFlow[previewIndex] ?? site.heroFlow[0]
-  const clock = `${String(liveNode + 1).padStart(2, '0')}/${String(STEP_COUNT).padStart(2, '0')}`
+  const tRef = useRef(0)
+  const activeRef = useRef(0)
+  const visibleRef = useRef(false)
+  const desktopRef = useRef(false)
+  const hoverRef = useRef(false)
+  const pausedRef = useRef(false)
+  const timerRef = useRef(0)
+  const runRef = useRef(0)
+  const scheduleRef = useRef<() => void>(() => {})
+  const [active, setActive] = useState(0)
+  const [shown, setShown] = useState(0)
+  const [fading, setFading] = useState(false)
+  const [pulse, setPulse] = useState(false)
+  const [desktop, setDesktop] = useState(false)
+  const reduced = usePrefersReducedMotion()
+  const labelId = useId()
+  const step = site.heroFlow[shown] ?? site.heroFlow[0]
 
-  function ping(index: number) {
-    window.clearTimeout(pingTimer.current)
-    setArmed(index)
-    pingTimer.current = window.setTimeout(() => setArmed(null), PING_MS)
+  function place(t: number) {
+    const rail = railRef.current
+    const progress = progressRef.current
+    const signal = signalRef.current
+    if (!rail || !progress || !signal) return
+    const length = rail.getTotalLength()
+    if (!length) return
+    const point = rail.getPointAtLength(Math.max(0, Math.min(1, t)) * length)
+    signal.setAttribute('transform', `translate(${point.x} ${point.y})`)
+    progress.style.transform = `scaleX(${Math.max(0, Math.min(1, t))})`
+    tRef.current = t
   }
 
-  function commitNode(index: number) {
-    setLiveNode((current) => {
-      if (current === index) return current
-      ping(index)
-      return index
+  function measure() {
+    const svg = svgRef.current
+    const rail = railRef.current
+    const progress = progressRef.current
+    if (!svg || !rail || !progress) return
+    const box = svg.getBoundingClientRect()
+    const points = buttonsRef.current.flatMap((button) => {
+      if (!button) return []
+      const rect = button.getBoundingClientRect()
+      return [{ x: rect.left + rect.width / 2 - box.left, y: rect.top + rect.height / 2 - box.top }]
     })
+    const first = points[0]
+    const last = points[points.length - 1]
+    if (!first || !last) return
+    const d = `M ${first.x} ${first.y} L ${last.x} ${last.y}`
+    rail.setAttribute('d', d)
+    progress.setAttribute('d', d)
+    place(tRef.current)
   }
 
-  function paint(t: number) {
-    alongRef.current = t
-    applyOffset(signalRef.current, t)
-    applyOffset(coreRef.current, t)
-    TRAIL.forEach((lag, index) => {
-      applyOffset(trailRefs.current[index], t - lag)
-    })
-    const fill = fillRef.current
-    if (fill) {
-      const axis = axisRef.current
-      fill.style.transform = axis === 'x' ? `scaleX(${clamp01(t)})` : `scaleY(${clamp01(t)})`
-    }
-    commitNode(tToNode(t))
-  }
-
-  function clearHintTimers() {
-    window.clearTimeout(openTimer.current)
-    window.clearTimeout(closeTimer.current)
-  }
-
-  function openAt(index: number) {
-    clearHintTimers()
-    setOpenHint(index)
-  }
-
-  function scheduleOpen(index: number) {
-    if (!hasHoverPointer()) return
-    clearHintTimers()
-    if (openHint === index) return
-    if (openHint !== null) {
-      setOpenHint(index)
+  function travel(index: number, duration: number, done?: () => void) {
+    const from = tRef.current
+    const to = LAST === 0 ? 0 : index / LAST
+    if (duration <= 0 || reduced) {
+      place(to)
+      setActive(index)
+      activeRef.current = index
+      done?.()
       return
     }
-    openTimer.current = window.setTimeout(() => setOpenHint(index), OPEN_DELAY_MS)
-  }
-
-  function scheduleClose() {
-    if (!hasHoverPointer()) return
-    clearHintTimers()
-    closeTimer.current = window.setTimeout(() => setOpenHint(null), CLOSE_DELAY_MS)
+    const started = performance.now()
+    const run = runRef.current + 1
+    runRef.current = run
+    const tick = (now: number) => {
+      if (run !== runRef.current) return
+      const u = Math.min(1, (now - started) / duration)
+      place(from + (to - from) * ease(u))
+      if (u < 1) {
+        window.requestAnimationFrame(tick)
+        return
+      }
+      setActive(index)
+      activeRef.current = index
+      setPulse(true)
+      window.setTimeout(() => setPulse(false), 600)
+      done?.()
+    }
+    window.requestAnimationFrame(tick)
   }
 
   useEffect(() => {
-    const wrap = wrapRef.current
-    if (!wrap) return
+    activeRef.current = active
+  }, [active])
 
-    const measure = () => {
-      const box = wrap.getBoundingClientRect()
-      const points = site.heroFlow.map((_, index) => {
-        const dot = dotRefs.current[index]
-        if (!dot) return { x: 0, y: 0 }
-        const rect = dot.getBoundingClientRect()
-        return {
-          x: rect.left + rect.width / 2 - box.left,
-          y: rect.top + rect.height / 2 - box.top,
-        }
-      })
-      const xs = points.map((point) => point.x)
-      const ys = points.map((point) => point.y)
-      const xSpread = Math.max(...xs) - Math.min(...xs)
-      const ySpread = Math.max(...ys) - Math.min(...ys)
-      const snapped =
-        xSpread < 1.5 && ySpread > 8
-          ? points.map((point) => ({
-              x: xs.reduce((sum, value) => sum + value, 0) / xs.length,
-              y: point.y,
-            }))
-          : ySpread < 1.5 && xSpread > 8
-            ? points.map((point) => ({
-                x: point.x,
-                y: ys.reduce((sum, value) => sum + value, 0) / ys.length,
-              }))
-            : points
-      setPath(toPath(snapped))
-      const first = snapped[0]
-      const last = snapped[snapped.length - 1]
-      const meter = meterRef.current
-      const horizontal = xSpread >= ySpread && xSpread > 8
-      axisRef.current = horizontal ? 'x' : 'y'
-      if (meter && first && last) {
-        meter.classList.toggle('is-x', horizontal)
-        if (horizontal) {
-          const left = Math.min(first.x, last.x)
-          meter.style.left = `${left}px`
-          meter.style.top = `${first.y - 1}px`
-          meter.style.width = `${Math.max(Math.abs(last.x - first.x), 1)}px`
-          meter.style.height = '2px'
-        } else {
-          const top = Math.min(first.y, last.y)
-          meter.style.left = `${first.x - 1}px`
-          meter.style.top = `${top}px`
-          meter.style.width = '2px'
-          meter.style.height = `${Math.max(Math.abs(last.y - first.y), 1)}px`
-        }
-      }
+  useEffect(() => {
+    const media = window.matchMedia('(min-width: 960px)')
+    const sync = () => {
+      desktopRef.current = media.matches
+      setDesktop(media.matches)
     }
+    sync()
+    media.addEventListener('change', sync)
+    return () => media.removeEventListener('change', sync)
+  }, [])
 
+  useEffect(() => {
     measure()
-    const observer = new ResizeObserver(measure)
-    observer.observe(wrap)
+    const card = cardRef.current
+    if (!card) return
+    const observer = new ResizeObserver(() => measure())
+    observer.observe(card)
     window.addEventListener('resize', measure)
-
-    let frame = 0
-    const started = performance.now()
-    const tick = (now: number) => {
-      measure()
-      if (now - started < PATH_SETTLE_MS) {
-        frame = window.requestAnimationFrame(tick)
-      }
-    }
-    frame = window.requestAnimationFrame(tick)
-
     return () => {
-      window.cancelAnimationFrame(frame)
       observer.disconnect()
       window.removeEventListener('resize', measure)
     }
-  }, [openHint])
+  }, [desktop])
 
   useEffect(() => {
-    bindPath(signalRef.current, path)
-    bindPath(coreRef.current, path)
-    trailRefs.current.forEach((el) => bindPath(el, path))
-    paint(alongRef.current)
-  }, [path])
+    if (shown === active) return
+    setFading(true)
+    const wait = reduced ? 0 : 160
+    const timer = window.setTimeout(() => {
+      setShown(active)
+      setFading(false)
+    }, wait)
+    return () => window.clearTimeout(timer)
+  }, [active, reduced, shown])
 
   useEffect(() => {
-    const wrap = wrapRef.current
-    if (!wrap) return
-    const io = new IntersectionObserver(
+    const card = cardRef.current
+    if (!card) return
+    const observer = new IntersectionObserver(
       ([entry]) => {
-        visibleRef.current = entry?.isIntersecting ?? true
+        visibleRef.current = entry?.isIntersecting ?? false
       },
-      { threshold: 0.12 },
+      { threshold: 0.35 },
     )
-    io.observe(wrap)
-    return () => io.disconnect()
+    observer.observe(card)
+    return () => observer.disconnect()
   }, [])
 
   useEffect(() => {
-    openHintRef.current = openHint
-    const machine = machineRef.current
-    if (openHint === null) {
-      const node = tToNode(alongRef.current)
-      machine.kind = 'dwell'
-      machine.node = node
-      machine.fromT = nodeT(node)
-      machine.toT = nodeT(node)
-      machine.started = performance.now()
-      paint(nodeT(node))
-      return
-    }
-    machine.kind = 'seek'
-    machine.fromT = alongRef.current
-    machine.toT = nodeT(openHint)
-    machine.node = openHint
-    machine.started = performance.now()
-  }, [openHint])
+    if (!desktop || reduced) return
+    let stopped = false
 
-  useEffect(() => {
-    if (!path) return
-
-    reduceRef.current = prefersReducedMotion()
-    if (reduceRef.current) {
-      paint(0)
-      const signal = signalRef.current
-      const core = coreRef.current
-      if (signal) signal.style.opacity = '0'
-      if (core) core.style.opacity = '0'
-      trailRefs.current.forEach((el) => {
-        if (el) el.style.opacity = '0'
-      })
-      setLiveNode(0)
-      return
-    }
-
-    const machine = machineRef.current
-    if (machine.started === 0) machine.started = performance.now()
-    let frame = 0
-    let pausedAt = 0
-
-    const tick = (now: number) => {
-      if (!visibleRef.current || document.hidden) {
-        if (!pausedAt) pausedAt = now
-        frame = window.requestAnimationFrame(tick)
-        return
-      }
-      if (pausedAt) {
-        machine.started += now - pausedAt
-        pausedAt = 0
-      }
-
-      const elapsed = now - machine.started
-      const signal = signalRef.current
-      const core = coreRef.current
-
-      switch (machine.kind) {
-        case 'dwell': {
-          paint(nodeT(machine.node))
-          if (signal) signal.style.opacity = '1'
-          if (core) core.style.opacity = '1'
-          if (openHintRef.current === null && elapsed >= DWELL_MS) {
-            if (machine.node >= LAST) {
-              machine.kind = 'hold'
-              machine.started = now
-            } else {
-              machine.kind = 'move'
-              machine.fromT = nodeT(machine.node)
-              machine.toT = nodeT(machine.node + 1)
-              machine.started = now
-            }
-          }
-          break
-        }
-        case 'move': {
-          const u = easeInOutCubic(elapsed / MOVE_MS)
-          paint(machine.fromT + (machine.toT - machine.fromT) * u)
-          if (elapsed >= MOVE_MS) {
-            machine.node = Math.min(LAST, machine.node + 1)
-            machine.kind = 'dwell'
-            machine.started = now
-            paint(nodeT(machine.node))
-          }
-          break
-        }
-        case 'hold': {
-          paint(1)
-          if (elapsed >= HOLD_MS) {
-            machine.kind = 'reset'
-            machine.started = now
-          }
-          break
-        }
-        case 'reset': {
-          const fade = 1 - clamp01(elapsed / RESET_MS)
-          if (signal) signal.style.opacity = String(fade)
-          if (core) core.style.opacity = String(fade)
-          paint(1)
-          if (elapsed >= RESET_MS) {
-            machine.kind = 'dwell'
-            machine.node = 0
-            machine.started = now
+    const schedule = () => {
+      window.clearTimeout(timerRef.current)
+      if (stopped || !visibleRef.current || hoverRef.current || pausedRef.current) return
+      const index = activeRef.current
+      const wait = index >= LAST ? 2400 : 1800
+      timerRef.current = window.setTimeout(() => {
+        if (stopped || !visibleRef.current || hoverRef.current || pausedRef.current) return
+        if (activeRef.current >= LAST) {
+          const signal = signalRef.current
+          if (signal) signal.style.opacity = '0'
+          window.setTimeout(() => {
+            place(0)
+            setActive(0)
+            activeRef.current = 0
             if (signal) signal.style.opacity = '1'
-            if (core) core.style.opacity = '1'
-            paint(0)
-          }
-          break
+            schedule()
+          }, 200)
+          return
         }
-        case 'seek': {
-          const u = easeInOutCubic(elapsed / SEEK_MS)
-          paint(machine.fromT + (machine.toT - machine.fromT) * u)
-          if (signal) signal.style.opacity = '1'
-          if (core) core.style.opacity = '1'
-          if (elapsed >= SEEK_MS) {
-            machine.kind = 'dwell'
-            machine.node = tToNode(machine.toT)
-            machine.started = now
-            paint(machine.toT)
-          }
-          break
-        }
-        default:
-          assertNever(machine.kind)
-      }
-
-      frame = window.requestAnimationFrame(tick)
+        travel(activeRef.current + 1, 900, schedule)
+      }, wait)
     }
 
-    frame = window.requestAnimationFrame(tick)
-    return () => window.cancelAnimationFrame(frame)
-  }, [path])
-
-  useEffect(() => {
+    const boot = window.setTimeout(schedule, 400)
+    scheduleRef.current = schedule
     return () => {
-      clearHintTimers()
-      window.clearTimeout(pingTimer.current)
+      stopped = true
+      window.clearTimeout(boot)
+      window.clearTimeout(timerRef.current)
     }
-  }, [])
+  }, [desktop, reduced])
 
   useEffect(() => {
-    const close = (event: PointerEvent) => {
-      const wrap = wrapRef.current
-      if (!wrap) return
-      if (event.target instanceof Node && wrap.contains(event.target)) return
-      setOpenHint(null)
-    }
-    document.addEventListener('pointerdown', close)
-    return () => document.removeEventListener('pointerdown', close)
-  }, [])
+    if (desktop || reduced) return
+    const list = mobileListRef.current
+    const dot = dotRef.current
+    if (!list || !dot) return
+    const tiles = [...list.querySelectorAll<HTMLElement>('.stepper__tile')]
+    const current = tiles[active]
+    const first = tiles[0]
+    if (!current || !first) return
+    const y = current.getBoundingClientRect().top - first.getBoundingClientRect().top
+    dot.style.transform = `translateY(${y}px)`
+    if (fillRef.current) fillRef.current.style.height = `${y}px`
+  }, [active, desktop, reduced])
+
+  function seek(index: number, event?: PointerEvent<HTMLButtonElement>) {
+    if (event && event.pointerType !== 'mouse') return
+    if (!desktopRef.current) return
+    travel(index, reduced ? 0 : 900)
+  }
+
+  function choose(index: number) {
+    pausedRef.current = true
+    window.clearTimeout(timerRef.current)
+    travel(index, reduced ? 0 : desktopRef.current ? 900 : 600)
+  }
+
+  function onKey(event: KeyboardEvent<HTMLOListElement>) {
+    if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft') return
+    const buttons = buttonsRef.current.filter((button): button is HTMLButtonElement => button !== null)
+    const index = buttons.indexOf(document.activeElement as HTMLButtonElement)
+    if (index < 0) return
+    const next = event.key === 'ArrowRight' ? Math.min(LAST, index + 1) : Math.max(0, index - 1)
+    event.preventDefault()
+    buttons[next]?.focus()
+    choose(next)
+  }
 
   return (
-    <div className="hero-flow" ref={wrapRef} onMouseLeave={scheduleClose}>
-      <div className="hero-flow__head">
-        <p className="hero-flow__kicker">{site.hero.flowKicker}</p>
-        <p className="hero-flow__meta">
-          <span className="hero-flow__trace" aria-hidden="true">
-            <span className={openHint === null ? 'hero-flow__trace-dot is-run' : 'hero-flow__trace-dot'} />
-            <span className="mono">{clock}</span>
-          </span>
-          <span className="hero-flow__cue">
-            <span className="hero-flow__cue-hover">{site.hero.flowCueHover}</span>
-            <span className="hero-flow__cue-tap">{site.hero.flowCueTap}</span>
-          </span>
-        </p>
+    <div
+      className="hero-flow card-premium"
+      ref={cardRef}
+      onMouseEnter={() => {
+        hoverRef.current = true
+        window.clearTimeout(timerRef.current)
+      }}
+      onMouseLeave={() => {
+        hoverRef.current = false
+        if (!pausedRef.current) scheduleRef.current()
+      }}
+    >
+      <div className="signal-track">
+        <div className="signal-stage">
+          <svg className="signal-svg" ref={svgRef} aria-hidden="true">
+            <defs>
+              <linearGradient id="flow-grad" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stopColor="#2AABEE" />
+                <stop offset="100%" stopColor="#35E2A1" />
+              </linearGradient>
+            </defs>
+            <path ref={railRef} className="signal-rail" fill="none" />
+            <path ref={progressRef} className="signal-progress" stroke="url(#flow-grad)" fill="none" />
+            <g ref={signalRef}>
+              <circle className={pulse ? 'signal-halo is-pulse' : 'signal-halo'} r="14" />
+              <circle className="signal-dot" r="5" />
+            </g>
+          </svg>
+          <ol className="signal-nodes" onKeyDown={onKey}>
+            {site.heroFlow.map((node, index) => {
+              const icon = ICONS[index] ?? 'send'
+              const state = index === active ? 'is-active' : index < active ? 'is-done' : ''
+              return (
+                <li key={node.id}>
+                  <span className="signal-nodes__num">{String(index + 1).padStart(2, '0')}</span>
+                  <button
+                    type="button"
+                    className={['icon-tile', 'signal-nodes__btn', state].filter(Boolean).join(' ')}
+                    aria-pressed={index === active}
+                    aria-label={node.label}
+                    ref={(el) => {
+                      buttonsRef.current[index] = el
+                    }}
+                    onPointerEnter={(event) => seek(index, event)}
+                    onFocus={() => {
+                      if (desktopRef.current) travel(index, reduced ? 0 : 900)
+                    }}
+                    onClick={() => choose(index)}
+                  >
+                    <Icon name={icon} size={24} />
+                  </button>
+                  <span className="signal-nodes__label">{node.label}</span>
+                </li>
+              )
+            })}
+          </ol>
+        </div>
+        <div className={fading ? 'signal-readout is-out' : 'signal-readout is-in'} aria-live="polite">
+          <p className="signal-readout__num grad-text" id={labelId}>
+            {String(shown + 1).padStart(2, '0')}
+          </p>
+          <div>
+            <p className="signal-readout__title">{step?.label}</p>
+            <p className="signal-readout__text">{step?.hint}</p>
+          </div>
+        </div>
       </div>
-      <div className="hero-flow__stage">
-      <div className="hero-flow__meter" ref={meterRef} aria-hidden="true">
-        <span className="hero-flow__meter-fill" ref={fillRef} />
-      </div>
-      <ol className="hero-flow__nodes">
-        {site.heroFlow.map((node, index) => {
-          const open = openHint === index
-          const live = liveNode === index
-          const done = index < liveNode
-          const nodeClass = [
-            'hero-flow__node',
-            live ? 'is-live' : '',
-            done ? 'is-done' : '',
-          ]
-            .filter(Boolean)
-            .join(' ')
 
+      <div className="stepper">
+        <span className="stepper__rail" aria-hidden="true">
+          <span className="stepper__fill" ref={fillRef} />
+          <span className="stepper__dot" ref={dotRef} />
+        </span>
+        <ol className="stepper__list" ref={mobileListRef}>
+        {site.heroFlow.map((node, index) => {
+          const icon = ICONS[index] ?? 'send'
+          const open = index === active
           return (
-            <li
-              key={node.id}
-              className={open ? 'hero-flow__item is-open' : 'hero-flow__item'}
-              onMouseEnter={() => scheduleOpen(index)}
-            >
-              <button
-                type="button"
-                className={nodeClass}
-                aria-expanded={open}
-                aria-controls={`${hintId}-${node.id}`}
-                aria-describedby={readoutId}
-                onFocus={() => openAt(index)}
-                onBlur={(event) => {
-                  if (!hasHoverPointer()) return
-                  const next = event.relatedTarget
-                  if (!(next instanceof Node) || wrapRef.current?.contains(next)) return
-                  scheduleClose()
-                }}
-                onClick={() => {
-                  if (!hasHoverPointer()) {
-                    setOpenHint((current) => (current === index ? null : index))
-                  }
-                }}
-              >
-                <span
-                  className={
-                    armed === index ? 'hero-flow__dot is-ping' : 'hero-flow__dot'
-                  }
-                  aria-hidden="true"
-                  ref={(el) => {
-                    dotRefs.current[index] = el
-                  }}
-                />
-                <span className="hero-flow__index">{String(index + 1).padStart(2, '0')}</span>
-                <span className="hero-flow__label">{node.label}</span>
+            <li key={node.id} className={open ? 'stepper__item is-open' : 'stepper__item'}>
+              <button type="button" className="stepper__hit" aria-pressed={open} onClick={() => choose(index)}>
+                <span className={open ? 'icon-tile stepper__tile is-active' : 'icon-tile stepper__tile'}>
+                  <Icon name={icon} size={20} />
+                </span>
+                <span className="stepper__copy">
+                  <span className="stepper__num">{String(index + 1).padStart(2, '0')}</span>
+                  <span className="stepper__label">{node.label}</span>
+                </span>
               </button>
-              <div
-                className={open ? 'hero-flow__hint is-open' : 'hero-flow__hint'}
-                id={`${hintId}-${node.id}`}
-              >
-                <div className="hero-flow__hint-clip">
-                  <p className="hero-flow__hint-text">{node.hint}</p>
+              <div className="stepper__panel">
+                <div className="stepper__clip">
+                  <p>{node.hint}</p>
                 </div>
               </div>
             </li>
           )
         })}
-      </ol>
-      <p className="hero-flow__readout" id={readoutId} aria-live="polite">
-        <span className="hero-flow__readout-kicker">
-          {openHint === null
-            ? site.hero.flowIdleKicker
-            : `${String(previewIndex + 1).padStart(2, '0')} ${preview.label}`}
-        </span>
-        <span key={openHint === null ? 'idle' : preview.id} className="hero-flow__readout-text">
-          {openHint === null ? site.hero.flowIdle : preview.hint}
-        </span>
-      </p>
+        </ol>
       </div>
-      <svg
-        className={path ? 'hero-flow__svg' : 'hero-flow__svg is-idle'}
-        aria-hidden="true"
-      >
-        <path className="hero-flow__rail" d={path} fill="none" />
-        {TRAIL.map((_, index) => (
-          <circle
-            key={index}
-            ref={(el) => {
-              trailRefs.current[index] = el
-            }}
-            className={`hero-flow__trail is-${index}`}
-            r={index === 0 ? 2.1 : 1.5}
-            cx="0"
-            cy="0"
-          />
-        ))}
-        <circle ref={signalRef} className="hero-flow__signal" r="3.1" cx="0" cy="0" />
-        <circle ref={coreRef} className="hero-flow__core" r="1.25" cx="0" cy="0" />
-      </svg>
     </div>
   )
 }

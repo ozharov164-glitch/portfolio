@@ -3014,3 +3014,177 @@ section + section::before {
   align-items: center;
   gap: 8px;
 }
+
+.signal-track { display: none; }
+
+.signal-stage {
+  position: relative;
+  height: 132px;
+}
+
+.signal-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.signal-rail { stroke: rgb(237 245 255 / 0.1); stroke-width: 2; }
+
+.signal-progress {
+  stroke-width: 2;
+  transform-box: fill-box;
+  transform-origin: left center;
+}
+
+.signal-halo {
+  fill: rgb(42 171 238 / 0.35);
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
+.signal-halo.is-pulse { animation: signal-pulse 600ms var(--ease-out); }
+
+.signal-dot { fill: #2aabee; }
+
+@keyframes signal-pulse {
+  from { transform: scale(1); opacity: 0.35; }
+  to { transform: scale(1.6); opacity: 0; }
+}
+
+.signal-nodes {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 132px;
+  margin: 0 -24px;
+  padding: 0;
+  list-style: none;
+}
+
+.signal-nodes li {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: 6px;
+  width: 48px;
+}
+
+.signal-nodes__num {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.signal-nodes__label {
+  font-size: 15px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.signal-nodes__btn { color: var(--muted); transition: transform 200ms var(--ease-out); }
+.signal-nodes__btn.is-done { color: var(--tg); box-shadow: var(--hl-top-strong), inset 0 0 0 1px rgb(42 171 238 / 0.45), var(--elev-1); }
+.signal-nodes__btn.is-active {
+  color: var(--tg);
+  background: rgb(42 171 238 / 0.14);
+  transform: scale(1.06);
+  box-shadow: var(--hl-top-strong), inset 0 0 0 1px var(--tg), var(--glow-tg-soft);
+}
+
+.signal-readout {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 16px;
+  align-items: start;
+  min-height: 5.5rem;
+  margin-top: 28px;
+}
+
+.signal-readout.is-out { opacity: 0; transform: translateY(-6px); transition: opacity 160ms var(--ease-out), transform 160ms var(--ease-out); }
+.signal-readout.is-in { opacity: 1; transform: none; transition: opacity 240ms var(--ease-out), transform 240ms var(--ease-out); }
+.signal-readout__num { margin: 0; font-size: 40px; line-height: 1; }
+.signal-readout__title { margin: 0; font-weight: 600; }
+.signal-readout__text { margin: 6px 0 0; color: var(--muted); }
+
+.stepper { position: relative; display: grid; }
+.stepper__list { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.stepper__item { display: grid; }
+.stepper__hit {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  text-align: left;
+  color: inherit;
+  cursor: pointer;
+}
+.stepper__tile { width: 40px; height: 40px; border-radius: 12px; }
+.stepper__tile .icon { width: 20px; height: 20px; }
+.stepper__tile.is-active { background: rgb(42 171 238 / 0.14); color: var(--tg); }
+.stepper__num { display: block; font-family: var(--font-mono); font-size: 12px; color: var(--muted); }
+.stepper__label { display: block; font-weight: 600; }
+.stepper__panel { display: grid; grid-template-rows: 0fr; margin-left: 52px; }
+.stepper__item.is-open .stepper__panel { grid-template-rows: 1fr; }
+.stepper__clip { overflow: hidden; }
+.stepper__clip p { margin: 8px 0 0; color: var(--muted); }
+
+.stepper__rail {
+  position: absolute;
+  left: 0;
+  top: 20px;
+  bottom: 20px;
+  width: 40px;
+  pointer-events: none;
+}
+
+.stepper__rail::before {
+  content: '';
+  position: absolute;
+  left: 19px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: rgb(237 245 255 / 0.1);
+}
+
+.stepper__fill {
+  position: absolute;
+  left: 19px;
+  top: 0;
+  width: 2px;
+  height: 0;
+  background: linear-gradient(180deg, #2aabee, #35e2a1);
+  transition: height 400ms var(--ease-out);
+}
+
+.stepper__dot {
+  position: absolute;
+  left: 16px;
+  top: -4px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #2aabee;
+  transition: transform 600ms cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+@media (min-width: 960px) {
+  .hero-flow { padding: 40px; }
+  .signal-track { display: block; }
+  .stepper { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .signal-readout,
+  .stepper__dot,
+  .stepper__fill,
+  .signal-halo { transition: none; animation: none; }
+}
