@@ -21,7 +21,7 @@ export function WorkProcess() {
               <p className="steps__num grad-text">{step.id}</p>
               <h3>
                 {STEP_ICONS[index] ? <Icon name={STEP_ICONS[index]} size={16} /> : null}
-                {step.title}
+                <span>{step.title}</span>
               </h3>
               <p>{step.text}</p>
             </li>

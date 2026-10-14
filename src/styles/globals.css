@@ -2383,10 +2383,10 @@ html.is-locked .float-cta {
 .steps li p { margin-top: 8px; color: var(--muted); }
 
 .steps h3 {
-  font-size: clamp(1.25rem, 1.7vw, 1.625rem);
-  line-height: 1.12;
+  font-size: clamp(1.05rem, 1.25vw, 1.35rem);
+  line-height: 1.2;
   margin-top: 10px;
-  overflow-wrap: normal;
+  overflow-wrap: break-word;
   hyphens: manual;
 }
 
@@ -3024,7 +3024,17 @@ section + section::before {
 .facts li p:last-child { grid-column: 2; }
 .facts li .icon-tile { grid-row: 1 / span 2; }
 
-.steps h3,
+.steps h3 {
+  display: grid;
+  grid-template-columns: 16px minmax(0, 1fr);
+  gap: 8px;
+  align-items: start;
+  min-width: 0;
+}
+
+.steps h3 span { min-width: 0; }
+.steps li { min-width: 0; }
+
 .lightbox__close,
 .cta__mail {
   display: flex;
