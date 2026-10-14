@@ -1,8 +1,15 @@
 import { useEffect, useRef } from 'react'
 import { site } from '../content/site'
+import { ty } from '../lib/typograph'
 import { useTilt } from '../lib/motion'
 
-const STEP_MS = [1000, 1400, 1800, 1600, 2200, 4000] as const
+const MARKS = [
+  { at: 450, step: '1' },
+  { at: 900, step: '2' },
+  { at: 1500, step: '3' },
+  { at: 3100, step: '4' },
+  { at: 4700, step: '5' },
+] as const
 
 export function HeroPhone() {
   const rootRef = useRef<HTMLDivElement>(null)
@@ -17,24 +24,27 @@ export function HeroPhone() {
       return
     }
 
-    let step = 0
-    let timer = 0
     let stopped = false
+    let timers: number[] = []
     root.dataset.step = '0'
 
     const arm = () => {
-      window.clearTimeout(timer)
+      for (const id of timers) window.clearTimeout(id)
+      timers = []
       if (stopped) return
       if (document.hidden || root.classList.contains('is-off')) {
-        timer = window.setTimeout(arm, 240)
+        timers.push(window.setTimeout(arm, 240))
         return
       }
-      const wait = STEP_MS[step] ?? 1200
-      timer = window.setTimeout(() => {
-        step = step >= 5 ? 0 : step + 1
-        root.dataset.step = String(step)
-        arm()
-      }, wait)
+      root.dataset.step = '0'
+      for (const mark of MARKS) {
+        timers.push(
+          window.setTimeout(() => {
+            if (!stopped) root.dataset.step = mark.step
+          }, mark.at),
+        )
+      }
+      timers.push(window.setTimeout(arm, 9000))
     }
 
     arm()
@@ -47,15 +57,13 @@ export function HeroPhone() {
 
     const replay = () => {
       if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) return
-      step = 0
-      root.dataset.step = '0'
       arm()
     }
     root.addEventListener('click', replay)
 
     return () => {
       stopped = true
-      window.clearTimeout(timer)
+      for (const id of timers) window.clearTimeout(id)
       observer.disconnect()
       root.removeEventListener('click', replay)
     }
@@ -83,6 +91,9 @@ export function HeroPhone() {
                   </span>
                 </header>
                 <div className="tg__log">
+                  <p className="tg__day">{ty('сегодня')}</p>
+                  <p className="bubble bubble--seed bubble--user">{ty('Здравствуйте!')}</p>
+                  <p className="bubble bubble--seed bubble--bot">{ty('Чем помочь?')}</p>
                   <p className="bubble bubble--user">Хочу оформить заказ</p>
                   <p className="typing" aria-hidden="true">
                     <i />

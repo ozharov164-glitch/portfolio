@@ -42,7 +42,7 @@ export function ty(text: string): string {
     (full, word: string) => (SHORT.has(word.toLowerCase()) ? `${word}\u00A0` : full),
   )
 
-  result = result.replace(/([A-Za-zА-Яа-яЁё]{1,8})-([A-Za-zА-Яа-яЁё]{1,12})/gu, '$1\u2060-\u2060$2')
+  result = result.replace(/([A-Za-zА-Яа-яЁё]{1,6})-([A-Za-zА-Яа-яЁё]{1,6})/gu, '$1\u2011$2')
   result = result.replace(/[ \t]+—/g, '\u00A0—')
   result = result.replace(/(\d)[ \t]+([^\s\d]{1,12})/gu, '$1\u00A0$2')
 

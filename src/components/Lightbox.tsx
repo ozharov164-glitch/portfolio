@@ -30,9 +30,11 @@ export function Lightbox({ slides, index, origin, onClose, onIndex }: LightboxPr
     const opener = document.activeElement instanceof HTMLElement ? document.activeElement : null
     const previous = document.body.style.overflow
     document.body.style.overflow = 'hidden'
+    document.documentElement.classList.add('is-locked')
     focusable(dialog)[0]?.focus()
     return () => {
       document.body.style.overflow = previous
+      if (!document.querySelector('.menu.is-open')) document.documentElement.classList.remove('is-locked')
       opener?.focus()
     }
   }, [])

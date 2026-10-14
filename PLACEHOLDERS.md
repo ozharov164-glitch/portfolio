@@ -14,12 +14,13 @@
 ## Когда появятся
 
 2. `[[SHOT_COZYRESET]]` — настоящие скриншоты «ВключиСебя» вместо `public/media/cozyreset/card.svg`.
-3. `[[SHOT_RESUMEBOT]]` — настоящие скриншоты резюме-бота вместо `public/media/resumebot/card.svg`.
-4. `[[PHOTO_PATH]]` в `src/content/site.ts` — фото владельца, путь вида `/media/brand/photo.webp`. Пока его нет, в блоке «Обо мне» стоит знак `programmer.webp`.
-5. `[[GITHUB_PROFILE_URL]]` — ссылка на профиль GitHub, не на репозиторий этого сайта. Пока ключ стоит, ссылка «GitHub» скрыта.
-6. Кадр каталога LINKTECH с целой кнопкой «+ В корзину». Сейчас `public/media/linktech/poster.webp` обрезан по этой кнопке. Готового кадра в папке нет — не подменять карточкой товара или корзиной.
-7. `[[REVIEW_1_TEXT]]`, `[[REVIEW_1_AUTHOR]]`, `[[REVIEW_1_CONTEXT]]` — первый отзыв.
-8. `[[REVIEW_2_TEXT]]`, `[[REVIEW_2_AUTHOR]]`, `[[REVIEW_2_CONTEXT]]` — второй.
-9. `[[REVIEW_3_TEXT]]`, `[[REVIEW_3_AUTHOR]]`, `[[REVIEW_3_CONTEXT]]` — третий.
+3. `[[COZYRESET_POSTER_V2]]` — новый постер «ВключиСебя». Пока ключ не заполнен, на карточке остаётся текущий ассет, края кругов уходят в виньетку.
+4. `[[SHOT_RESUMEBOT]]` — настоящие скриншоты резюме-бота вместо `public/media/resumebot/card.svg`.
+5. `[[PHOTO_PATH]]` в `src/content/site.ts` — фото владельца, путь вида `/media/brand/photo.webp`. Пока его нет, в блоке «Обо мне» стоит знак `programmer.webp`.
+6. `[[GITHUB_PROFILE_URL]]` — ссылка на профиль GitHub, не на репозиторий этого сайта. Пока ключ стоит, ссылка «GitHub» скрыта.
+7. Кадр каталога LINKTECH с целой кнопкой «+ В корзину». Сейчас `public/media/linktech/poster.webp` обрезан по этой кнопке. Готового кадра в папке нет — не подменять карточкой товара или корзиной.
+8. `[[REVIEW_1_TEXT]]`, `[[REVIEW_1_AUTHOR]]`, `[[REVIEW_1_CONTEXT]]` — первый отзыв.
+9. `[[REVIEW_2_TEXT]]`, `[[REVIEW_2_AUTHOR]]`, `[[REVIEW_2_CONTEXT]]` — второй.
+10. `[[REVIEW_3_TEXT]]`, `[[REVIEW_3_AUTHOR]]`, `[[REVIEW_3_CONTEXT]]` — третий.
 
 Секция «Что говорят» и пункт меню появляются только когда заполнены текст и автор хотя бы одного отзыва. Не выдумывайте отзывы.

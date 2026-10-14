@@ -142,26 +142,25 @@ export function CaseScene({ project, flip }: { project: Project; flip: boolean }
             {youtube ? (
               <ExternalLink className="btn btn-watch" href={project.youtubeUrl ?? ''}>
                 <YoutubeMark />
-                <span className="only-wide">{site.projectsIntro.youtubeCta}</span>
-                <span className="only-narrow">{site.projectsIntro.youtubeCtaShort}</span>
+                <span>{site.projectsIntro.youtubeCtaShort}</span>
               </ExternalLink>
             ) : null}
           </div>
-          {demo || siteLink ? (
-            <div className="case__links">
-              {demo ? (
-                <ExternalLink className="text-link" href={project.demoUrl ?? ''}>
-                  {project.demoLabel || site.projectsIntro.demoCta}
-                </ExternalLink>
-              ) : null}
-              {siteLink ? (
-                <ExternalLink className="text-link" href={project.siteUrl ?? ''}>
-                  {project.siteLabel}
-                </ExternalLink>
-              ) : null}
-            </div>
-          ) : null}
         </div>
+        {demo || siteLink ? (
+          <div className="case__links">
+            {demo ? (
+              <ExternalLink className="text-link" href={project.demoUrl ?? ''}>
+                {project.demoLabel || site.projectsIntro.demoCta}
+              </ExternalLink>
+            ) : null}
+            {siteLink ? (
+              <ExternalLink className="text-link" href={project.siteUrl ?? ''}>
+                {project.siteLabel}
+              </ExternalLink>
+            ) : null}
+          </div>
+        ) : null}
         <h3 id={`case-title-${project.id}`} tabIndex={-1}>
           {project.title}
         </h3>

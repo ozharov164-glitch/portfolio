@@ -4,25 +4,39 @@ import { spawnRipple } from '../lib/motion'
 import { HeroPhone } from './HeroPhone'
 import { TelegramMark } from './TelegramMark'
 
+function titlePieces(word: string): string[] {
+  const match = word.match(/^([\p{L}\p{N}]{7,})-([\p{L}\p{N}].*)$/u)
+  if (!match?.[1] || !match[2]) return [word]
+  return [`${match[1]}-`, match[2]]
+}
+
 function HeroTitle({ text, accent }: { text: string; accent: string }) {
   const marked = new Set(accent.split(/\s+/).map((word) => word.toLowerCase()))
   const words = text.split(' ')
+  let pieceIndex = 0
   return (
     <h1>
       {words.map((word, index) => {
-        const bare = word.replace(/[^\p{L}\p{N}-]/gu, '').toLowerCase()
-        const accented = marked.has(bare)
-        return (
-          <span className="rise-word" key={`${word}-${index}`}>
-            <span
-              className={accented ? 'rise-word__in grad-text' : 'rise-word__in'}
-              style={{ animationDelay: `${index * 80}ms` }}
-            >
-              {word}
-              {index < words.length - 1 ? ' ' : ''}
+        const pieces = titlePieces(word)
+        return pieces.map((piece, pieceAt) => {
+          const delay = pieceIndex * 40
+          pieceIndex += 1
+          const bare = piece.replace(/[^\p{L}\p{N}-]/gu, '').toLowerCase()
+          const accented = marked.has(bare)
+          const lastPiece = pieceAt === pieces.length - 1
+          const glue = pieces.length > 1 && pieceAt === 0
+          return (
+            <span className={glue ? 'rise-word is-glue' : 'rise-word'} key={`${piece}-${index}-${pieceAt}`}>
+              <span
+                className={accented ? 'rise-word__in grad-text' : 'rise-word__in'}
+                style={{ animationDelay: `${delay}ms` }}
+              >
+                {piece}
+                {lastPiece && index < words.length - 1 ? ' ' : ''}
+              </span>
             </span>
-          </span>
-        )
+          )
+        })
       })}
     </h1>
   )

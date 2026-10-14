@@ -154,7 +154,7 @@ const rawSite = {
     headline: 'Что говорят',
   },
   contact: {
-    headline: 'Есть идея? Напишите мне\u00A0в\u00A0Telegram',
+    headline: 'Есть идея? Напишите мне в\u00A0Telegram',
     headlineAccent: 'в Telegram',
     text: 'Расскажите в двух словах, что нужно, — отвечу лично и предложу, как это сделать.',
     primary: 'Написать в Telegram',
