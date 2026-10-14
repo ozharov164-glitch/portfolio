@@ -11,6 +11,7 @@ import { Lightbox } from './Lightbox'
 import { ScreenCarousel } from './ScreenCarousel'
 import { TelegramMark } from './TelegramMark'
 import { YoutubeMark } from './YoutubeMark'
+import { Icon } from './icons/Icon'
 
 function slidesOf(project: Project): ProjectStill[] {
   if (project.stills && project.stills.length > 0) return project.stills
@@ -150,14 +151,16 @@ export function CaseScene({ project, flip }: { project: Project; flip: boolean }
         {demo || siteLink ? (
           <div className="case__links">
             {demo ? (
-              <ExternalLink className="text-link" href={project.demoUrl ?? ''}>
-                {project.demoLabel || site.projectsIntro.demoCta}
-              </ExternalLink>
+                <ExternalLink className="text-link" href={project.demoUrl ?? ''}>
+                  {project.demoLabel || site.projectsIntro.demoCta}
+                  <Icon className="icon--out" name="arrow-up-right" size={16} />
+                </ExternalLink>
             ) : null}
             {siteLink ? (
-              <ExternalLink className="text-link" href={project.siteUrl ?? ''}>
-                {project.siteLabel}
-              </ExternalLink>
+                <ExternalLink className="text-link" href={project.siteUrl ?? ''}>
+                  {project.siteLabel}
+                  <Icon className="icon--out" name="arrow-up-right" size={16} />
+                </ExternalLink>
             ) : null}
           </div>
         ) : null}
@@ -185,7 +188,10 @@ export function CaseScene({ project, flip }: { project: Project; flip: boolean }
           {stack.extra > 0 ? <li>+{stack.extra}</li> : null}
         </ul>
         <details className="fold">
-          <summary>{site.projectsIntro.details}</summary>
+          <summary>
+            {site.projectsIntro.details}
+            <Icon name="chevron-down" size={20} />
+          </summary>
           <div className="fold__body">
             <p className="fold__label">{site.projectsIntro.flow}</p>
             <ol>

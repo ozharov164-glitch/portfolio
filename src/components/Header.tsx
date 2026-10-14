@@ -4,6 +4,7 @@ import { spawnRipple } from '../lib/motion'
 import { publicUrl } from '../lib/publicUrl'
 import { useScrollSpy } from '../lib/scrollSpy'
 import { TelegramMark } from './TelegramMark'
+import { Icon } from './icons/Icon'
 
 function focusable(root: HTMLElement): HTMLElement[] {
   return [...root.querySelectorAll<HTMLElement>('a[href], button:not([disabled])')].filter(
@@ -220,6 +221,7 @@ export function Header() {
             </p>
           ) : null}
           <button type="button" className="menu__close" onClick={closeMenu}>
+            <Icon name="x" size={24} />
             {site.menu.close}
           </button>
         </div>

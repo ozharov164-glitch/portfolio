@@ -4,6 +4,7 @@ import type { ProjectStill } from '../content/projects'
 import { site } from '../content/site'
 import { publicUrl } from '../lib/publicUrl'
 import { SoftImage } from './Chrome'
+import { Icon } from './icons/Icon'
 
 type LightboxProps = {
   slides: ProjectStill[]
@@ -128,6 +129,7 @@ export function Lightbox({ slides, index, origin, onClose, onIndex }: LightboxPr
           {index + 1} / {total}
         </p>
         <button type="button" className="lightbox__close" onClick={onClose}>
+          <Icon name="x" size={24} />
           {site.projectsIntro.lightboxClose}
           <span className="lightbox__esc">Esc</span>
         </button>

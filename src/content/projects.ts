@@ -74,7 +74,7 @@ const rawProjects: Project[] = [
     youtubeUrl: '',
     githubUrl: '',
     demoUrl: 'https://linktech-demo.vercel.app',
-    demoLabel: 'Открыть демо ↗',
+    demoLabel: 'Открыть демо',
     footnote: 'Живое демо. Цены и остатки берутся из прайса. Оплата на сайте не принимается — заявка уходит менеджеру.',
   },
   {
@@ -118,7 +118,7 @@ const rawProjects: Project[] = [
     youtubeUrl: '[[YOUTUBE_FADELINE_PUBLIC]]',
     githubUrl: '',
     demoUrl: 'https://t.me/fadeline_bot',
-    demoLabel: 'Открыть демо ↗',
+    demoLabel: 'Открыть демо',
     footnote: 'Оплата через ЮKassa и Telegram Stars подготовлена, в демо выключена.',
   },
   {
@@ -208,7 +208,7 @@ const rawProjects: Project[] = [
     youtubeUrl: 'https://www.youtube.com/watch?v=vtnyWM9_l40&t=1s',
     githubUrl: '',
     siteUrl: 'https://cozyreset.ru',
-    siteLabel: 'Сайт проекта ↗',
+    siteLabel: 'Сайт проекта',
     footnote: 'Проект в архиве. Не медицинский сервис и не замена психологу.',
   },
   {
@@ -227,7 +227,7 @@ const rawProjects: Project[] = [
     ownership: 'Сценарий бота, логика подбора навыков, API и деплой.',
     stack: ['Python', 'Telegram Bot API', 'SkillPick', 'VPS'],
     poster: '/media/resumebot/card.svg',
-    posterAlt: 'Схема резюме-бота: вакансия → навыки → документ',
+    posterAlt: 'Схема резюме-бота: вакансия, навыки, документ',
     posterWidth: 800,
     posterHeight: 1000,
     mediaKind: 'poster',

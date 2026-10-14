@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react'
 import { site } from '../content/site'
 import { ty } from '../lib/typograph'
 import { useTilt } from '../lib/motion'
+import { Icon } from './icons/Icon'
 
 const MARKS = [
   { at: 450, step: '1' },
@@ -110,8 +111,10 @@ export function HeroPhone() {
                   <p className="bubble bubble--ok">
                     Заявка принята
                     <span className="check" aria-hidden="true">
-                      <i className="check__short" />
-                      <i className="check__long" />
+                      <svg className="check__svg" viewBox="0 0 24 24" width="20" height="20">
+                        <circle cx="12" cy="12" r="11" className="check__bg" />
+                        <path d="M7 12.5l3.2 3.2L17 9" className="check__mark" pathLength="1" />
+                      </svg>
                     </span>
                   </p>
                 </div>
@@ -132,7 +135,10 @@ export function HeroPhone() {
           <span className="phone__ground" aria-hidden="true" />
         </div>
       </div>
-      <p className="phone__caption">{site.hero.phoneCaption}</p>
+      <p className="phone__caption">
+        {ty('Демонстрация: бот')} <Icon className="icon--mute" name="arrow-right" size={16} /> {ty('Mini App')}{' '}
+        <Icon className="icon--mute" name="arrow-right" size={16} /> {ty('результат')}
+      </p>
     </div>
   )
 }

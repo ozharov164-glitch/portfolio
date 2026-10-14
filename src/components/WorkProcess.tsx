@@ -1,5 +1,8 @@
 import { site } from '../content/site'
 import { HeroFlow } from './HeroFlow'
+import { Icon, type IconName } from './icons/Icon'
+
+const STEP_ICONS: IconName[] = ['send', 'smartphone', 'workflow', 'rocket']
 
 export function WorkProcess() {
   return (
@@ -13,10 +16,13 @@ export function WorkProcess() {
           <span className="steps__line-fill" />
         </div>
         <ol className="steps">
-          {site.process.steps.map((step) => (
-            <li key={step.id}>
+          {site.process.steps.map((step, index) => (
+            <li key={step.id} className="card-premium">
               <p className="steps__num grad-text">{step.id}</p>
-              <h3>{step.title}</h3>
+              <h3>
+                {STEP_ICONS[index] ? <Icon name={STEP_ICONS[index]} size={16} /> : null}
+                {step.title}
+              </h3>
               <p>{step.text}</p>
             </li>
           ))}

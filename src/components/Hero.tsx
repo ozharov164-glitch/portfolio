@@ -2,6 +2,7 @@ import { projects } from '../content/projects'
 import { isConfigured, projectsInTelegram, site } from '../content/site'
 import { spawnRipple } from '../lib/motion'
 import { HeroPhone } from './HeroPhone'
+import { Icon } from './icons/Icon'
 import { TelegramMark } from './TelegramMark'
 
 function titlePieces(word: string): string[] {
@@ -71,6 +72,7 @@ export function Hero() {
           <a className="btn btn-ghost btn-lg" href="#projects">
             <span className="only-wide">{site.hero.secondaryCta}</span>
             <span className="only-narrow">{site.hero.secondaryCtaShort}</span>
+            <Icon name="arrow-down" size={16} />
           </a>
         </div>
         <p className="hero__trust">{projectsInTelegram(projects.length)}</p>

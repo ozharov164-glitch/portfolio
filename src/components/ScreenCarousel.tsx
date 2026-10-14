@@ -3,6 +3,7 @@ import type { ProjectStill } from '../content/projects'
 import { site } from '../content/site'
 import { publicUrl } from '../lib/publicUrl'
 import { SoftImage } from './Chrome'
+import { Icon } from './icons/Icon'
 
 type ScreenCarouselProps = {
   slides: ProjectStill[]
@@ -80,6 +81,7 @@ export function ScreenCarousel({ slides, onOpen }: ScreenCarouselProps) {
       {total > 1 ? (
         <div className="carousel__nav">
           <button type="button" className="carousel__arrow carousel__arrow--prev" onClick={() => go(-1)}>
+            <Icon name="chevron-left" size={20} />
             <span className="sr-only">{site.projectsIntro.prev}</span>
           </button>
           <div className="carousel__dots">
@@ -99,6 +101,7 @@ export function ScreenCarousel({ slides, onOpen }: ScreenCarouselProps) {
             ))}
           </div>
           <button type="button" className="carousel__arrow carousel__arrow--next" onClick={() => go(1)}>
+            <Icon name="chevron-right" size={20} />
             <span className="sr-only">{site.projectsIntro.next}</span>
           </button>
         </div>

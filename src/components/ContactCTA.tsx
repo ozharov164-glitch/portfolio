@@ -2,9 +2,11 @@ import { useState, type MouseEvent } from 'react'
 import { isConfigured, site } from '../content/site'
 import { spawnRipple } from '../lib/motion'
 import { TelegramMark } from './TelegramMark'
+import { Icon } from './icons/Icon'
 
 export function ContactCTA() {
   const [toast, setToast] = useState('')
+  const [copied, setCopied] = useState(false)
   const ready = isConfigured(site.telegramUrl)
 
   async function copyEmail(event: MouseEvent<HTMLAnchorElement>) {
@@ -13,7 +15,11 @@ export function ContactCTA() {
     try {
       await navigator.clipboard.writeText(site.email)
       setToast(site.contact.copied)
-      window.setTimeout(() => setToast(''), 2200)
+      setCopied(true)
+      window.setTimeout(() => {
+        setToast('')
+        setCopied(false)
+      }, 1500)
     } catch {
       window.location.href = `mailto:${site.email}`
     }
@@ -53,6 +59,7 @@ export function ContactCTA() {
       ) : null}
       {isConfigured(site.email) ? (
         <p className="cta__mail">
+          <Icon name={copied ? 'check' : 'mail'} size={16} />
           {site.contact.emailLead}{' '}
           <a href={`mailto:${site.email}`} onClick={copyEmail}>
             {site.email}
