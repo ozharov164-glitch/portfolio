@@ -1,41 +1,48 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, type KeyboardEvent } from 'react'
 import { projects, type ProjectId } from '../content/projects'
 import { site } from '../content/site'
+import { useScrollSpy } from '../lib/scrollSpy'
 import { CaseScene } from './CaseScene'
 
+const CASE_IDS = projects.map((project) => `case-${project.id}`)
+
 export function Cases() {
-  const [active, setActive] = useState<ProjectId>(projects[0]?.id ?? 'linktech')
+  const { active, select } = useScrollSpy(CASE_IDS, 0.4)
+  const rowRef = useRef<HTMLDivElement>(null)
+  const activeId = active.replace('case-', '') as ProjectId
 
   useEffect(() => {
-    const nodes = projects
-      .map((project) => document.getElementById(`case-${project.id}`))
-      .filter((node): node is HTMLElement => node !== null)
-    if (nodes.length === 0) return
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)
-        const id = visible[0]?.target.id.replace('case-', '')
-        if (id && projects.some((project) => project.id === id)) setActive(id as ProjectId)
-      },
-      { rootMargin: '-28% 0px -45% 0px', threshold: [0.2, 0.5] },
-    )
-    nodes.forEach((node) => observer.observe(node))
-    return () => observer.disconnect()
-  }, [])
+    const row = rowRef.current
+    if (!row) return
+    const chip = row.querySelector<HTMLElement>(`[data-case="${activeId}"]`)
+    if (!chip) return
+    const pad = Number.parseFloat(getComputedStyle(row).paddingLeft) || 0
+    const mask = 32
+    const viewLeft = row.scrollLeft + pad
+    const viewRight = row.scrollLeft + row.clientWidth - mask
+    const chipLeft = chip.offsetLeft
+    const chipRight = chipLeft + chip.offsetWidth
+    if (chipLeft >= viewLeft - 1 && chipRight <= viewRight + 1) return
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    row.scrollTo({
+      left: Math.max(0, chip.offsetLeft - pad),
+      behavior: reduce ? 'auto' : 'smooth',
+    })
+  }, [activeId])
 
-  useEffect(() => {
-    const row = document.querySelector<HTMLElement>('.case-index__row')
-    const chip = row?.querySelector<HTMLElement>(`[data-case="${active}"]`)
-    if (!row || !chip) return
-    const start = chip.offsetLeft
-    const end = start + chip.offsetWidth
-    if (start < row.scrollLeft || end > row.scrollLeft + row.clientWidth) {
-      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-      chip.scrollIntoView({ inline: 'center', block: 'nearest', behavior: reduce ? 'auto' : 'smooth' })
-    }
-  }, [active])
+  function onRowKey(event: KeyboardEvent<HTMLDivElement>) {
+    if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft') return
+    const chips = [...event.currentTarget.querySelectorAll<HTMLAnchorElement>('a[data-case]')]
+    const index = chips.indexOf(document.activeElement as HTMLAnchorElement)
+    if (index < 0) return
+    const next = event.key === 'ArrowRight' ? index + 1 : index - 1
+    const chip = chips[next]
+    if (!chip) return
+    event.preventDefault()
+    for (const item of chips) item.tabIndex = -1
+    chip.tabIndex = 0
+    chip.focus()
+  }
 
   return (
     <section className="cases" id="projects">
@@ -45,15 +52,18 @@ export function Cases() {
         <p className="lede">{site.projectsIntro.note}</p>
       </header>
       <nav className="case-index" aria-label="Кейсы">
-        <div className="case-index__row">
+        <div className="case-index__row" ref={rowRef} onKeyDown={onRowKey}>
           {projects.map((project) => {
-            const current = project.id === active
+            const id = `case-${project.id}`
+            const current = id === active
             return (
               <a
                 key={project.id}
-                href={`#case-${project.id}`}
+                href={`#${id}`}
                 data-case={project.id}
                 aria-current={current ? 'true' : undefined}
+                tabIndex={current ? 0 : -1}
+                onClick={(event) => select(id, event, 'h3')}
               >
                 <span className="mono">{project.number}</span>
                 {project.tab}

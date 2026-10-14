@@ -100,7 +100,9 @@
   --font-mono: 'JetBrains Mono', 'JetBrains Mono Fallback', ui-monospace, monospace;
   --wide: 1240px;
   --pad: clamp(20px, 5vw, 48px);
+  --container: calc(var(--wide) - 2 * var(--pad));
   --header-h: 56px;
+  --case-index-h: 56px;
   --brand-mark: 32px;
   --label: 12px;
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
@@ -116,9 +118,14 @@
 @media (min-width: 960px) {
   :root {
     --header-h: 76px;
+    --case-index-h: 60px;
     --brand-mark: clamp(40px, 2.2vw, 56px);
     --label: 13px;
   }
+}
+
+section[id] {
+  scroll-margin-top: calc(var(--header-h) + 16px);
 }
 
 @media (min-width: 1200px) {
@@ -1507,7 +1514,9 @@ html.is-locked body {
   gap: 8px;
   overflow-x: auto;
   scroll-snap-type: x proximity;
-  padding: 10px var(--pad);
+  padding-block: 10px;
+  padding-inline: max(var(--pad), calc((100vw - var(--container)) / 2));
+  scroll-padding-inline: max(var(--pad), calc((100vw - var(--container)) / 2));
   mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 32px), transparent);
   scrollbar-width: none;
 }
@@ -1539,7 +1548,7 @@ html.is-locked body {
   display: grid;
   gap: 28px;
   padding-block: clamp(56px, 8vw, 96px);
-  scroll-margin-top: calc(var(--header-h) + var(--safe-top) + 64px);
+  scroll-margin-top: calc(var(--header-h) + var(--case-index-h) + 16px);
 }
 
 .case__num {

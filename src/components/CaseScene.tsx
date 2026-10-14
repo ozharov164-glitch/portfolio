@@ -162,7 +162,9 @@ export function CaseScene({ project, flip }: { project: Project; flip: boolean }
             </div>
           ) : null}
         </div>
-        <h3 id={`case-title-${project.id}`}>{project.title}</h3>
+        <h3 id={`case-title-${project.id}`} tabIndex={-1}>
+          {project.title}
+        </h3>
         <dl className="case__facts">
           <div>
             <dt>{site.projectsIntro.task}</dt>

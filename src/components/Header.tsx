@@ -1,10 +1,9 @@
-import { useEffect, useId, useRef, useState } from 'react'
+import { useEffect, useId, useMemo, useRef, useState, type MouseEvent } from 'react'
 import { configuredReviews, isConfigured, site } from '../content/site'
-import { publicUrl } from '../lib/publicUrl'
 import { spawnRipple } from '../lib/motion'
+import { publicUrl } from '../lib/publicUrl'
+import { useScrollSpy } from '../lib/scrollSpy'
 import { TelegramMark } from './TelegramMark'
-
-const SECTION_IDS = [...site.nav.map((item) => item.href.slice(1)), 'contact']
 
 function focusable(root: HTMLElement): HTMLElement[] {
   return [...root.querySelectorAll<HTMLElement>('a[href], button:not([disabled])')].filter(
@@ -14,7 +13,6 @@ function focusable(root: HTMLElement): HTMLElement[] {
 
 export function Header() {
   const telegramReady = isConfigured(site.telegramUrl)
-  const [active, setActive] = useState('')
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
   const [pill, setPill] = useState({ x: 0, y: 0, w: 0, h: 0, on: false })
@@ -24,25 +22,18 @@ export function Header() {
   const menuId = useId()
   const reviewsReady = configuredReviews().length > 0
   const links = reviewsReady ? [...site.nav, { href: '#reviews', label: 'Отзывы' }] : [...site.nav]
+  const sectionIds = useMemo(() => [...links.map((item) => item.href.slice(1)), 'contact'], [links])
+  const { active, select } = useScrollSpy(sectionIds, 0.4)
 
-  useEffect(() => {
-    const nodes = SECTION_IDS.map((id) => document.getElementById(id)).filter(
-      (node): node is HTMLElement => node !== null,
-    )
-    if (nodes.length === 0) return
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)
-        const id = visible[0]?.target.id
-        if (id) setActive(id)
-      },
-      { rootMargin: '-20% 0px -55% 0px', threshold: [0.15, 0.4, 0.7] },
-    )
-    nodes.forEach((node) => observer.observe(node))
-    return () => observer.disconnect()
-  }, [])
+  function goTo(id: string, event: MouseEvent<HTMLAnchorElement>) {
+    event.preventDefault()
+    if (open) {
+      setOpen(false)
+      window.setTimeout(() => select(id), 200)
+      return
+    }
+    select(id)
+  }
 
   useEffect(() => {
     const sentinel = document.querySelector('.scroll-sentinel')
@@ -140,7 +131,13 @@ export function Header() {
             const id = item.href.slice(1)
             const current = active === id
             return (
-              <a key={item.href} href={item.href} className={current ? 'is-active' : undefined} aria-current={current ? 'true' : undefined}>
+              <a
+                key={item.href}
+                href={item.href}
+                className={current ? 'is-active' : undefined}
+                aria-current={current ? 'true' : undefined}
+                onClick={(event) => goTo(id, event)}
+              >
                 {item.label}
               </a>
             )
@@ -185,11 +182,21 @@ export function Header() {
         hidden={!open}
       >
         <nav className="menu__nav" aria-label="Разделы">
-          {links.map((item, index) => (
-            <a key={item.href} href={item.href} style={{ animationDelay: `${index * 70}ms` }} onClick={closeMenu}>
-              {item.label}
-            </a>
-          ))}
+          {links.map((item, index) => {
+            const id = item.href.slice(1)
+            const current = active === id
+            return (
+              <a
+                key={item.href}
+                href={item.href}
+                style={{ animationDelay: `${index * 70}ms` }}
+                aria-current={current ? 'true' : undefined}
+                onClick={(event) => goTo(id, event)}
+              >
+                {item.label}
+              </a>
+            )
+          })}
         </nav>
         <div className="menu__foot">
           {telegramReady ? (
