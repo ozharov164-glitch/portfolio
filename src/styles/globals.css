@@ -1253,7 +1253,28 @@ html.is-locked body {
   gap: 8px;
   padding: 12px;
   flex: 1;
+  min-height: 0;
 }
+
+.hero-phone .tg__log {
+  gap: 6px;
+  padding: 8px 10px 10px;
+  overflow: hidden;
+}
+
+.hero-phone .bubble {
+  padding: 6px 9px;
+  font-size: 12.5px;
+}
+
+.hero-phone .key,
+.hero-phone .sheet li,
+.hero-phone .sheet__go {
+  min-height: 28px;
+  font-size: 12.5px;
+}
+
+.hero-phone .sheet li { padding: 6px 8px; }
 
 .tg__day {
   justify-self: center;
@@ -1265,8 +1286,6 @@ html.is-locked body {
   font-size: 12px;
   line-height: 1.4;
 }
-
-.bubble--seed { opacity: 0.55; }
 
 .optbot .tg__log {
   align-content: start;
@@ -1317,37 +1336,54 @@ html.is-locked body {
 
 .typing {
   display: inline-flex;
-  gap: 4px;
-  padding: 8px 10px;
+  gap: 5px;
+  align-items: center;
+  width: fit-content;
+  height: 34px;
+  padding: 0 12px;
+  border-radius: 14px;
+  background: #1c2633;
 }
 
 .typing i,
 .typing i i {
-  width: 5px;
-  height: 5px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
-  background: var(--muted);
-  animation: blink 1s var(--ease-in-out) infinite;
+  background: var(--text);
+  animation: blink 0.9s var(--ease-in-out) infinite;
 }
 
-.typing i:nth-child(2) { animation-delay: 0.15s; }
-.typing i:nth-child(3) { animation-delay: 0.3s; }
+.typing i:nth-child(2) { animation-delay: 0.12s; }
+.typing i:nth-child(3) { animation-delay: 0.24s; }
 
 @keyframes blink {
-  50% { opacity: 0.25; transform: translateY(1px); }
+  0%, 70%, 100% { opacity: 0.28; transform: translateY(0); }
+  35% { opacity: 1; transform: translateY(-4px); }
+}
+
+.tg__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: hsl(var(--shadow-tint) / 0.5);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 420ms var(--ease-out);
 }
 
 .sheet {
   position: absolute;
+  z-index: 2;
   left: 8px;
   right: 8px;
   bottom: 8px;
   padding: 10px;
   border-radius: 18px 18px 28px 28px;
   background: var(--ink-2);
-  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.06);
-  transform: translateY(110%);
-  transition: transform 520ms var(--spring);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.06), var(--elev-3);
+  transform: translateY(115%);
+  transition: transform 680ms var(--spring);
 }
 
 .sheet__grab {
@@ -1413,46 +1449,91 @@ html.is-locked body {
   transition: stroke-dashoffset 360ms var(--ease-out) 120ms;
 }
 
-.hero-phone[data-step='5'] .check__bg {
+.hero-phone .tg__log > .bubble,
+.hero-phone .tg__log > .typing {
+  display: none;
+}
+
+.hero-phone .tg__log > .is-in {
+  display: block;
+}
+
+.hero-phone .tg__log > .typing.is-in,
+.hero-phone .tg__log > .bubble--ok.is-in {
+  display: inline-flex;
+}
+
+.hero-phone .bubble--user { transform-origin: 100% 100%; }
+.hero-phone .bubble--bot,
+.hero-phone .bubble--ok,
+.hero-phone .typing { transform-origin: 0 100%; }
+
+.hero-phone .bubble--user.is-in { animation: msg-in-user 640ms var(--spring) both; }
+.hero-phone .bubble--bot.is-in,
+.hero-phone .bubble--ok.is-in,
+.hero-phone .typing.is-in { animation: msg-in-bot 640ms var(--spring) both; }
+
+.hero-phone .bubble--bot.is-in .key {
+  animation: msg-in-bot 420ms var(--spring) both;
+}
+
+.hero-phone .bubble--bot.is-in .key:nth-child(2) { animation-delay: 90ms; }
+
+.hero-phone.is-press .key--catalog {
+  transform: scale(0.9);
+  transition: transform 140ms var(--ease-out);
+}
+
+.hero-phone.is-sheet .tg__scrim { opacity: 1; }
+
+.hero-phone.is-sheet .sheet { transform: translateY(0); }
+
+.hero-phone.is-sheet .sheet li {
+  animation: msg-in-bot 460ms var(--ease-out) both;
+}
+
+.hero-phone.is-sheet .sheet li:nth-child(2) { animation-delay: 70ms; }
+.hero-phone.is-sheet .sheet li:nth-child(3) { animation-delay: 140ms; }
+.hero-phone.is-sheet .sheet__go { animation: msg-in-bot 460ms var(--ease-out) 180ms both; }
+
+.hero-phone .bubble--ok.is-in .check__bg {
   transform: scale(1);
   opacity: 1;
+  transition-delay: 280ms;
 }
 
-.hero-phone[data-step='5'] .check__mark { stroke-dashoffset: 0; }
-
-.hero-phone .bubble--seed {
-  opacity: 0.55;
-  transform: none;
+.hero-phone .bubble--ok.is-in .check__mark {
+  stroke-dashoffset: 0;
+  transition-delay: 420ms;
 }
 
-.hero-phone .bubble,
-.hero-phone .typing {
+.hero-phone.is-clear .tg__log,
+.hero-phone.is-clear .sheet,
+.hero-phone.is-clear .tg__scrim {
   opacity: 0;
-  transform: translateY(16px);
-  transition: transform 420ms var(--ease-out), opacity 420ms var(--ease-out);
+  transition: opacity 320ms var(--ease-out);
 }
 
-.hero-phone[data-step='1'] .bubble--user:not(.bubble--seed),
-.hero-phone[data-step='2'] .bubble--user:not(.bubble--seed),
-.hero-phone[data-step='3'] .bubble--user:not(.bubble--seed),
-.hero-phone[data-step='4'] .bubble--user:not(.bubble--seed),
-.hero-phone[data-step='5'] .bubble--user:not(.bubble--seed),
-.hero-phone[data-step='2'] .typing,
-.hero-phone[data-step='3'] .bubble--bot,
-.hero-phone[data-step='4'] .bubble--bot,
-.hero-phone[data-step='5'] .bubble--bot,
-.hero-phone[data-step='5'] .bubble--ok {
-  opacity: 1;
-  transform: none;
+@keyframes msg-in-user {
+  from { opacity: 0; transform: translate(28px, 12px) scale(0.88); }
+  to { opacity: 1; transform: none; }
 }
 
-.hero-phone[data-step='3'] .key--catalog,
-.hero-phone[data-step='4'] .key--catalog {
-  transform: scale(0.96);
+@keyframes msg-in-bot {
+  from { opacity: 0; transform: translate(-22px, 12px) scale(0.88); }
+  to { opacity: 1; transform: none; }
 }
 
-.hero-phone[data-step='4'] .sheet {
-  transform: translateY(0);
+@media (min-width: 960px) {
+  @keyframes msg-in-user {
+    from { opacity: 0; filter: blur(5px); transform: translate(28px, 12px) scale(0.88); }
+    to { opacity: 1; filter: none; transform: none; }
+  }
+
+  @keyframes msg-in-bot {
+    from { opacity: 0; filter: blur(5px); transform: translate(-22px, 12px) scale(0.88); }
+    to { opacity: 1; filter: none; transform: none; }
+  }
 }
 
 .tg--static .bubble {
