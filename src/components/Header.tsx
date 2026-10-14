@@ -22,8 +22,13 @@ export function Header() {
   const menuButtonRef = useRef<HTMLButtonElement>(null)
   const menuId = useId()
   const reviewsReady = configuredReviews().length > 0
-  const links = reviewsReady ? [...site.nav, { href: '#reviews', label: 'Отзывы' }] : [...site.nav]
-  const sectionIds = useMemo(() => [...links.map((item) => item.href.slice(1)), 'contact'], [links])
+  const links = reviewsReady ? [...site.nav, { href: '#reviews', label: 'Отзывы' }] : site.nav
+  const sectionIds = useMemo(() => {
+    const ids = site.nav.map((item) => item.href.slice(1))
+    if (reviewsReady) ids.push('reviews')
+    ids.push('contact')
+    return ids
+  }, [reviewsReady])
   const { active, select } = useScrollSpy(sectionIds, 0.4)
 
   function goTo(id: string, event: MouseEvent<HTMLAnchorElement>) {

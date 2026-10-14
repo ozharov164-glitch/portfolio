@@ -2,8 +2,7 @@ import { ICON_PATHS } from './paths'
 
 export type IconName = keyof typeof ICON_PATHS
 
-const SIZES = [16, 20, 24, 32] as const
-export type IconSize = (typeof SIZES)[number]
+export type IconSize = 16 | 20 | 24 | 32
 
 export function Icon({
   name,
