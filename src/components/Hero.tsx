@@ -49,7 +49,7 @@ export function Hero() {
   return (
     <section className="hero" id="top">
       <div className="hero__copy">
-        <p className="hero__badge">
+        <p className="hero__badge" data-reveal="" style={{ ['--i' as string]: 0 }}>
           <span className="status-dot" aria-hidden="true" />
           {site.hero.eyebrow}
         </p>

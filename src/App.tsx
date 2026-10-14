@@ -10,8 +10,12 @@ import { Offer } from './components/Offer'
 import { Reviews } from './components/Reviews'
 import { SiteAtmosphere } from './components/SiteAtmosphere'
 import { WorkProcess } from './components/WorkProcess'
+import { useMagnetic, useReveal } from './lib/motion'
 
 export default function App() {
+  useReveal()
+  useMagnetic('.btn-xl, .header-cta')
+
   return (
     <>
       <SiteAtmosphere />

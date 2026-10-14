@@ -46,9 +46,122 @@ export function usePrefersReducedMotion(): boolean {
   return reduced
 }
 
-/** Devices stay upright. The ref remains so frames keep a stable hook. */
-export function useTilt(_maxDeg: number) {
-  return useRef<HTMLDivElement>(null)
+/** Tilt only for a fine pointer. Amplitude stays at or under 6 degrees. */
+export function useTilt(maxDeg: number) {
+  const ref = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const node = ref.current
+    if (!node) return
+    const fine = window.matchMedia('(hover: hover) and (pointer: fine)')
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)')
+    if (!fine.matches || reduce.matches) return
+    const cap = Math.min(6, Math.max(0, maxDeg))
+    let frame = 0
+    let rx = 0
+    let ry = 0
+
+    const paint = () => {
+      frame = 0
+      node.style.setProperty('--rx', `${rx.toFixed(2)}`)
+      node.style.setProperty('--ry', `${ry.toFixed(2)}`)
+      node.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg)`
+    }
+
+    const onMove = (event: PointerEvent) => {
+      const rect = node.getBoundingClientRect()
+      const px = (event.clientX - rect.left) / Math.max(rect.width, 1) - 0.5
+      const py = (event.clientY - rect.top) / Math.max(rect.height, 1) - 0.5
+      ry = px * cap * 2
+      rx = -py * cap * 2
+      if (!frame) frame = window.requestAnimationFrame(paint)
+    }
+
+    const reset = () => {
+      rx = 0
+      ry = 0
+      node.style.transform = ''
+    }
+
+    node.addEventListener('pointermove', onMove)
+    node.addEventListener('pointerleave', reset)
+    return () => {
+      node.removeEventListener('pointermove', onMove)
+      node.removeEventListener('pointerleave', reset)
+      if (frame) window.cancelAnimationFrame(frame)
+    }
+  }, [maxDeg])
+
+  return ref
+}
+
+export function useReveal() {
+  useEffect(() => {
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const nodes = [...document.querySelectorAll<HTMLElement>('[data-reveal]')]
+    if (reduce) {
+      for (const node of nodes) node.dataset.shown = 'true'
+      return
+    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue
+          const target = entry.target as HTMLElement
+          target.dataset.shown = 'true'
+          observer.unobserve(target)
+        }
+      },
+      { rootMargin: '0px 0px -12% 0px', threshold: 0 },
+    )
+    for (const node of nodes) observer.observe(node)
+    return () => observer.disconnect()
+  }, [])
+}
+
+export function useMagnetic(selector: string) {
+  useEffect(() => {
+    const fine = window.matchMedia('(hover: hover) and (pointer: fine)')
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)')
+    if (!fine.matches || reduce.matches) return
+    const nodes = [...document.querySelectorAll<HTMLElement>(selector)]
+    const cleanups: Array<() => void> = []
+
+    for (const node of nodes) {
+      let frame = 0
+      let x = 0
+      let y = 0
+      const paint = () => {
+        frame = 0
+        node.style.transform = `translate(${x}px, ${y}px)`
+      }
+      const onMove = (event: PointerEvent) => {
+        const rect = node.getBoundingClientRect()
+        const dx = event.clientX - (rect.left + rect.width / 2)
+        const dy = event.clientY - (rect.top + rect.height / 2)
+        const limit = 6
+        x = Math.max(-limit, Math.min(limit, dx / 8))
+        y = Math.max(-limit, Math.min(limit, dy / 8))
+        if (!frame) frame = window.requestAnimationFrame(paint)
+      }
+      const reset = () => {
+        x = 0
+        y = 0
+        node.style.transform = ''
+      }
+      node.addEventListener('pointermove', onMove)
+      node.addEventListener('pointerleave', reset)
+      cleanups.push(() => {
+        node.removeEventListener('pointermove', onMove)
+        node.removeEventListener('pointerleave', reset)
+        if (frame) window.cancelAnimationFrame(frame)
+      })
+    }
+
+    return () => {
+      for (const cleanup of cleanups) cleanup()
+    }
+  }, [selector])
 }
 
 export function spawnRipple(event: ReactPointerEvent<HTMLElement>) {
