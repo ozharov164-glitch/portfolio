@@ -1,5 +1,4 @@
 import { site } from '../content/site'
-import { HeroFlow } from './HeroFlow'
 import { Icon, type IconName } from './icons/Icon'
 
 const STEP_ICONS: IconName[] = ['send', 'smartphone', 'workflow', 'rocket']
@@ -32,7 +31,6 @@ export function WorkProcess() {
           ))}
         </ol>
       </div>
-      <HeroFlow />
     </section>
   )
 }

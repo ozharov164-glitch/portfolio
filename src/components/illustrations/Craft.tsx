@@ -73,18 +73,18 @@ export function SiteWindow() {
 
 export function PakoDesk() {
   return (
-    <svg className="craft" viewBox="0 0 200 180" role="img" aria-hidden="true">
-      <rect x="46" y="12" width="108" height="140" rx="22" fill="var(--surface-3)" stroke="var(--hairline-strong)" />
-      <rect x="78" y="20" width="44" height="6" rx="3" fill="var(--surface-1)" />
-      <rect x="62" y="34" width="32" height="32" rx="10" fill="var(--surface-4)" />
-      <rect x="106" y="34" width="32" height="32" rx="10" fill="var(--surface-1)" stroke="var(--tg)" strokeWidth="1.5" />
-      <text x="122" y="55" textAnchor="middle" fill="var(--tg)" fontSize="14" fontFamily="Unbounded, sans-serif">
+    <svg className="craft" viewBox="0 0 200 160" role="img" aria-hidden="true">
+      <rect x="58" y="8" width="84" height="144" rx="18" fill="var(--surface-3)" stroke="var(--hairline-strong)" />
+      <rect x="78" y="16" width="44" height="5" rx="2.5" fill="var(--surface-1)" />
+      <rect x="70" y="30" width="28" height="28" rx="8" fill="var(--surface-4)" />
+      <rect x="102" y="30" width="28" height="28" rx="8" fill="var(--surface-1)" stroke="var(--tg)" strokeWidth="1.5" />
+      <text x="116" y="49" textAnchor="middle" fill="var(--tg)" fontSize="13" fontFamily="Unbounded, sans-serif">
         П
       </text>
-      <rect x="62" y="74" width="32" height="32" rx="10" fill="var(--surface-4)" />
-      <rect x="106" y="74" width="32" height="32" rx="10" fill="var(--surface-4)" />
-      <rect x="58" y="114" width="84" height="16" rx="8" fill="rgb(53 226 161 / 0.16)" />
-      <text x="100" y="125" textAnchor="middle" fill="var(--signal)" fontSize="10" fontFamily="Onest, sans-serif">
+      <rect x="70" y="64" width="28" height="28" rx="8" fill="var(--surface-4)" />
+      <rect x="102" y="64" width="28" height="28" rx="8" fill="var(--surface-4)" />
+      <rect x="66" y="102" width="68" height="16" rx="8" fill="rgb(53 226 161 / 0.16)" />
+      <text x="100" y="113" textAnchor="middle" fill="var(--signal)" fontSize="9" fontFamily="Onest, sans-serif">
         {ty('Установлено')}
       </text>
     </svg>

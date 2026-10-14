@@ -2242,8 +2242,13 @@ html.is-locked .float-cta {
 
 .more__card > .mini-phone,
 .more__card > .flip {
-  align-self: center;
   justify-self: center;
+  align-self: center;
+  width: 200px;
+  max-width: 100%;
+  height: 160px;
+  margin: 0 auto;
+  overflow: hidden;
 }
 
 .more__card h3,
@@ -2336,6 +2341,12 @@ html.is-locked .float-cta {
   width: 200px;
   height: 180px;
   margin-inline: auto;
+}
+
+.more .flip__face.craft-slot {
+  width: 100%;
+  height: 100%;
+  margin: 0;
 }
 
 .craft { width: 100%; height: 100%; }
@@ -2524,6 +2535,10 @@ html.is-locked .float-cta {
 
 @keyframes draw-y { to { transform: scaleY(1); } }
 @keyframes draw-x { to { transform: scaleX(1); } }
+
+@media (max-width: 959px) {
+  .steps__line { display: none; }
+}
 
 @media (min-width: 960px) {
   .steps {
