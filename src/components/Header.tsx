@@ -1,4 +1,4 @@
-import { useEffect, useId, useMemo, useRef, useState, type MouseEvent } from 'react'
+import { useCallback, useEffect, useId, useMemo, useRef, useState, type MouseEvent } from 'react'
 import { configuredReviews, isConfigured, site } from '../content/site'
 import { spawnRipple } from '../lib/motion'
 import { publicUrl } from '../lib/publicUrl'
@@ -49,13 +49,14 @@ export function Header() {
     return () => observer.disconnect()
   }, [])
 
-  useEffect(() => {
+  const measurePill = useCallback(() => {
     const nav = navRef.current
     if (!nav) return
     const current = nav.querySelector<HTMLElement>('a.is-active') ?? nav.querySelector<HTMLElement>('a')
     if (!current) return
     const parent = nav.getBoundingClientRect()
     const rect = current.getBoundingClientRect()
+    if (rect.width < 1) return
     setPill({
       x: rect.left - parent.left,
       y: rect.top - parent.top,
@@ -63,7 +64,18 @@ export function Header() {
       h: rect.height,
       on: true,
     })
-  }, [active, links.length])
+  }, [])
+
+  useEffect(() => {
+    measurePill()
+  }, [measurePill, active, links.length])
+
+  // Keep the active-section pill aligned after a resize or a late web-font swap.
+  useEffect(() => {
+    window.addEventListener('resize', measurePill)
+    document.fonts?.ready.then(measurePill).catch(() => {})
+    return () => window.removeEventListener('resize', measurePill)
+  }, [measurePill])
 
   useEffect(() => {
     document.documentElement.classList.toggle('is-locked', open)

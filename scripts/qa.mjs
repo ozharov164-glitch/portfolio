@@ -127,18 +127,11 @@ for (const viewport of viewports) {
 
   await shot(page, `${viewport.name}-hero`)
 
-  if (!viewport.mobile) {
-    await page.hover('.signal-nodes button')
-    await page.waitForTimeout(1000)
-    await shot(page, `${viewport.name}-process`)
-  } else {
-    await page.locator('#process').scrollIntoViewIfNeeded()
-    await page.locator('.stepper__hit').nth(1).click()
-    await page.locator('.stepper__hit').nth(1).click()
-    const open = await page.locator('.stepper__item.is-open').count()
-    if (open !== 1) fail(`${viewport.name}: stepper open count ${open}`)
-    await shot(page, `${viewport.name}-process`)
-  }
+  await page.locator('#process').scrollIntoViewIfNeeded()
+  await page.waitForTimeout(400)
+  const steps = await page.locator('#process .steps > li').count()
+  if (steps !== 4) fail(`${viewport.name}: process steps ${steps} != 4`)
+  await shot(page, `${viewport.name}-process`)
 
   await page.screenshot({ path: join(shots, `${viewport.name}-top.png`) })
   await page.close()
