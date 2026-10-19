@@ -564,7 +564,7 @@ html.is-hidden .marquee__track {
   height: var(--brand-mark);
   border-radius: 50%;
   object-fit: cover;
-  object-position: center 18%;
+  object-position: center;
 }
 
 .brand__text {
@@ -2598,7 +2598,7 @@ html.is-locked .float-cta {
   height: 100%;
   object-fit: cover;
   border-radius: inherit;
-  object-position: center 15%;
+  object-position: center;
 }
 
 .portrait.is-photo {
@@ -2606,6 +2606,10 @@ html.is-locked .float-cta {
   height: auto;
   aspect-ratio: 4 / 5;
   border-radius: 24px;
+}
+
+.portrait.is-photo img {
+  object-position: center 15%;
 }
 
 .about__text { max-width: 42rem; }
